@@ -22,6 +22,14 @@ func TestCompileAuto(t *testing.T) {
 			inputPath: "testdata/schema-url-404.json",
 			wantErr:   true,
 		},
+		{
+			// If this test happens to fail, it might be that our linter
+			// actually changed and does support negative lookbehind.
+			// See https://github.com/santhosh-tekuri/jsonschema/pull/60
+			name:      "Regex",
+			inputPath: "testdata/regex-negative-lookbehind.json",
+			wantErr:   true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -1,0 +1,6 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "string",
+    "title": "String schema with regex using negative lookahead/behind (?<!)",
+    "pattern": "^([a-zA-Z0-9-]+)(?<![-])$"
+}
