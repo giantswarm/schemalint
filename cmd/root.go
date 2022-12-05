@@ -14,7 +14,7 @@ var (
 		Short:        "Validate whether a file is valid JSON schema",
 		Args:         cobra.MinimumNArgs(1),
 		ArgAliases:   []string{"PATH"},
-		RunE:         validate,
+		Run:          validate,
 		SilenceUsage: true,
 	}
 )
@@ -25,18 +25,16 @@ func Execute() error {
 }
 
 // Main validation command
-func validate(cmd *cobra.Command, args []string) error {
+func validate(cmd *cobra.Command, args []string) {
 	url, err := lint.ToFileURL(args[0])
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 
 	err = lint.CompileAuto(url)
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 
 	log.Printf("%s: PASS", args[0])
-
-	return nil
 }
