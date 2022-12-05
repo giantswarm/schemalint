@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Return non-zero exit code in case of error.
+
 ## [0.0.1] - 2022-12-05
 
 - Added first basic linting.
