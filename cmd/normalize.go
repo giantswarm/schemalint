@@ -12,8 +12,13 @@ import (
 
 var (
 	normalizeCmd = &cobra.Command{
-		Use:          "normalize PATH",
-		Short:        "Normalize the given JSON schema input",
+		Use:     "normalize PATH",
+		Short:   "Normalize the given JSON schema input",
+		Aliases: []string{"normalise", "norm"},
+		Long: `Normalize the given JSON schema input.
+
+The normalized JSON will be printed to STDOUT.`,
+		Example:      "  schemalint path/to/schema.json > normalized.json",
 		Args:         cobra.MinimumNArgs(1),
 		ArgAliases:   []string{"PATH"},
 		Run:          normalizeRun,
