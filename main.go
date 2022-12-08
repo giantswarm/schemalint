@@ -8,5 +8,8 @@ import (
 
 func main() {
 	log.SetFlags(log.Flags() &^ (log.Ldate | log.Ltime))
-	cmd.Execute()
+	err := cmd.Execute()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
