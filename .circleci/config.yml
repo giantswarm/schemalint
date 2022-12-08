@@ -4,7 +4,7 @@ orbs:
   architect: giantswarm/architect@4.27.0
 
 workflows:
-  my-workflow:
+  build:
     jobs:
       - architect/go-test:
           name: go-test
