@@ -1,0 +1,15 @@
+version: 2.1
+
+orbs:
+  architect: giantswarm/architect@4.24.0
+
+workflows:
+  my-workflow:
+    jobs:
+      - architect/go-test:
+          name: go-test
+          # Needed to trigger job also on git tag.
+          filters:
+            # Trigger job also on git tag.
+            tags:
+              only: /^v.*/
