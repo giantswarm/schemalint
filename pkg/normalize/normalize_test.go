@@ -56,6 +56,11 @@ func TestNormalize(t *testing.T) {
 			goldenPath: "5.golden",
 			wantErr:    false,
 		},
+		{
+			name:      "Sixth, not JSON",
+			inputPath: "6.txt",
+			wantErr:   true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -66,15 +71,25 @@ func TestNormalize(t *testing.T) {
 			}
 
 			got, err := Normalize(input)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Normalize() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
+			var want []byte
 
-			want := goldenValue(t, "testdata/"+tt.goldenPath, got, *update)
+			if !tt.wantErr {
+				if err != nil {
+					t.Errorf("Normalize() unexpected error = %v", err)
+					return
+				}
 
-			if !reflect.DeepEqual(got, want) {
-				t.Errorf("Normalize() = %v, want %v", string(got), string(want))
+				if tt.goldenPath != "" {
+					want = goldenValue(t, "testdata/"+tt.goldenPath, got, *update)
+					if !reflect.DeepEqual(got, want) {
+						t.Errorf("Normalize() = %v, want %v", string(got), string(want))
+					}
+				}
+			} else {
+				// Error expected
+				if err == nil {
+					t.Error("Normalize() expected error, got nil")
+				}
 			}
 		})
 	}
