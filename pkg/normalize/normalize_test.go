@@ -61,6 +61,13 @@ func TestNormalize(t *testing.T) {
 			inputPath: "6.txt",
 			wantErr:   true,
 		},
+		// Property is defined multiple times. Last value wins.
+		{
+			name:       "Seventh, duplicate key",
+			inputPath:  "7.json",
+			goldenPath: "7.golden",
+			wantErr:    false,
+		},
 	}
 
 	for _, tt := range tests {
