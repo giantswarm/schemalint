@@ -18,7 +18,7 @@ var (
 		Long: `Normalize the given JSON schema input.
 
 The normalized JSON will be printed to STDOUT.`,
-		Example:      "  schemalint path/to/schema.json > normalized.json",
+		Example:      `  schemalint path/to/schema.json > normalized.json`,
 		Args:         cobra.MinimumNArgs(1),
 		ArgAliases:   []string{"PATH"},
 		Run:          normalizeRun,
@@ -35,7 +35,7 @@ func normalizeRun(cmd *cobra.Command, args []string) {
 
 	output, err := normalize.Normalize(input)
 	if err != nil {
-		log.Fatalf("Error reading file %s: %s", path, err)
+		log.Fatalf("Error processing file %s.\nProbably this is not valid JSON.\nDetails: %s", path, err)
 	}
 
 	fmt.Println(string(output))
