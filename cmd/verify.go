@@ -2,8 +2,6 @@ package cmd
 
 import (
 	"log"
-	"os"
-	"reflect"
 
 	"github.com/spf13/cobra"
 
@@ -35,7 +33,6 @@ func verifyRun(cmd *cobra.Command, args []string) {
 			log.Fatal(err)
 		}
 	}
-
 
 	log.Printf("%s: PASS", args[0])
 }
