@@ -84,6 +84,9 @@ func goldenValue(t *testing.T, goldenPath string, actual []byte, update bool) []
 	t.Helper()
 
 	f, err := os.OpenFile(goldenPath, os.O_RDWR, 0644)
+	if err != nil {
+		t.Fatalf("Error opening to file %s: %s", goldenPath, err)
+	}
 	defer f.Close()
 
 	if update {
