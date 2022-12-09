@@ -20,6 +20,8 @@ Is valid JSON schema: SUCCESS
 Is normalized: SUCCESS
 ```
 
+Use `--help` to learn about more options.
+
 ### Normalization
 
 Create a normalized (white space, sorting) representation of a JSON Schema file.
