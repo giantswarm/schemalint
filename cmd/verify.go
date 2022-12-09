@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"reflect"
 
@@ -19,19 +20,34 @@ var (
 		Short:        "Verify the given JSON schema input",
 		Args:         cobra.MinimumNArgs(1),
 		ArgAliases:   []string{"PATH"},
+		PreRun:       verifyPreRun,
 		Run:          verifyRun,
 		SilenceUsage: true,
 	}
 
 	successColor *color.Color = color.New(color.FgGreen)
 	failureColor *color.Color = color.New(color.FgRed).Add(color.Bold)
+
+	skipNormalization    bool
+	skipSchemaValidation bool
 )
+
+func init() {
+	verifyCmd.Flags().BoolVar(&skipNormalization, "skip-normalization", false, "Disable the normalization check.")
+	verifyCmd.Flags().BoolVar(&skipSchemaValidation, "skip-schema-validation", false, "Disable the JSON schema validation.")
+}
 
 // Structure to collect results from different checks
 type TestResult struct {
 	Name          string
 	Success       bool
 	ReturnedError error
+}
+
+func verifyPreRun(cmd *cobra.Command, args []string) {
+	if skipNormalization && skipSchemaValidation {
+		log.Fatal("Error: both --skip-normalization and --skip-schema-validation are set, so we have no checks to run")
+	}
 }
 
 func verifyRun(cmd *cobra.Command, args []string) {
@@ -41,7 +57,7 @@ func verifyRun(cmd *cobra.Command, args []string) {
 	results := []TestResult{}
 
 	// Verify JSON schema validity
-	{
+	if !skipSchemaValidation {
 		url, err := lint.ToFileURL(path)
 		if err == nil {
 			err = lint.CompileAuto(url)
@@ -60,7 +76,7 @@ func verifyRun(cmd *cobra.Command, args []string) {
 	}
 
 	// Verify normalization
-	{
+	if !skipNormalization {
 		var err error
 		var got, want []byte
 
