@@ -19,7 +19,7 @@ var (
 
 The normalized JSON will be printed to STDOUT.`,
 		Example:      `  schemalint path/to/schema.json > normalized.json`,
-		Args:         cobra.MinimumNArgs(1),
+		Args:         cobra.ExactArgs(1),
 		ArgAliases:   []string{"PATH"},
 		Run:          normalizeRun,
 		SilenceUsage: true,
