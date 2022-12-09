@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Move linting function from root command into `verify` command (breaking).
 - Add `normalize` command.
+- Avoid double error output.
+- Quit with error if users gives multiple positional arguments to the `verify` and `normalize` command.
 
 ## [0.0.2] - 2022-12-05
 
