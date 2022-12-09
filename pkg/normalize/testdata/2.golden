@@ -1,0 +1,15 @@
+{
+    "$id": null,
+    "$schema": "",
+    "1": "number one",
+    "2": [
+        "two",
+        2,
+        "number",
+        1,
+        null
+    ],
+    "a": null,
+    "b": 123,
+    "c": {}
+}
