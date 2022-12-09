@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2022-12-09
+
 - Move linting function from root command into `verify` command (breaking).
 - Add `normalize` command.
 
@@ -18,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v0.0.2...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/giantswarm/schemalint/compare/v0.0.2...v0.1.0
 [0.0.2]: https://github.com/giantswarm/schemalint/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/giantswarm/schemalint/releases/tag/v0.0.1
