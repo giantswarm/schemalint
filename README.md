@@ -12,11 +12,12 @@ go install github.com/giantswarm/schemalint@latest
 
 ### Validation
 
-Verify whether a file is valid JSON Schema.
+Verify whether a file is valid JSON Schema and is normalized.
 
 ```nohighlight
 $ schemalint verify myschema.json
-myschema.json: PASS
+Is valid JSON schema: SUCCESS
+Is normalized: SUCCESS
 ```
 
 ### Normalization
