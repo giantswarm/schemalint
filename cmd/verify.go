@@ -18,7 +18,7 @@ var (
 	verifyCmd = &cobra.Command{
 		Use:          "verify PATH",
 		Short:        "Verify the given JSON schema input",
-		Args:         cobra.MinimumNArgs(1),
+		Args:         cobra.ExactArgs(1),
 		ArgAliases:   []string{"PATH"},
 		PreRun:       verifyPreRun,
 		Run:          verifyRun,

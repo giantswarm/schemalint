@@ -8,11 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - Extend `verify` command to also check normalization.
+- Fix `normalize`: avoid extra line break at end of output.
 
 ## [0.1.0] - 2022-12-09
 
 - Move linting function from root command into `verify` command (breaking).
 - Add `normalize` command.
+- Avoid double error output.
+- Quit with error if users gives multiple positional arguments to the `verify` and `normalize` command.
 
 ## [0.0.2] - 2022-12-05
 
