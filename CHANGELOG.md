@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - Extend `verify` command to also check normalization.
-- Fix `normalize`: avoid extra line break at end of output.
+- Fix `normalize`: avoid extra line break at end of output (breaking).
 
 ## [0.1.0] - 2022-12-09
 
