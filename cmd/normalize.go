@@ -64,7 +64,7 @@ func normalizeRun(cmd *cobra.Command, args []string) {
 
 	// Write output.
 	if outputPath != "" {
-		err := os.WriteFile(outputPath, output, 0644)
+		err := os.WriteFile(outputPath, output, 0600)
 		if err != nil {
 			log.Fatalf("Error writing to file: %s", err)
 		} else {
