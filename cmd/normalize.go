@@ -38,5 +38,7 @@ func normalizeRun(cmd *cobra.Command, args []string) {
 		log.Fatalf("Error processing file %s.\nProbably this is not valid JSON.\nDetails: %s", path, err)
 	}
 
-	fmt.Println(string(output))
+	// Print normalized to STDOUT.
+	// Caution: no extra white space must be added.
+	fmt.Print(string(output))
 }
