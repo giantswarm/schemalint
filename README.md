@@ -29,3 +29,5 @@ Create a normalized (white space, sorting) representation of a JSON Schema file.
 ```nohighlight
 $ schemalint normalize myschema.json > normalized.json
 ```
+
+Use `--help` to learn about more options.
