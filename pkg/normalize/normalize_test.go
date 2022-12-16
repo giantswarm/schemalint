@@ -126,3 +126,40 @@ func goldenValue(t *testing.T, goldenPath string, actual []byte, update bool) []
 	}
 	return content
 }
+
+func TestCheckIsNormalized(t *testing.T) {
+	tests := []struct {
+		name         string
+		inputPath    string
+		isNormalized bool
+	}{
+		{
+			name:         "not normalized",
+			inputPath:    "1.json",
+			isNormalized: false,
+		}, {
+			name:         "normalized",
+			inputPath:    "1.golden",
+			isNormalized: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			input, err := os.ReadFile("testdata/" + tt.inputPath)
+			if err != nil {
+				t.Fatalf("IsNormalized() error when reading file: %v", err)
+			}
+
+			isNormalized, error := CheckIsNormalized(input)
+			if error != nil {
+				t.Errorf("IsNormalized() unexpected error = %v", error)
+				return
+			}
+			if isNormalized != tt.isNormalized {
+				t.Errorf("IsNormalized() = %v, want %v", isNormalized, tt.isNormalized)
+			}
+		})
+	}
+
+}

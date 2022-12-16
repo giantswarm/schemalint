@@ -86,13 +86,14 @@ func (l *Linter) CompileAllDrafts(url string) (success []string, errors map[stri
 // If the schema provides a valid `$schema` property, the one given will
 // be used. If not, an error will be thrown.
 // In case of success, a string will be returned, otherwise an error.
-func CompileAuto(url string) (err error) {
-	_, err = jsonschema.Compile(url)
+func Compile(path string) (*jsonschema.Schema, error) {
+	url, err := ToFileURL(path)
+
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return jsonschema.Compile(url)
 }
 
 func ToFileURL(path string) (string, error) {

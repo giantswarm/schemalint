@@ -2,6 +2,9 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+
+	"github.com/giantswarm/schemalint/cmd/normalize"
+	"github.com/giantswarm/schemalint/cmd/verify"
 )
 
 var (
@@ -15,8 +18,8 @@ var (
 )
 
 func init() {
-	rootCmd.AddCommand(normalizeCmd)
-	rootCmd.AddCommand(verifyCmd)
+	rootCmd.AddCommand(normalize.NormalizeCmd)
+	rootCmd.AddCommand(verify.VerifyCmd)
 }
 
 // Execute executes the root command.

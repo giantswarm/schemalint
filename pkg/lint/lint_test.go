@@ -33,11 +33,7 @@ func TestCompileAuto(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			url, err := ToFileURL(tt.inputPath)
-			if err != nil {
-				t.Errorf("CompileAuto() error creating file URL: %s", err)
-			}
-			if err := CompileAuto(url); (err != nil) != tt.wantErr {
+			if _, err := Compile(tt.inputPath); (err != nil) != tt.wantErr {
 				t.Errorf("CompileAuto() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
