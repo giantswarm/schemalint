@@ -8,24 +8,24 @@ import (
 
 func TestTitleExists(t *testing.T) {
 	testCases := []struct {
-		name     string
-		schemaPath   string
+		name        string
+		schemaPath  string
 		nViolations int
 	}{
 		{
-			name:     "has no title",
-			schemaPath:   "testdata/8_missing_titles.json",
+			name:        "has no title",
+			schemaPath:  "testdata/8_missing_titles.json",
 			nViolations: 8,
 		},
 		{
-			name:     "has title",
-			schemaPath:   "testdata/has_title.json",
+			name:        "has title",
+			schemaPath:  "testdata/has_title.json",
 			nViolations: 0,
 		},
 	}
 
 	for _, tc := range testCases {
-		schema,err := lint.Compile(tc.schemaPath)
+		schema, err := lint.Compile(tc.schemaPath)
 		if err != nil {
 			t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 		}
