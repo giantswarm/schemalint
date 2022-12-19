@@ -2,6 +2,7 @@ package verify
 
 import (
 	"errors"
+	"fmt"
 	"os"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
@@ -92,7 +93,8 @@ func verifyNormalization(path string) TestResult {
 
 	content, err = os.ReadFile(path)
 	if err == nil {
-		isNormalized, err := normalize.CheckIsNormalized(content)
+		var isNormalized bool
+		isNormalized, err = normalize.CheckIsNormalized(content)
 		if err == nil && !isNormalized {
 			err = errors.New("schema is not normalized")
 		}
@@ -119,7 +121,7 @@ func verifyRuleSet(ruleSet string, schema *jsonschema.Schema) TestResult {
 	lintFindings := rulesets.VerifyRuleSet(ruleSet, schema)
 
 	result := TestResult{
-		Name:     "Rule set " + ruleSet,
+		Name:     fmt.Sprintf("Rule set '%s'", ruleSet),
 		Success:  findings.GetCount(lintFindings, findings.SeverityError) == 0,
 		Findings: lintFindings,
 	}

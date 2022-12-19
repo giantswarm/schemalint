@@ -1,9 +1,10 @@
 package rules
 
 import (
-	"strings"
+	"fmt"
 
 	"github.com/giantswarm/schemalint/pkg/lint/findings"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 	"github.com/santhosh-tekuri/jsonschema/v5"
 )
 
@@ -11,34 +12,24 @@ import (
 type TitleExists struct{}
 
 func (r TitleExists) Verify(schema *jsonschema.Schema) []RuleViolation {
-	violations := []RuleViolation{}
-	for _, property := range schema.Properties {
-		violations = append(violations, VerifyR(property)...)
-	}
-
-	return violations
-
+	return recurseCall(schema, checkTitle)
 }
 
-func VerifyR(schema *jsonschema.Schema) []RuleViolation {
-	violations := []RuleViolation{}
+func checkTitle(schema *jsonschema.Schema) []RuleViolation {
+	ruleViolations := []RuleViolation{}
+
+	if !schemautils.IsProperty(schema) {
+		return ruleViolations
+	}
+
 	if schema.Title == "" {
-		violations = append(violations, RuleViolation{
-			Reason: "title is missing @ " + trimLocation(schema.Location),
+		ruleViolations = append(ruleViolations, RuleViolation{
+			Reason: fmt.Sprintf("Property '%s' has no title", schemautils.GetLocation(schema)),
 		})
 	}
-
-	for _, property := range schema.Properties {
-		violations = append(violations, VerifyR(property)...)
-	}
-
-	return violations
+	return ruleViolations
 }
 
 func (r TitleExists) GetSeverity() findings.Severity {
 	return findings.SeverityError
-}
-
-func trimLocation(location string) string {
-	return strings.Split(location, "#")[1]
 }

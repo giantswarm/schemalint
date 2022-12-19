@@ -20,27 +20,27 @@ func (f *flag) init(cmd *cobra.Command) {
 	cmd.Flags().StringVar(&f.ruleSet, "rule-set", "", "The rule set to use for validation.")
 }
 
-func (f *flag) verify() []error {
+func (f *flag) validate() []error {
 	var errors []error
 
-	if err := verifySkipFlags(f); err != nil {
+	if err := validateSkipFlags(f); err != nil {
 		errors = append(errors, err)
 	}
-	if err := verifyRuleSetFlag(f); err != nil {
+	if err := validateRuleSetFlag(f); err != nil {
 		errors = append(errors, err)
 	}
 
 	return errors
 }
 
-func verifySkipFlags(flag *flag) error {
+func validateSkipFlags(flag *flag) error {
 	if flag.skipNormalization && flag.skipSchemaValidation {
 		return errors.New(cli.SprintErrorMessage("both --skip-normalization and --skip-schema-validation are set, so we have no checks to run"))
 	}
 	return nil
 }
 
-func verifyRuleSetFlag(flag *flag) error {
+func validateRuleSetFlag(flag *flag) error {
 	if flag.ruleSet != "" && !rulesets.IsRuleSetName(flag.ruleSet) {
 		availableRuleSets := rulesets.GetAvailableRuleSets()
 		return errors.New(cli.SprintfErrorMessage("unknown rule set %s, available rule sets are: %v", flag.ruleSet, availableRuleSets))

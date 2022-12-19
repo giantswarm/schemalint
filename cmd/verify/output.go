@@ -12,13 +12,14 @@ func printOutput(results []TestResult) {
 	for _, r := range results {
 		if r.Success {
 			summary += cli.SprintSuccessMessage(r.Name) + "\n"
+		} else {
+			summary += cli.SprintErrorMessage(r.Name) + "\n"
 		}
 
 		for _, finding := range r.Findings {
 			fmt.Fprintln(os.Stderr, finding)
 		}
 	}
-	summary += "\n"
-
+	fmt.Println()
 	fmt.Println(summary)
 }

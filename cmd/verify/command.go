@@ -20,5 +20,7 @@ func New() *cobra.Command {
 		Run:          runner.run,
 		SilenceUsage: true,
 	}
+
+	flag.init(cmd)
 	return cmd
 }

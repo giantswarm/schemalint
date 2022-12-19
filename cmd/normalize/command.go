@@ -33,6 +33,7 @@ func New() *cobra.Command {
 		Args:         cobra.ExactArgs(1),
 		ArgAliases:   []string{"PATH"},
 		Run:          runner.run,
+		PreRun:       runner.preRun,
 		SilenceUsage: true,
 	}
 

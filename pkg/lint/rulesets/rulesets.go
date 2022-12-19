@@ -14,13 +14,26 @@ type RuleSet struct {
 type RuleSetName string
 
 const (
-	ClusterApp RuleSetName = "cluster-app"
+	NameClusterApp RuleSetName = "cluster-app"
 )
 
+var ClusterApp = &RuleSet{
+	rules: []rules.Rule{
+		rules.TitleExists{},
+	},
+}
+
+var RuleSets = map[RuleSetName]*RuleSet{
+	NameClusterApp: ClusterApp,
+}
+
 func GetAvailableRuleSets() []RuleSetName {
-	return []RuleSetName{
-		ClusterApp,
+	ruleSets := []RuleSetName{}
+	for ruleSetName := range RuleSets {
+		ruleSets = append(ruleSets, ruleSetName)
 	}
+
+	return ruleSets
 }
 
 func IsRuleSetName(name string) bool {
@@ -33,25 +46,19 @@ func IsRuleSetName(name string) bool {
 	return false
 }
 
-func GetRuleSet(name RuleSetName) (*RuleSet, error) {
-	switch name {
-	case ClusterApp:
-		return &RuleSet{
-			rules: []rules.Rule{
-				rules.TitleExists{},
-			},
-		}, nil
-	default:
-		return nil, fmt.Errorf("unknown ruleset: %s", name)
+func GetRuleSet(name RuleSetName) *RuleSet {
+	ruleSet, ok := RuleSets[name]
+	if !ok {
+		// This should never happen, as we validate the rule set name before
+		panic(fmt.Sprintf("Rule set '%s' not found", name))
 	}
+
+	return ruleSet
 }
 
 func VerifyRuleSet(name string, schema *jsonschema.Schema) []findings.LintFindings {
 	nameEnum := RuleSetName(name)
-	ruleSet, err := GetRuleSet(nameEnum)
-	if err != nil {
-		panic(err)
-	}
+	ruleSet := GetRuleSet(nameEnum)
 
 	lintFindings := []findings.LintFindings{}
 	for _, rule := range ruleSet.rules {
