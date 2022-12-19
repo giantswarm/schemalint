@@ -4,19 +4,45 @@ import (
 	"errors"
 	"os"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
-
 	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/lint/findings"
 	"github.com/giantswarm/schemalint/pkg/lint/rulesets"
 	"github.com/giantswarm/schemalint/pkg/normalize"
+	"github.com/santhosh-tekuri/jsonschema/v5"
+	"github.com/spf13/cobra"
 )
 
-func runVerificatonSteps(path string) ([]TestResult, bool) {
+type runner struct {
+	flag *flag
+}
+
+// Structure to collect results from different checks
+type TestResult struct {
+	Name     string
+	Success  bool
+	Findings []findings.LintFindings
+}
+
+func (r *runner) run(cmd *cobra.Command, args []string) {
+	path := args[0]
+
+	results, success := r.runVerificatonSteps(path)
+
+	printOutput(results)
+
+	if !success {
+		os.Exit(1)
+	}
+
+}
+
+func (r *runner) runVerificatonSteps(path string) ([]TestResult, bool) {
 	results := []TestResult{}
 	var schema *jsonschema.Schema
 
-	if !skipSchemaValidation {
+	flags := r.flag
+
+	if !flags.skipSchemaValidation {
 		var result TestResult
 		result, schema = verifySchemaValidity(path)
 		results = append(results, result)
@@ -26,13 +52,13 @@ func runVerificatonSteps(path string) ([]TestResult, bool) {
 		return results, success
 	}
 
-	if !skipNormalization {
+	if !flags.skipNormalization {
 		result := verifyNormalization(path)
 		results = append(results, result)
 	}
 
-	if !skipSchemaValidation && ruleSet != "" {
-		result := verifyRuleSet(ruleSet, schema)
+	if !flags.skipSchemaValidation && flags.ruleSet != "" {
+		result := verifyRuleSet(flags.ruleSet, schema)
 		results = append(results, result)
 
 	}

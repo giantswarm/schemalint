@@ -18,8 +18,8 @@ var (
 )
 
 func init() {
-	rootCmd.AddCommand(normalize.NormalizeCmd)
-	rootCmd.AddCommand(verify.VerifyCmd)
+	rootCmd.AddCommand(normalize.New())
+	rootCmd.AddCommand(verify.New())
 }
 
 // Execute executes the root command.

@@ -33,11 +33,13 @@ func TestVerifyFlags(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run("", func(t *testing.T) {
-			ruleSet = tc.ruleSet
-			skipNormalization = tc.skipNormalization
-			skipSchemaValidation = tc.skipSchemaValidation
+			flag := &flag{
+				ruleSet:              tc.ruleSet,
+				skipNormalization:    tc.skipNormalization,
+				skipSchemaValidation: tc.skipSchemaValidation,
+			}
 
-			err := verifyFlags()
+			err := flag.verify()
 			if err != nil && !tc.expectedError {
 				t.Fatalf("Unexpected error: %s", err)
 			}

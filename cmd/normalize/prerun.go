@@ -8,8 +8,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func preRun(cmd *cobra.Command, args []string) {
-	if outputPath != "" && !forceOverwrite {
+func (r *runner) preRun(cmd *cobra.Command, args []string) {
+	outputPath := r.flag.outputPath
+
+	if r.flag.outputPath != "" && !r.flag.forceOverwrite {
 		exitIfOutputExists(outputPath)
 	}
 }
