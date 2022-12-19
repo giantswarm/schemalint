@@ -4,9 +4,10 @@ import (
 	"log"
 	"os"
 
+	"github.com/spf13/cobra"
+
 	"github.com/giantswarm/schemalint/pkg/cli"
 	"github.com/giantswarm/schemalint/pkg/normalize"
-	"github.com/spf13/cobra"
 )
 
 type runner struct {

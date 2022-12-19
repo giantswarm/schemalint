@@ -3,9 +3,10 @@ package rules
 import (
 	"fmt"
 
+	"github.com/santhosh-tekuri/jsonschema/v5"
+
 	"github.com/giantswarm/schemalint/pkg/lint/findings"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
-	"github.com/santhosh-tekuri/jsonschema/v5"
 )
 
 // Check recursively that all properties have a title

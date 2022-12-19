@@ -1,8 +1,9 @@
 package rules
 
 import (
-	"github.com/giantswarm/schemalint/pkg/lint/findings"
 	"github.com/santhosh-tekuri/jsonschema/v5"
+
+	"github.com/giantswarm/schemalint/pkg/lint/findings"
 )
 
 type RuleViolation struct {

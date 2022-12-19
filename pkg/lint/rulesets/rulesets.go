@@ -3,9 +3,10 @@ package rulesets
 import (
 	"fmt"
 
+	"github.com/santhosh-tekuri/jsonschema/v5"
+
 	"github.com/giantswarm/schemalint/pkg/lint/findings"
 	"github.com/giantswarm/schemalint/pkg/lint/rulesets/rules"
-	"github.com/santhosh-tekuri/jsonschema/v5"
 )
 
 type RuleSet struct {

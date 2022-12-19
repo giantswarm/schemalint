@@ -3,8 +3,9 @@ package verify
 import (
 	"os"
 
-	"github.com/giantswarm/schemalint/pkg/cli"
 	"github.com/spf13/cobra"
+
+	"github.com/giantswarm/schemalint/pkg/cli"
 )
 
 func (r *runner) preRun(cmd *cobra.Command, args []string) {

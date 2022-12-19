@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/santhosh-tekuri/jsonschema/v5"
+	"github.com/spf13/cobra"
+
 	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/lint/findings"
 	"github.com/giantswarm/schemalint/pkg/lint/rulesets"
 	"github.com/giantswarm/schemalint/pkg/normalize"
-	"github.com/santhosh-tekuri/jsonschema/v5"
-	"github.com/spf13/cobra"
 )
 
 type runner struct {

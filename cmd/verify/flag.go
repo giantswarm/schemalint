@@ -3,9 +3,10 @@ package verify
 import (
 	"errors"
 
+	"github.com/spf13/cobra"
+
 	"github.com/giantswarm/schemalint/pkg/cli"
 	"github.com/giantswarm/schemalint/pkg/lint/rulesets"
-	"github.com/spf13/cobra"
 )
 
 type flag struct {
