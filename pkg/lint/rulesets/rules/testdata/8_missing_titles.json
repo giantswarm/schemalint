@@ -2,6 +2,32 @@
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "properties": {
+        "addresses": {
+            "description": "The person's addresses.",
+            "items": {
+                "description": "The person's address.",
+                "properties": {
+                    "city": {
+                        "description": "The city.",
+                        "type": "string"
+                    },
+                    "state": {
+                        "description": "The state.",
+                        "type": "string"
+                    },
+                    "street": {
+                        "description": "The street address.",
+                        "type": "string"
+                    },
+                    "zip": {
+                        "description": "The zip code.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        },
         "age": {
             "description": "Age in years which must be equal to or greater than zero.",
             "minimum": 0,
@@ -14,32 +40,6 @@
         "lastName": {
             "description": "The person's last name.",
             "type": "string"
-        },
-        "addresses": {
-            "description": "The person's addresses.",
-            "type": "array",
-            "items": {
-                "description": "The person's address.",
-                "type": "object",
-                "properties": {
-                    "street": {
-                        "description": "The street address.",
-                        "type": "string"
-                    },
-                    "city": {
-                        "description": "The city.",
-                        "type": "string"
-                    },
-                    "state": {
-                        "description": "The state.",
-                        "type": "string"
-                    },
-                    "zip": {
-                        "description": "The zip code.",
-                        "type": "string"
-                    }
-                }
-            }
         }
     },
     "type": "object"
