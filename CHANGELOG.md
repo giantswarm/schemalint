@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - `normalize`: add flags to write to output file path.
+- Add `rule-set` flag to `verify` command, that enables additional optional rules
 
 ## [0.2.0] - 2022-12-12
 
