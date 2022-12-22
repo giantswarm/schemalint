@@ -1,6 +1,6 @@
-# JSON Schema Linter
+# JSON Schema linter
 
-Validates whether an input is valid JSON schema.
+Validates whether an input is valid JSON schema. Also helps normalizing, and checks for normalization.
 
 ## Installation
 
