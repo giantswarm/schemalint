@@ -2,7 +2,10 @@
 // normalized form.
 package normalize
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"reflect"
+)
 
 const (
 	// Four spaces indentation.
@@ -29,4 +32,13 @@ func Normalize(jsonBytes []byte) ([]byte, error) {
 	output = append(output, []byte("\n")...)
 
 	return output, nil
+}
+
+func CheckIsNormalized(jsonBytes []byte) (bool, error) {
+	normalized, err := Normalize(jsonBytes)
+	if err != nil {
+		return false, err
+	}
+
+	return reflect.DeepEqual(jsonBytes, normalized), nil
 }

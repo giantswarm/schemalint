@@ -1,0 +1,53 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "properties": {
+        "addresses": {
+            "description": "The person's addresses.",
+            "items": {
+                "description": "The person's address.",
+                "properties": {
+                    "city": {
+                        "description": "The city.",
+                        "title": "City",
+                        "type": "string"
+                    },
+                    "state": {
+                        "description": "The state.",
+                        "title": "State",
+                        "type": "string"
+                    },
+                    "street": {
+                        "description": "The street address.",
+                        "title": "Street",
+                        "type": "string"
+                    },
+                    "zip": {
+                        "description": "The zip code.",
+                        "title": "Zip",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "title": "Addresses",
+            "type": "array"
+        },
+        "age": {
+            "description": "Age in years which must be equal to or greater than zero.",
+            "minimum": 0,
+            "title": "Age",
+            "type": "integer"
+        },
+        "firstName": {
+            "description": "The person's first name.",
+            "title": "First Name",
+            "type": "string"
+        },
+        "lastName": {
+            "description": "The person's last name.",
+            "title": "Last Name",
+            "type": "string"
+        }
+    },
+    "type": "object"
+}

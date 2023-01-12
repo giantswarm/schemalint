@@ -53,6 +53,7 @@ func New() *Linter {
 	for _, draft := range drafts {
 		l.compilers[draft.name] = jsonschema.NewCompiler()
 		l.compilers[draft.name].Draft = draft.jsonschemaDraft
+		l.compilers[draft.name].ExtractAnnotations = true
 	}
 
 	return l
@@ -84,15 +85,19 @@ func (l *Linter) CompileAllDrafts(url string) (success []string, errors map[stri
 
 // This processes the given input without specifying the draft to use.
 // If the schema provides a valid `$schema` property, the one given will
-// be used. If not, an error will be thrown.
+// be used. If not, the latest draft will be used.
 // In case of success, a string will be returned, otherwise an error.
-func CompileAuto(url string) (err error) {
-	_, err = jsonschema.Compile(url)
+func Compile(path string) (*jsonschema.Schema, error) {
+	url, err := ToFileURL(path)
+
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	compiler := jsonschema.NewCompiler()
+	compiler.ExtractAnnotations = true
+
+	return compiler.Compile(url)
 }
 
 func ToFileURL(path string) (string, error) {
