@@ -2,6 +2,7 @@ package verify
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -16,9 +17,10 @@ type flag struct {
 }
 
 func (f *flag) init(cmd *cobra.Command) {
+	ruleSets := rulesets.GetAvailableRuleSetsAsStrings()
 	cmd.Flags().BoolVar(&f.skipNormalization, "skip-normalization", false, "Disable the normalization check.")
 	cmd.Flags().BoolVar(&f.skipSchemaValidation, "skip-schema-validation", false, "Disable the JSON schema validation.")
-	cmd.Flags().StringVar(&f.ruleSet, "rule-set", "", "The rule set to use for validation.")
+	cmd.Flags().StringVar(&f.ruleSet, "rule-set", "", "The rule set to use for validation. Available rule sets are: "+strings.Join(ruleSets, ", "))
 }
 
 func (f *flag) validate() []error {
