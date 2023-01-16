@@ -22,6 +22,7 @@ const (
 var ClusterApp = &RuleSet{
 	rules: []rulesmeta.Rule{
 		rules.TitleExists{},
+		rules.DescriptionExists{},
 	},
 }
 
