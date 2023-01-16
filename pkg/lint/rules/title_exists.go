@@ -5,7 +5,7 @@ import (
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
 
-	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta"
+	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
@@ -13,7 +13,7 @@ import (
 type TitleExists struct{}
 
 func (r TitleExists) Verify(schema *jsonschema.Schema) []string {
-	return rulesmeta.RecurseCall(schema, checkTitle)
+	return lint.RecurseCall(schema, checkTitle)
 }
 
 func checkTitle(schema *jsonschema.Schema) []string {
@@ -29,6 +29,6 @@ func checkTitle(schema *jsonschema.Schema) []string {
 	return ruleViolations
 }
 
-func (r TitleExists) GetSeverity() rulesmeta.Severity {
-	return rulesmeta.SeverityError
+func (r TitleExists) GetSeverity() lint.Severity {
+	return lint.SeverityError
 }

@@ -5,14 +5,14 @@ import (
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
 
-	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta"
+	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type DescriptionExists struct{}
 
 func (r DescriptionExists) Verify(schema *jsonschema.Schema) []string {
-	return rulesmeta.RecurseCall(schema, checkDescription)
+	return lint.RecurseCall(schema, checkDescription)
 }
 
 func checkDescription(schema *jsonschema.Schema) []string {
@@ -28,6 +28,6 @@ func checkDescription(schema *jsonschema.Schema) []string {
 	return ruleViolations
 }
 
-func (r DescriptionExists) GetSeverity() rulesmeta.Severity {
-	return rulesmeta.SeverityRecomendation
+func (r DescriptionExists) GetSeverity() lint.Severity {
+	return lint.SeverityRecomendation
 }
