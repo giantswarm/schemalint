@@ -15,7 +15,7 @@ const (
 
 var (
 	SuccessColor *color.Color = color.New(color.FgGreen)
-	ErrorColor *color.Color = color.New(color.FgRed).Add(color.Bold)
+	ErrorColor   *color.Color = color.New(color.FgRed).Add(color.Bold)
 	WarningColor *color.Color = color.New(color.FgYellow)
 )
 

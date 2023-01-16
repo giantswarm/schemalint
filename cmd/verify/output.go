@@ -2,8 +2,9 @@ package verify
 
 import (
 	"fmt"
-	"github.com/fatih/color"
 	"sort"
+
+	"github.com/fatih/color"
 
 	"github.com/giantswarm/schemalint/pkg/cli"
 )
