@@ -6,6 +6,14 @@ import (
 	"github.com/santhosh-tekuri/jsonschema/v5"
 )
 
+// Gets current location without '/properties' in path
+func GetConciseLocation(schema *jsonschema.Schema) string {
+	location := GetLocation(schema)
+	// remove all occurrences of '/properties'
+	location = strings.ReplaceAll(location, "/properties", "")
+	return location
+}
+
 func GetLocation(schema *jsonschema.Schema) string {
 	return TrimLocation(schema.Location)
 }

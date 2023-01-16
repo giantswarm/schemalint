@@ -9,26 +9,27 @@ import (
 )
 
 const (
-	errorPrefix   = "ERROR: "
-	successPrefix = "SUCCESS: "
+	errorPrefix   = "[ERROR] "
+	successPrefix = "[SUCCESS] "
 )
 
 var (
-	successColor *color.Color = color.New(color.FgGreen)
-	failureColor *color.Color = color.New(color.FgRed).Add(color.Bold)
+	SuccessColor *color.Color = color.New(color.FgGreen)
+	ErrorColor   *color.Color = color.New(color.FgRed).Add(color.Bold)
+	WarningColor *color.Color = color.New(color.FgYellow)
 )
 
 func PrintErrorMessage(message string) {
-	fullMessage := failureColor.Sprint(errorPrefix) + message
+	fullMessage := ErrorColor.Sprint(errorPrefix) + message
 	fmt.Fprintln(os.Stderr, fullMessage)
 }
 
 func SprintErrorMessage(message string) string {
-	return failureColor.Sprint(errorPrefix) + message
+	return ErrorColor.Sprint(errorPrefix) + message
 }
 
 func SprintfErrorMessage(format string, a ...interface{}) string {
-	return failureColor.Sprint(errorPrefix) + fmt.Sprintf(format, a...)
+	return ErrorColor.Sprint(errorPrefix) + fmt.Sprintf(format, a...)
 }
 
 func FatalErrorMessage(message string) {
@@ -40,5 +41,5 @@ func FatalfErrorMessage(format string, a ...interface{}) {
 }
 
 func SprintSuccessMessage(message string) string {
-	return successColor.Sprint(successPrefix) + message
+	return SuccessColor.Sprint(successPrefix) + message
 }
