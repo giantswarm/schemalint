@@ -12,10 +12,10 @@ import (
 type DescriptionExists struct{}
 
 func (r DescriptionExists) Verify(schema *jsonschema.Schema) []string {
-	return lint.RecurseProperties(schema, checkDescription)
+	return lint.RecurseProperties(schema, checkDescriptionExists)
 }
 
-func checkDescription(schema *jsonschema.Schema) []string {
+func checkDescriptionExists(schema *jsonschema.Schema) []string {
 	if schema.Description == "" {
 		return []string{fmt.Sprintf("Property '%s' should have a description.", schemautils.GetConciseLocation(schema))}
 	}
