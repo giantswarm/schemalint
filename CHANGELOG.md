@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add check that an existing description follows requirements as defined in [this RFC](https://github.com/giantswarm/rfc/pull/55).
 - Add check that an description exists on every property to `cluster-app` rule set.
 
 ## [0.4.0] - 2023-01-16
