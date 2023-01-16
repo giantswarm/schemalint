@@ -12,20 +12,14 @@ import (
 type DescriptionExists struct{}
 
 func (r DescriptionExists) Verify(schema *jsonschema.Schema) []string {
-	return lint.RecurseCall(schema, checkDescription)
+	return lint.RecurseProperties(schema, checkDescription)
 }
 
 func checkDescription(schema *jsonschema.Schema) []string {
-	ruleViolations := []string{}
-
-	if !schemautils.IsProperty(schema) {
-		return ruleViolations
-	}
-
 	if schema.Description == "" {
-		ruleViolations = append(ruleViolations, fmt.Sprintf("Property '%s' should have a description.", schemautils.GetConciseLocation(schema)))
+		return []string{fmt.Sprintf("Property '%s' should have a description.", schemautils.GetConciseLocation(schema))}
 	}
-	return ruleViolations
+	return []string{}
 }
 
 func (r DescriptionExists) GetSeverity() lint.Severity {

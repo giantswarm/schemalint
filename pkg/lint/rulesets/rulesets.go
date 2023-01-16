@@ -22,6 +22,11 @@ var ClusterApp = &RuleSet{
 	rules: []lint.Rule{
 		rules.TitleExists{},
 		rules.DescriptionExists{},
+		rules.DescriptionMustNotContainLineBreaks{},
+		rules.DescriptionMustBeSentenceCase{},
+		rules.DescriptionMustUsePunctuation{},
+		rules.DescriptionShouldNotContainTitle{},
+		rules.DescriptionShouldHaveCorrectLength{},
 	},
 }
 
@@ -71,9 +76,13 @@ func VerifyRuleSet(name string, schema *jsonschema.Schema) (errors []string, rec
 	nameEnum := RuleSetName(name)
 	ruleSet := GetRuleSet(nameEnum)
 
+	return LintWithRules(schema, ruleSet.rules)
+}
+
+func LintWithRules(schema *jsonschema.Schema, rules []lint.Rule) (errors []string, recommendations []string) {
 	errors = []string{}
 	recommendations = []string{}
-	for _, rule := range ruleSet.rules {
+	for _, rule := range rules {
 		violations := rule.Verify(schema)
 		severity := rule.GetSeverity()
 		if severity == lint.SeverityError {

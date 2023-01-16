@@ -13,20 +13,14 @@ import (
 type TitleExists struct{}
 
 func (r TitleExists) Verify(schema *jsonschema.Schema) []string {
-	return lint.RecurseCall(schema, checkTitle)
+	return lint.RecurseProperties(schema, checkTitle)
 }
 
 func checkTitle(schema *jsonschema.Schema) []string {
-	ruleViolations := []string{}
-
-	if !schemautils.IsProperty(schema) {
-		return ruleViolations
-	}
-
 	if schema.Title == "" {
-		ruleViolations = append(ruleViolations, fmt.Sprintf("Property '%s' must have a title.", schemautils.GetConciseLocation(schema)))
+		return []string{fmt.Sprintf("Property '%s' must have a title.", schemautils.GetConciseLocation(schema))}
 	}
-	return ruleViolations
+	return []string{}
 }
 
 func (r TitleExists) GetSeverity() lint.Severity {

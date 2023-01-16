@@ -7,6 +7,8 @@ import (
 )
 
 // Gets current location without '/properties' in path
+// e.g. /properties/cluster/properties/azure/properties/credentialSecret/properties/namespace
+// becomes /cluster/azure/credentialSecret/namespace
 func GetConciseLocation(schema *jsonschema.Schema) string {
 	location := GetLocation(schema)
 	// remove all occurrences of '/properties'
