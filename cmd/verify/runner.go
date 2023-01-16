@@ -9,7 +9,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/findings"
 	"github.com/giantswarm/schemalint/pkg/lint/rulesets"
 	"github.com/giantswarm/schemalint/pkg/normalize"
 )
@@ -20,9 +19,10 @@ type runner struct {
 
 // Structure to collect results from different checks
 type TestResult struct {
-	Name     string
-	Success  bool
-	Findings []findings.LintFindings
+	Message         string
+	Success         bool
+	Errors          []string
+	Recommendations []string
 }
 
 func (r *runner) run(cmd *cobra.Command, args []string) {
@@ -71,18 +71,20 @@ func (r *runner) runVerificatonSteps(path string) ([]TestResult, bool) {
 func verifySchemaValidity(path string) (TestResult, *jsonschema.Schema) {
 	schema, err := lint.Compile(path)
 
-	lintFindings := []findings.LintFindings{}
+	compileErrors := []string{}
 	if err != nil {
-		lintFindings = append(lintFindings, findings.LintFindings{
-			Message:  err.Error(),
-			Severity: findings.SeverityError,
-		})
+		compileErrors = append(compileErrors, err.Error())
 	}
 
+	success := err == nil
+	message := "Input is valid JSON Schema."
+	if !success {
+		message = "Input is not valid JSON Schema."
+	}
 	result := TestResult{
-		Name:     "Is valid JSON schema",
-		Success:  err == nil,
-		Findings: lintFindings,
+		Message: message,
+		Success: success,
+		Errors:  compileErrors,
 	}
 
 	return result, schema
@@ -101,30 +103,38 @@ func verifyNormalization(path string) TestResult {
 		}
 
 	}
-	lintFindings := []findings.LintFindings{}
+	errors := []string{}
 	if err != nil {
-		lintFindings = append(lintFindings, findings.LintFindings{
-			Message:  err.Error(),
-			Severity: findings.SeverityError,
-		})
+		errors = append(errors, err.Error())
 	}
 
+	success := err == nil
+	message := "Input is normalized."
+	if !success {
+		message = "Input is not normalized."
+	}
 	result := TestResult{
-		Name:     "Is normalized",
-		Success:  err == nil,
-		Findings: lintFindings,
+		Message: message,
+		Success: success,
+		Errors:  errors,
 	}
 	return result
 
 }
 
 func verifyRuleSet(ruleSet string, schema *jsonschema.Schema) TestResult {
-	lintFindings := rulesets.VerifyRuleSet(ruleSet, schema)
+	errors, recommendations := rulesets.VerifyRuleSet(ruleSet, schema)
 
+	success := len(errors) == 0
+	message := fmt.Sprintf("Input is valid according to rule set '%s'.", ruleSet)
+	if !success {
+		message = fmt.Sprintf("Input is not valid according to rule set '%s'.", ruleSet)
+	}
 	result := TestResult{
-		Name:     fmt.Sprintf("Rule set '%s'", ruleSet),
-		Success:  findings.GetCount(lintFindings, findings.SeverityError) == 0,
-		Findings: lintFindings,
+		Message:         message,
+		Success:         len(errors) == 0,
+		Errors:          errors,
+		Recommendations: recommendations,
 	}
 
 	return result

@@ -2,7 +2,7 @@ package rulesmeta
 
 import "github.com/santhosh-tekuri/jsonschema/v5"
 
-func RecurseCall(schema *jsonschema.Schema, getViolationsAtLocation func(schema *jsonschema.Schema) []RuleViolation) []RuleViolation {
+func RecurseCall(schema *jsonschema.Schema, getViolationsAtLocation func(schema *jsonschema.Schema) []string) []string {
 	violations := getViolationsAtLocation(schema)
 
 	for _, property := range schema.Properties {

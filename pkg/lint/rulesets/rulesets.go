@@ -5,7 +5,6 @@ import (
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
 
-	"github.com/giantswarm/schemalint/pkg/lint/findings"
 	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta"
 	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta/rules"
 )
@@ -59,30 +58,22 @@ func GetRuleSet(name RuleSetName) *RuleSet {
 	return ruleSet
 }
 
-func VerifyRuleSet(name string, schema *jsonschema.Schema) []findings.LintFindings {
+func VerifyRuleSet(name string, schema *jsonschema.Schema) (errors []string, recommendations []string) {
 	nameEnum := RuleSetName(name)
 	ruleSet := GetRuleSet(nameEnum)
 
-	lintFindings := []findings.LintFindings{}
+	errors = []string{}
+	recommendations = []string{}
 	for _, rule := range ruleSet.rules {
 		violations := rule.Verify(schema)
-		lintFindings = append(
-			lintFindings,
-			tranformRuleViolationsToFindings(violations, rule.GetSeverity())...,
-		)
+		severity := rule.GetSeverity()
+		if severity == rulesmeta.SeverityError {
+			errors = append(errors, violations...)
+		}
+		if severity == rulesmeta.SeverityRecomendation {
+			recommendations = append(recommendations, violations...)
+		}
 	}
 
-	return lintFindings
-}
-
-func tranformRuleViolationsToFindings(violations []rulesmeta.RuleViolation, severity findings.Severity) []findings.LintFindings {
-	lintFindings := []findings.LintFindings{}
-	for _, violation := range violations {
-		lintFindings = append(lintFindings, findings.LintFindings{
-			Severity: severity,
-			Message:  violation.Reason,
-		})
-	}
-
-	return lintFindings
+	return errors, recommendations
 }

@@ -6,8 +6,7 @@ type Severity int
 
 const (
 	SeverityError Severity = iota
-	SeverityWarning
-	SeverityInfo
+	SeverityRecomendation
 )
 
 type LintFindings struct {
@@ -19,10 +18,8 @@ func (f LintFindings) String() string {
 	switch f.Severity {
 	case SeverityError:
 		return cli.SprintErrorMessage(f.Message)
-	case SeverityWarning:
-		return cli.SprintWarningMessage(f.Message)
-	case SeverityInfo:
-		return cli.SprintInfoMessage(f.Message)
+	case SeverityRecomendation:
+		return f.Message
 	}
 	return f.Message
 }
