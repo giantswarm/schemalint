@@ -38,6 +38,15 @@ func GetAvailableRuleSets() []RuleSetName {
 	return ruleSets
 }
 
+func GetAvailableRuleSetsAsStrings() []string {
+	ruleSets := GetAvailableRuleSets()
+	stringRuleSets := []string{}
+	for _, ruleSet := range ruleSets {
+		stringRuleSets = append(stringRuleSets, string(ruleSet))
+	}
+	return stringRuleSets
+}
+
 func IsRuleSetName(name string) bool {
 	for _, ruleSet := range GetAvailableRuleSets() {
 		if ruleSet == RuleSetName(name) {
