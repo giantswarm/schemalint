@@ -11,11 +11,15 @@ import (
 const (
 	errorPrefix   = "ERROR: "
 	successPrefix = "SUCCESS: "
+	warningPrefix = "WARNING: "
+	infoPrefix    = "INFO: "
 )
 
 var (
 	successColor *color.Color = color.New(color.FgGreen)
 	failureColor *color.Color = color.New(color.FgRed).Add(color.Bold)
+	warningColor *color.Color = color.New(color.FgYellow)
+	infoColor    *color.Color = color.New(color.FgBlue)
 )
 
 func PrintErrorMessage(message string) {
@@ -41,4 +45,12 @@ func FatalfErrorMessage(format string, a ...interface{}) {
 
 func SprintSuccessMessage(message string) string {
 	return successColor.Sprint(successPrefix) + message
+}
+
+func SprintWarningMessage(message string) string {
+	return warningColor.Sprint(warningPrefix) + message
+}
+
+func SprintInfoMessage(message string) string {
+	return infoColor.Sprint(infoPrefix) + message
 }

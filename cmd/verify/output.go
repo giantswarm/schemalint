@@ -2,7 +2,6 @@ package verify
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/giantswarm/schemalint/pkg/cli"
 )
@@ -17,7 +16,7 @@ func printOutput(results []TestResult) {
 		}
 
 		for _, finding := range r.Findings {
-			fmt.Fprintln(os.Stderr, finding)
+			fmt.Println(finding.String())
 		}
 	}
 	fmt.Println()

@@ -1,5 +1,7 @@
 package findings
 
+import "github.com/giantswarm/schemalint/pkg/cli"
+
 type Severity int
 
 const (
@@ -14,6 +16,14 @@ type LintFindings struct {
 }
 
 func (f LintFindings) String() string {
+	switch f.Severity {
+	case SeverityError:
+		return cli.SprintErrorMessage(f.Message)
+	case SeverityWarning:
+		return cli.SprintWarningMessage(f.Message)
+	case SeverityInfo:
+		return cli.SprintInfoMessage(f.Message)
+	}
 	return f.Message
 }
 
