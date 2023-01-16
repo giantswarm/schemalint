@@ -22,7 +22,7 @@ func checkDescriptionShouldNotContainTitle(schema *jsonschema.Schema) []string {
 	}
 
 	if strings.Contains(strings.ToLower(schema.Description), strings.ToLower(schema.Title)) {
-		return []string{fmt.Sprintf("Property '%s' description should not repeat title.", schemautils.GetConciseLocation(schema))}
+		return []string{fmt.Sprintf("Property '%s' description should not repeat the title.", schemautils.GetConciseLocation(schema))}
 	}
 
 	return []string{}
