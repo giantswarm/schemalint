@@ -6,11 +6,12 @@ import (
 	"github.com/santhosh-tekuri/jsonschema/v5"
 
 	"github.com/giantswarm/schemalint/pkg/lint/findings"
-	"github.com/giantswarm/schemalint/pkg/lint/rulesets/rules"
+	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta"
+	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta/rules"
 )
 
 type RuleSet struct {
-	rules []rules.Rule
+	rules []rulesmeta.Rule
 }
 type RuleSetName string
 
@@ -19,7 +20,7 @@ const (
 )
 
 var ClusterApp = &RuleSet{
-	rules: []rules.Rule{
+	rules: []rulesmeta.Rule{
 		rules.TitleExists{},
 	},
 }
@@ -73,7 +74,7 @@ func VerifyRuleSet(name string, schema *jsonschema.Schema) []findings.LintFindin
 	return lintFindings
 }
 
-func tranformRuleViolationsToFindings(violations []rules.RuleViolation, severity findings.Severity) []findings.LintFindings {
+func tranformRuleViolationsToFindings(violations []rulesmeta.RuleViolation, severity findings.Severity) []findings.LintFindings {
 	lintFindings := []findings.LintFindings{}
 	for _, violation := range violations {
 		lintFindings = append(lintFindings, findings.LintFindings{

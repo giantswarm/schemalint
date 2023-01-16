@@ -1,4 +1,4 @@
-package rules
+package rulesmeta
 
 import (
 	"github.com/santhosh-tekuri/jsonschema/v5"

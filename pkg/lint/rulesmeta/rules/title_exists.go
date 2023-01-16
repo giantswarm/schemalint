@@ -6,25 +6,26 @@ import (
 	"github.com/santhosh-tekuri/jsonschema/v5"
 
 	"github.com/giantswarm/schemalint/pkg/lint/findings"
+	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 // Check recursively that all properties have a title
 type TitleExists struct{}
 
-func (r TitleExists) Verify(schema *jsonschema.Schema) []RuleViolation {
-	return recurseCall(schema, checkTitle)
+func (r TitleExists) Verify(schema *jsonschema.Schema) []rulesmeta.RuleViolation {
+	return rulesmeta.RecurseCall(schema, checkTitle)
 }
 
-func checkTitle(schema *jsonschema.Schema) []RuleViolation {
-	ruleViolations := []RuleViolation{}
+func checkTitle(schema *jsonschema.Schema) []rulesmeta.RuleViolation {
+	ruleViolations := []rulesmeta.RuleViolation{}
 
 	if !schemautils.IsProperty(schema) {
 		return ruleViolations
 	}
 
 	if schema.Title == "" {
-		ruleViolations = append(ruleViolations, RuleViolation{
+		ruleViolations = append(ruleViolations, rulesmeta.RuleViolation{
 			Reason: fmt.Sprintf("Property '%s' has no title", schemautils.GetLocation(schema)),
 		})
 	}

@@ -19,7 +19,7 @@ func TestTitleExists(t *testing.T) {
 		},
 		{
 			name:        "has title",
-			schemaPath:  "testdata/has_title.json",
+			schemaPath:  "testdata/has_titles.json",
 			nViolations: 0,
 		},
 	}
