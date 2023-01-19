@@ -7,16 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Wrap all table-based tests in `t.Run`.
 - Add check that an description exists on every property to `cluster-app` rule set.
 
 ## [0.4.0] - 2023-01-16
 
-- Add possible values of `rule-set` to `--help` message
+- Add possible values of `rule-set` to `--help` message.
 
 ## [0.3.0] - 2023-01-12
 
 - `normalize`: add flags to write to output file path.
-- Add `rule-set` flag to `verify` command, that enables additional optional rules
+- Add `rule-set` flag to `verify` command, that enables additional optional rules.
 
 ## [0.2.0] - 2022-12-12
 

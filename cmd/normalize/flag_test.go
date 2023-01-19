@@ -33,16 +33,18 @@ func TestValidateFlags(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		flag := &flag{
-			outputPath:     tc.outputPath,
-			forceOverwrite: tc.forceOverwrite,
-		}
-		err := flag.validate()
-		if err != nil && !tc.expectedError {
-			t.Fatalf("Unexpected error in test case '%s': %s", tc.name, err)
-		}
-		if err == nil && tc.expectedError {
-			t.Fatalf("Expected error, got none in test case '%s'", tc.name)
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			flag := &flag{
+				outputPath:     tc.outputPath,
+				forceOverwrite: tc.forceOverwrite,
+			}
+			err := flag.validate()
+			if err != nil && !tc.expectedError {
+				t.Fatalf("Unexpected error in test case '%s': %s", tc.name, err)
+			}
+			if err == nil && tc.expectedError {
+				t.Fatalf("Expected error, got none in test case '%s'", tc.name)
+			}
+		})
 	}
 }

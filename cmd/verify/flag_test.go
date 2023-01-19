@@ -45,19 +45,21 @@ func TestValidateFlags(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		flag := &flag{
-			ruleSet:              tc.ruleSet,
-			skipNormalization:    tc.skipNormalization,
-			skipSchemaValidation: tc.skipSchemaValidation,
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			flag := &flag{
+				ruleSet:              tc.ruleSet,
+				skipNormalization:    tc.skipNormalization,
+				skipSchemaValidation: tc.skipSchemaValidation,
+			}
 
-		err := flag.validate()
+			err := flag.validate()
 
-		if err != nil && !tc.expectedError {
-			t.Fatalf("Unexpected error in test case '%s': %s", tc.name, err)
-		}
-		if err == nil && tc.expectedError {
-			t.Fatalf("Expected error, got none in test case '%s'", tc.name)
-		}
+			if err != nil && !tc.expectedError {
+				t.Fatalf("Unexpected error in test case '%s': %s", tc.name, err)
+			}
+			if err == nil && tc.expectedError {
+				t.Fatalf("Expected error, got none in test case '%s'", tc.name)
+			}
+		})
 	}
 }
