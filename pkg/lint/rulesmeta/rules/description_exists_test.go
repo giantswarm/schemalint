@@ -25,15 +25,17 @@ func TestDescriptionExists(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		schema, err := lint.Compile(tc.schemaPath)
-		if err != nil {
-			t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
-		}
-		descriptionExistsRule := DescriptionExists{}
-		ruleViolations := descriptionExistsRule.Verify(schema)
+		t.Run(tc.name, func(t *testing.T) {
+			schema, err := lint.Compile(tc.schemaPath)
+			if err != nil {
+				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
+			}
+			descriptionExistsRule := DescriptionExists{}
+			ruleViolations := descriptionExistsRule.Verify(schema)
 
-		if len(ruleViolations) != tc.nViolations {
-			t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleViolations))
-		}
+			if len(ruleViolations) != tc.nViolations {
+				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleViolations))
+			}
+		})
 	}
 }
