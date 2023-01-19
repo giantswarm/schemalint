@@ -15,9 +15,9 @@ func TestDescriptionCorrect(t *testing.T) {
 	}{
 		{
 			name:        "description contains line breaks",
-			schemaPath:  "testdata/description_with_line_breaks.json",
-			nViolations: 2,
-			rules:       []lint.Rule{DescriptionMustNotContainLineBreaks{}},
+			schemaPath:  "testdata/description_with_illegal_chars.json",
+			nViolations: 6,
+			rules:       []lint.Rule{DescriptionMustNotContainIllegalCharacters{}},
 		},
 		{
 			name:        "description is not sentence case",
@@ -54,7 +54,7 @@ func TestDescriptionCorrect(t *testing.T) {
 			schemaPath:  "testdata/8_missing_descriptions.json",
 			nViolations: 0,
 			rules: []lint.Rule{
-				DescriptionMustNotContainLineBreaks{},
+				DescriptionMustNotContainIllegalCharacters{},
 				DescriptionMustBeSentenceCase{},
 				DescriptionShouldNotContainTitle{},
 				DescriptionShouldHaveCorrectLength{},
@@ -66,7 +66,7 @@ func TestDescriptionCorrect(t *testing.T) {
 			schemaPath:  "testdata/description_correct.json",
 			nViolations: 0,
 			rules: []lint.Rule{
-				DescriptionMustNotContainLineBreaks{},
+				DescriptionMustNotContainIllegalCharacters{},
 				DescriptionMustBeSentenceCase{},
 				DescriptionShouldNotContainTitle{},
 				DescriptionShouldHaveCorrectLength{},
@@ -78,7 +78,7 @@ func TestDescriptionCorrect(t *testing.T) {
 			schemaPath:  "testdata/description_all_rules_fail.json",
 			nViolations: 5,
 			rules: []lint.Rule{
-				DescriptionMustNotContainLineBreaks{},
+				DescriptionMustNotContainIllegalCharacters{},
 				DescriptionMustBeSentenceCase{},
 				DescriptionShouldNotContainTitle{},
 				DescriptionShouldHaveCorrectLength{},

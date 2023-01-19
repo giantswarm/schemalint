@@ -22,7 +22,7 @@ var ClusterApp = &RuleSet{
 	rules: []lint.Rule{
 		rules.TitleExists{},
 		rules.DescriptionExists{},
-		rules.DescriptionMustNotContainLineBreaks{},
+		rules.DescriptionMustNotContainIllegalCharacters{},
 		rules.DescriptionMustBeSentenceCase{},
 		rules.DescriptionMustUsePunctuation{},
 		rules.DescriptionShouldNotContainTitle{},
