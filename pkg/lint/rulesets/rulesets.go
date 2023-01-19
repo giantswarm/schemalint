@@ -5,12 +5,12 @@ import (
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
 
-	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta"
-	"github.com/giantswarm/schemalint/pkg/lint/rulesmeta/rules"
+	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/rules"
 )
 
 type RuleSet struct {
-	rules []rulesmeta.Rule
+	rules []lint.Rule
 }
 type RuleSetName string
 
@@ -19,9 +19,14 @@ const (
 )
 
 var ClusterApp = &RuleSet{
-	rules: []rulesmeta.Rule{
+	rules: []lint.Rule{
 		rules.TitleExists{},
 		rules.DescriptionExists{},
+		rules.DescriptionMustNotContainIllegalCharacters{},
+		rules.DescriptionMustBeSentenceCase{},
+		rules.DescriptionMustUsePunctuation{},
+		rules.DescriptionShouldNotContainTitle{},
+		rules.DescriptionShouldHaveCorrectLength{},
 	},
 }
 
@@ -71,15 +76,19 @@ func VerifyRuleSet(name string, schema *jsonschema.Schema) (errors []string, rec
 	nameEnum := RuleSetName(name)
 	ruleSet := GetRuleSet(nameEnum)
 
+	return LintWithRules(schema, ruleSet.rules)
+}
+
+func LintWithRules(schema *jsonschema.Schema, rules []lint.Rule) (errors []string, recommendations []string) {
 	errors = []string{}
 	recommendations = []string{}
-	for _, rule := range ruleSet.rules {
+	for _, rule := range rules {
 		violations := rule.Verify(schema)
 		severity := rule.GetSeverity()
-		if severity == rulesmeta.SeverityError {
+		if severity == lint.SeverityError {
 			errors = append(errors, violations...)
 		}
-		if severity == rulesmeta.SeverityRecomendation {
+		if severity == lint.SeverityRecommendation {
 			recommendations = append(recommendations, violations...)
 		}
 	}

@@ -1,4 +1,4 @@
-package rulesmeta
+package lint
 
 import (
 	"github.com/santhosh-tekuri/jsonschema/v5"
@@ -8,7 +8,7 @@ type Severity int
 
 const (
 	SeverityError Severity = iota
-	SeverityRecomendation
+	SeverityRecommendation
 )
 
 type Rule interface {
