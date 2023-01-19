@@ -24,7 +24,7 @@ func checkDescriptionDoesNotContainLineBreaks(schema *jsonschema.Schema) []strin
 }
 
 func containsLineBreaks(s string) bool {
-	return strings.Contains(s, "\n")
+	return strings.Contains(s, "\n") || strings.Contains(s, "\r")
 }
 
 func (r DescriptionMustNotContainLineBreaks) GetSeverity() lint.Severity {

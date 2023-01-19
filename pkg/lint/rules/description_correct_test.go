@@ -16,7 +16,7 @@ func TestDescriptionCorrect(t *testing.T) {
 		{
 			name:        "description contains line breaks",
 			schemaPath:  "testdata/description_with_line_breaks.json",
-			nViolations: 1,
+			nViolations: 2,
 			rules:       []lint.Rule{DescriptionMustNotContainLineBreaks{}},
 		},
 		{

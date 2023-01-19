@@ -5,6 +5,11 @@
       "description": "Identifies the cluster uniquely within the installation.\n",
       "title": "Cluster name",
       "type": "string"
+    },
+    "firstName": {
+      "description": "Identifies the cluster uniquely within the installation.\r",
+      "title": "First name",
+      "type": "string"
     }
   },
   "type": "object"
