@@ -23,5 +23,5 @@ func checkDescriptionExists(schema *jsonschema.Schema) []string {
 }
 
 func (r DescriptionExists) GetSeverity() lint.Severity {
-	return lint.SeverityRecomendation
+	return lint.SeverityRecommendation
 }

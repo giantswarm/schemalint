@@ -8,7 +8,7 @@ type Severity int
 
 const (
 	SeverityError Severity = iota
-	SeverityRecomendation
+	SeverityRecommendation
 )
 
 type Rule interface {

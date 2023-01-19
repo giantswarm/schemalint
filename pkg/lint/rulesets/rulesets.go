@@ -88,7 +88,7 @@ func LintWithRules(schema *jsonschema.Schema, rules []lint.Rule) (errors []strin
 		if severity == lint.SeverityError {
 			errors = append(errors, violations...)
 		}
-		if severity == lint.SeverityRecomendation {
+		if severity == lint.SeverityRecommendation {
 			recommendations = append(recommendations, violations...)
 		}
 	}

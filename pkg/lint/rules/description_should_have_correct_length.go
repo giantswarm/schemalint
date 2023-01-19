@@ -31,5 +31,5 @@ func checkDescriptionShouldHaveCorrectLength(schema *jsonschema.Schema) []string
 }
 
 func (r DescriptionShouldHaveCorrectLength) GetSeverity() lint.Severity {
-	return lint.SeverityRecomendation
+	return lint.SeverityRecommendation
 }

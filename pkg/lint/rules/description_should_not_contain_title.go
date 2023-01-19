@@ -29,5 +29,5 @@ func checkDescriptionShouldNotContainTitle(schema *jsonschema.Schema) []string {
 }
 
 func (r DescriptionShouldNotContainTitle) GetSeverity() lint.Severity {
-	return lint.SeverityRecomendation
+	return lint.SeverityRecommendation
 }
