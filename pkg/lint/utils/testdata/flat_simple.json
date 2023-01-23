@@ -1,0 +1,10 @@
+{
+  "$id": "https://example.com/person.schema.json",
+  "properties": {
+    "lastName": {
+      "type": "string",
+      "title": "Last Name"
+    }
+  },
+  "type": "object"
+}

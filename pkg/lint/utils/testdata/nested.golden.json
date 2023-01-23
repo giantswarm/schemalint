@@ -1,0 +1,114 @@
+{
+  "/addresses": {
+    "Title": {
+      "Title": "Addresses",
+      "ReferenceLevel": 0
+    },
+    "Description": {
+      "Description": "The person's addresses.",
+      "ReferenceLevel": 0
+    },
+    "Examples": {
+      "Examples": null,
+      "ReferenceLevel": 0
+    }
+  },
+  "/addresses/items/city": {
+    "Title": {
+      "Title": "City",
+      "ReferenceLevel": 0
+    },
+    "Description": {
+      "Description": "The city.",
+      "ReferenceLevel": 0
+    },
+    "Examples": {
+      "Examples": null,
+      "ReferenceLevel": 0
+    }
+  },
+  "/addresses/items/state": {
+    "Title": {
+      "Title": "State",
+      "ReferenceLevel": 0
+    },
+    "Description": {
+      "Description": "The state.",
+      "ReferenceLevel": 0
+    },
+    "Examples": {
+      "Examples": null,
+      "ReferenceLevel": 0
+    }
+  },
+  "/addresses/items/street": {
+    "Title": {
+      "Title": "Street",
+      "ReferenceLevel": 0
+    },
+    "Description": {
+      "Description": "The street address.",
+      "ReferenceLevel": 0
+    },
+    "Examples": {
+      "Examples": null,
+      "ReferenceLevel": 0
+    }
+  },
+  "/addresses/items/zip": {
+    "Title": {
+      "Title": "Zip",
+      "ReferenceLevel": 0
+    },
+    "Description": {
+      "Description": "The zip code.",
+      "ReferenceLevel": 0
+    },
+    "Examples": {
+      "Examples": null,
+      "ReferenceLevel": 0
+    }
+  },
+  "/age": {
+    "Title": {
+      "Title": "Age",
+      "ReferenceLevel": 0
+    },
+    "Description": {
+      "Description": "Age in years which must be equal to or greater than zero.",
+      "ReferenceLevel": 0
+    },
+    "Examples": {
+      "Examples": null,
+      "ReferenceLevel": 0
+    }
+  },
+  "/firstName": {
+    "Title": {
+      "Title": "First Name",
+      "ReferenceLevel": 0
+    },
+    "Description": {
+      "Description": "The person's first name.",
+      "ReferenceLevel": 0
+    },
+    "Examples": {
+      "Examples": null,
+      "ReferenceLevel": 0
+    }
+  },
+  "/lastName": {
+    "Title": {
+      "Title": "Last Name",
+      "ReferenceLevel": 0
+    },
+    "Description": {
+      "Description": "The person's last name.",
+      "ReferenceLevel": 0
+    },
+    "Examples": {
+      "Examples": null,
+      "ReferenceLevel": 0
+    }
+  }
+}
