@@ -9,11 +9,11 @@ func RecurseAll(schema *schemautils.ExtendedSchema, getViolationsAtLocation func
 		return []string{}
 	}
 
+	violations := getViolationsAtLocation(schema)
 	if schema.Ref != nil {
 		refSchema := schema.GetRefSchema()
-		return RecurseAll(refSchema, getViolationsAtLocation)
+		violations = append(violations, RecurseAll(refSchema, getViolationsAtLocation)...)
 	}
-	violations := getViolationsAtLocation(schema)
 
 	for _, property := range schema.GetProperties() {
 		violations = append(violations, RecurseAll(property, getViolationsAtLocation)...)
