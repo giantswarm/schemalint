@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
-
 	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
@@ -14,18 +12,18 @@ type DescriptionMustNotContainIllegalCharacters struct{}
 
 var descriptionIllegalCharacters = []string{"\n", "\r", "\t", "  "}
 
-func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *jsonschema.Schema) []string {
+func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.ExtendedSchema) []string {
 	return lint.RecursePropertiesWithDescription(schema, checkDescriptionDoesNotContainIllegalCharacters)
 }
 
-func checkDescriptionDoesNotContainIllegalCharacters(schema *jsonschema.Schema) []string {
+func checkDescriptionDoesNotContainIllegalCharacters(schema *schemautils.ExtendedSchema) []string {
 	ruleViolations := []string{}
 
 	isInvalid, containedIllegalChars := containsIllegalCharacter(schema.Description)
 	if isInvalid {
 		ruleViolations = append(ruleViolations, fmt.Sprintf(
 			"Property '%s' description must not contain %s",
-			schemautils.GetConciseLocation(schema),
+			schema.GetConciseLocation(),
 			strings.Join(containedIllegalChars, "', '"),
 		))
 	}
@@ -33,7 +31,7 @@ func checkDescriptionDoesNotContainIllegalCharacters(schema *jsonschema.Schema) 
 	if containsLeadingOrTrailingSpace(schema.Description) {
 		ruleViolations = append(ruleViolations, fmt.Sprintf(
 			"Property '%s' description must not contain leading or trailing spaces",
-			schemautils.GetConciseLocation(schema),
+			schema.GetConciseLocation(),
 		))
 	}
 

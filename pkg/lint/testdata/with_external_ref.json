@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "address": {
+      "$ref": "external_ref.json"
+    }
+  },
+  "type": "object"
+}

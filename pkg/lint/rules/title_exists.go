@@ -3,8 +3,6 @@ package rules
 import (
 	"fmt"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
-
 	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
@@ -12,13 +10,13 @@ import (
 // Check recursively that all properties have a title
 type TitleExists struct{}
 
-func (r TitleExists) Verify(schema *jsonschema.Schema) []string {
+func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) []string {
 	return lint.RecurseProperties(schema, checkTitle)
 }
 
-func checkTitle(schema *jsonschema.Schema) []string {
+func checkTitle(schema *schemautils.ExtendedSchema) []string {
 	if schema.Title == "" {
-		return []string{fmt.Sprintf("Property '%s' must have a title.", schemautils.GetConciseLocation(schema))}
+		return []string{fmt.Sprintf("Property '%s' must have a title.", schema.GetConciseLocation())}
 	}
 	return []string{}
 }

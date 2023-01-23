@@ -3,10 +3,9 @@ package rulesets
 import (
 	"fmt"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
-
 	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/lint/rules"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type RuleSet struct {
@@ -72,14 +71,14 @@ func GetRuleSet(name RuleSetName) *RuleSet {
 	return ruleSet
 }
 
-func VerifyRuleSet(name string, schema *jsonschema.Schema) (errors []string, recommendations []string) {
+func VerifyRuleSet(name string, schema *schemautils.ExtendedSchema) (errors []string, recommendations []string) {
 	nameEnum := RuleSetName(name)
 	ruleSet := GetRuleSet(nameEnum)
 
 	return LintWithRules(schema, ruleSet.rules)
 }
 
-func LintWithRules(schema *jsonschema.Schema, rules []lint.Rule) (errors []string, recommendations []string) {
+func LintWithRules(schema *schemautils.ExtendedSchema, rules []lint.Rule) (errors []string, recommendations []string) {
 	errors = []string{}
 	recommendations = []string{}
 	for _, rule := range rules {

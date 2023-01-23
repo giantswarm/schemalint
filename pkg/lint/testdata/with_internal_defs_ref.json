@@ -1,0 +1,19 @@
+{
+    "$defs": {
+        "foo": {
+            "properties": {
+                "gold": {
+                    "title": "Gold",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "refProperty": {
+            "$ref": "#/$defs/foo"
+        }
+    },
+    "type": "object"
+}

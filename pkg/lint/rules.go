@@ -1,7 +1,7 @@
 package lint
 
 import (
-	"github.com/santhosh-tekuri/jsonschema/v5"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type Severity int
@@ -12,6 +12,6 @@ const (
 )
 
 type Rule interface {
-	Verify(*jsonschema.Schema) []string
+	Verify(*schemautils.ExtendedSchema) []string
 	GetSeverity() Severity
 }

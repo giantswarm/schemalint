@@ -18,6 +18,11 @@ func TestTitleExists(t *testing.T) {
 			nViolations: 8,
 		},
 		{
+			name:        "has no title - referenced",
+			schemaPath:  "testdata/9_missing_titles_referenced.json",
+			nViolations: 9,
+		},
+		{
 			name:        "has title",
 			schemaPath:  "testdata/has_titles.json",
 			nViolations: 0,

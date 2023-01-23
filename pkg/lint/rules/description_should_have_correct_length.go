@@ -3,8 +3,6 @@ package rules
 import (
 	"fmt"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
-
 	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
@@ -14,17 +12,17 @@ const minDescriptionLength = 50
 
 type DescriptionShouldHaveCorrectLength struct{}
 
-func (r DescriptionShouldHaveCorrectLength) Verify(schema *jsonschema.Schema) []string {
+func (r DescriptionShouldHaveCorrectLength) Verify(schema *schemautils.ExtendedSchema) []string {
 	return lint.RecursePropertiesWithDescription(schema, checkDescriptionShouldHaveCorrectLength)
 }
 
-func checkDescriptionShouldHaveCorrectLength(schema *jsonschema.Schema) []string {
+func checkDescriptionShouldHaveCorrectLength(schema *schemautils.ExtendedSchema) []string {
 	if len(schema.Description) > maxDescriptionLength {
-		return []string{fmt.Sprintf("Property '%s' description should be less than %d characters.", schemautils.GetConciseLocation(schema), maxDescriptionLength)}
+		return []string{fmt.Sprintf("Property '%s' description should be less than %d characters.", schema.GetConciseLocation(), maxDescriptionLength)}
 	}
 
 	if len(schema.Description) < minDescriptionLength {
-		return []string{fmt.Sprintf("Property '%s' description should be more than %d characters.", schemautils.GetConciseLocation(schema), minDescriptionLength)}
+		return []string{fmt.Sprintf("Property '%s' description should be more than %d characters.", schema.GetConciseLocation(), minDescriptionLength)}
 	}
 
 	return []string{}
