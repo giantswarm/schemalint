@@ -4,13 +4,14 @@ import (
 	"fmt"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type DescriptionExists struct{}
 
 func (r DescriptionExists) Verify(schema *schemautils.ExtendedSchema) []string {
-	return lint.RecurseProperties(schema, checkDescriptionExists)
+	return utils.RecurseProperties(schema, checkDescriptionExists)
 }
 
 func checkDescriptionExists(schema *schemautils.ExtendedSchema) []string {

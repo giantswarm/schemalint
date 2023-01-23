@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
@@ -11,7 +12,7 @@ import (
 type TitleExists struct{}
 
 func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) []string {
-	return lint.RecurseProperties(schema, checkTitle)
+	return utils.RecurseProperties(schema, checkTitle)
 }
 
 func checkTitle(schema *schemautils.ExtendedSchema) []string {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
@@ -13,7 +14,7 @@ const minDescriptionLength = 50
 type DescriptionShouldHaveCorrectLength struct{}
 
 func (r DescriptionShouldHaveCorrectLength) Verify(schema *schemautils.ExtendedSchema) []string {
-	return lint.RecursePropertiesWithDescription(schema, checkDescriptionShouldHaveCorrectLength)
+	return utils.RecursePropertiesWithDescription(schema, checkDescriptionShouldHaveCorrectLength)
 }
 
 func checkDescriptionShouldHaveCorrectLength(schema *schemautils.ExtendedSchema) []string {

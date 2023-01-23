@@ -1,8 +1,9 @@
-package lint
+package utils
 
 import (
 	"testing"
 
+	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
@@ -34,7 +35,7 @@ func TestRecurse(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := Compile(tc.schemaPath)
+			schema, err := lint.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
@@ -58,7 +59,7 @@ func TestRecurse(t *testing.T) {
 }
 
 func TestSelfReferencingRecurse(t *testing.T) {
-	schema, err := Compile("testdata/self_referencing_ref.json")
+	schema, err := lint.Compile("testdata/self_referencing_ref.json")
 	if err != nil {
 		t.Fatalf("Unexpected parsing error: %s", err)
 	}

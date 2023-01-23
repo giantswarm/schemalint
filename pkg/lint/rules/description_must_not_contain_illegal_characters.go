@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
@@ -13,7 +14,7 @@ type DescriptionMustNotContainIllegalCharacters struct{}
 var descriptionIllegalCharacters = []string{"\n", "\r", "\t", "  "}
 
 func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.ExtendedSchema) []string {
-	return lint.RecursePropertiesWithDescription(schema, checkDescriptionDoesNotContainIllegalCharacters)
+	return utils.RecursePropertiesWithDescription(schema, checkDescriptionDoesNotContainIllegalCharacters)
 }
 
 func checkDescriptionDoesNotContainIllegalCharacters(schema *schemautils.ExtendedSchema) []string {

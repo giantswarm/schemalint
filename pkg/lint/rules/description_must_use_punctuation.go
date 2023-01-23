@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
@@ -13,7 +14,7 @@ const AllowedEndings = ".!?"
 type DescriptionMustUsePunctuation struct{}
 
 func (r DescriptionMustUsePunctuation) Verify(schema *schemautils.ExtendedSchema) []string {
-	return lint.RecursePropertiesWithDescription(schema, checkDescriptionMustUsePunctuation)
+	return utils.RecursePropertiesWithDescription(schema, checkDescriptionMustUsePunctuation)
 }
 
 func checkDescriptionMustUsePunctuation(schema *schemautils.ExtendedSchema) []string {

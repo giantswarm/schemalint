@@ -5,13 +5,14 @@ import (
 	"strings"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type DescriptionShouldNotContainTitle struct{}
 
 func (r DescriptionShouldNotContainTitle) Verify(schema *schemautils.ExtendedSchema) []string {
-	return lint.RecursePropertiesWithDescription(schema, checkDescriptionShouldNotContainTitle)
+	return utils.RecursePropertiesWithDescription(schema, checkDescriptionShouldNotContainTitle)
 }
 
 func checkDescriptionShouldNotContainTitle(schema *schemautils.ExtendedSchema) []string {

@@ -5,13 +5,14 @@ import (
 	"unicode"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type DescriptionMustBeSentenceCase struct{}
 
 func (r DescriptionMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema) []string {
-	return lint.RecursePropertiesWithDescription(schema, checkDescriptionMustBeSentenceCase)
+	return utils.RecursePropertiesWithDescription(schema, checkDescriptionMustBeSentenceCase)
 }
 
 func checkDescriptionMustBeSentenceCase(schema *schemautils.ExtendedSchema) []string {

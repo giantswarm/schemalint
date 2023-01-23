@@ -1,4 +1,4 @@
-package lint
+package utils
 
 import (
 	"github.com/giantswarm/schemalint/pkg/schemautils"
