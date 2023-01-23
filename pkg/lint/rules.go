@@ -11,7 +11,15 @@ const (
 	SeverityRecommendation
 )
 
+type RuleResults struct {
+	Violations []string
+}
+
+func (r *RuleResults) Add(violation string) {
+	r.Violations = append(r.Violations, violation)
+}
+
 type Rule interface {
-	Verify(*schemautils.ExtendedSchema) []string
+	Verify(*schemautils.ExtendedSchema) RuleResults
 	GetSeverity() Severity
 }

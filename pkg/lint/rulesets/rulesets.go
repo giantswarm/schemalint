@@ -82,13 +82,13 @@ func LintWithRules(schema *schemautils.ExtendedSchema, rules []lint.Rule) (error
 	errors = []string{}
 	recommendations = []string{}
 	for _, rule := range rules {
-		violations := rule.Verify(schema)
+		ruleResults := rule.Verify(schema)
 		severity := rule.GetSeverity()
 		if severity == lint.SeverityError {
-			errors = append(errors, violations...)
+			errors = append(errors, ruleResults.Violations...)
 		}
 		if severity == lint.SeverityRecommendation {
-			recommendations = append(recommendations, violations...)
+			recommendations = append(recommendations, ruleResults.Violations...)
 		}
 	}
 

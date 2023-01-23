@@ -13,20 +13,25 @@ const minDescriptionLength = 50
 
 type DescriptionShouldHaveCorrectLength struct{}
 
-func (r DescriptionShouldHaveCorrectLength) Verify(schema *schemautils.ExtendedSchema) []string {
-	return utils.RecursePropertiesWithDescription(schema, checkDescriptionShouldHaveCorrectLength)
+func (r DescriptionShouldHaveCorrectLength) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+	ruleResults := &lint.RuleResults{}
+
+	callback := func(schema *schemautils.ExtendedSchema) {
+		checkDescriptionShouldHaveCorrectLength(schema, ruleResults)
+	}
+
+	utils.RecursePropertiesWithDescription(schema, callback)
+	return *ruleResults
 }
 
-func checkDescriptionShouldHaveCorrectLength(schema *schemautils.ExtendedSchema) []string {
+func checkDescriptionShouldHaveCorrectLength(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
 	if len(schema.Description) > maxDescriptionLength {
-		return []string{fmt.Sprintf("Property '%s' description should be less than %d characters.", schema.GetConciseLocation(), maxDescriptionLength)}
+		ruleResults.Add(fmt.Sprintf("Property '%s' description should be less than %d characters.", schema.GetConciseLocation(), maxDescriptionLength))
 	}
 
 	if len(schema.Description) < minDescriptionLength {
-		return []string{fmt.Sprintf("Property '%s' description should be more than %d characters.", schema.GetConciseLocation(), minDescriptionLength)}
+		ruleResults.Add(fmt.Sprintf("Property '%s' description should be more than %d characters.", schema.GetConciseLocation(), minDescriptionLength))
 	}
-
-	return []string{}
 }
 
 func (r DescriptionShouldHaveCorrectLength) GetSeverity() lint.Severity {

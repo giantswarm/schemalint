@@ -10,15 +10,19 @@ import (
 
 type DescriptionExists struct{}
 
-func (r DescriptionExists) Verify(schema *schemautils.ExtendedSchema) []string {
-	return utils.RecurseProperties(schema, checkDescriptionExists)
+func (r DescriptionExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+	ruleResults := &lint.RuleResults{}
+	callback := func(schema *schemautils.ExtendedSchema) {
+		checkDescriptionExists(schema, ruleResults)
+	}
+	utils.RecurseProperties(schema, callback)
+	return *ruleResults
 }
 
-func checkDescriptionExists(schema *schemautils.ExtendedSchema) []string {
+func checkDescriptionExists(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
 	if schema.Description == "" {
-		return []string{fmt.Sprintf("Property '%s' should have a description.", schema.GetConciseLocation())}
+		ruleResults.Add(fmt.Sprintf("Property '%s' should have a description.", schema.GetConciseLocation()))
 	}
-	return []string{}
 }
 
 func (r DescriptionExists) GetSeverity() lint.Severity {

@@ -94,13 +94,13 @@ func TestDescriptionCorrect(t *testing.T) {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 
-			ruleViolations := []string{}
+			ruleResults := []string{}
 			for _, rule := range tc.rules {
-				ruleViolations = append(ruleViolations, rule.Verify(schema)...)
+				ruleResults = append(ruleResults, rule.Verify(schema).Violations...)
 			}
 
-			if len(ruleViolations) != tc.nViolations {
-				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleViolations))
+			if len(ruleResults) != tc.nViolations {
+				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults))
 			}
 		})
 	}

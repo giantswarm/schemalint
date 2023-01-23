@@ -13,30 +13,33 @@ type DescriptionMustNotContainIllegalCharacters struct{}
 
 var descriptionIllegalCharacters = []string{"\n", "\r", "\t", "  "}
 
-func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.ExtendedSchema) []string {
-	return utils.RecursePropertiesWithDescription(schema, checkDescriptionDoesNotContainIllegalCharacters)
+func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+	ruleResults := &lint.RuleResults{}
+	callback := func(schema *schemautils.ExtendedSchema) {
+		checkDescriptionDoesNotContainIllegalCharacters(schema, ruleResults)
+	}
+
+	utils.RecursePropertiesWithDescription(schema, callback)
+	return *ruleResults
 }
 
-func checkDescriptionDoesNotContainIllegalCharacters(schema *schemautils.ExtendedSchema) []string {
-	ruleViolations := []string{}
-
+func checkDescriptionDoesNotContainIllegalCharacters(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
 	isInvalid, containedIllegalChars := containsIllegalCharacter(schema.Description)
 	if isInvalid {
-		ruleViolations = append(ruleViolations, fmt.Sprintf(
+		ruleResults.Add(fmt.Sprintf(
 			"Property '%s' description must not contain %s",
 			schema.GetConciseLocation(),
 			strings.Join(containedIllegalChars, "', '"),
 		))
+
 	}
 
 	if containsLeadingOrTrailingSpace(schema.Description) {
-		ruleViolations = append(ruleViolations, fmt.Sprintf(
+		ruleResults.Add(fmt.Sprintf(
 			"Property '%s' description must not contain leading or trailing spaces",
 			schema.GetConciseLocation(),
 		))
 	}
-
-	return ruleViolations
 }
 
 func containsIllegalCharacter(s string) (contains bool, containedIllegalCharacters []string) {

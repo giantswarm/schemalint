@@ -36,10 +36,10 @@ func TestTitleExists(t *testing.T) {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 			titleExistsRule := TitleExists{}
-			ruleViolations := titleExistsRule.Verify(schema)
+			ruleResults := titleExistsRule.Verify(schema)
 
-			if len(ruleViolations) != tc.nViolations {
-				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleViolations))
+			if len(ruleResults.Violations) != tc.nViolations {
+				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults.Violations))
 			}
 		})
 	}

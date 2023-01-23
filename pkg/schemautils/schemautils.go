@@ -103,3 +103,10 @@ func (schema *ExtendedSchema) getParentLocations() []string {
 	}
 	return locations
 }
+
+func (schema *ExtendedSchema) GetReferenceLevel() int {
+	if schema.Parent == nil {
+		return 0
+	}
+	return schema.Parent.GetReferenceLevel() + 1
+}

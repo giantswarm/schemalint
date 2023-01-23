@@ -13,15 +13,19 @@ const AllowedEndings = ".!?"
 
 type DescriptionMustUsePunctuation struct{}
 
-func (r DescriptionMustUsePunctuation) Verify(schema *schemautils.ExtendedSchema) []string {
-	return utils.RecursePropertiesWithDescription(schema, checkDescriptionMustUsePunctuation)
+func (r DescriptionMustUsePunctuation) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+	ruleResults := &lint.RuleResults{}
+	callback := func(schema *schemautils.ExtendedSchema) {
+		checkDescriptionMustUsePunctuation(schema, ruleResults)
+	}
+	utils.RecursePropertiesWithDescription(schema, callback)
+	return *ruleResults
 }
 
-func checkDescriptionMustUsePunctuation(schema *schemautils.ExtendedSchema) []string {
+func checkDescriptionMustUsePunctuation(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
 	if !endsWithPunctuation(schema.Description) {
-		return []string{fmt.Sprintf("Property '%s' description must end with punctuation.", schema.GetConciseLocation())}
+		ruleResults.Add(fmt.Sprintf("Property '%s' description must end with punctuation.", schema.GetConciseLocation()))
 	}
-	return []string{}
 }
 
 func endsWithPunctuation(s string) bool {

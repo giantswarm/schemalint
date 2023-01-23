@@ -4,46 +4,43 @@ import (
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
-func RecurseAll(schema *schemautils.ExtendedSchema, getViolationsAtLocation func(schema *schemautils.ExtendedSchema) []string) []string {
+func RecurseAll(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
 	if schema.IsSelfReference() {
-		return []string{}
+		return
 	}
 
-	violations := getViolationsAtLocation(schema)
+	callback(schema)
+
 	if schema.Ref != nil {
 		refSchema := schema.GetRefSchema()
-		violations = append(violations, RecurseAll(refSchema, getViolationsAtLocation)...)
+		RecurseAll(refSchema, callback)
 	}
 
 	for _, property := range schema.GetProperties() {
-		violations = append(violations, RecurseAll(property, getViolationsAtLocation)...)
+		RecurseAll(property, callback)
 	}
 
 	if schema.Items2020 != nil {
-		violations = append(violations, RecurseAll(schema.GetItems2020(), getViolationsAtLocation)...)
+		RecurseAll(schema.GetItems2020(), callback)
 	}
-
-	return violations
 }
 
-func RecurseProperties(schema *schemautils.ExtendedSchema, getViolationsAtLocation func(schema *schemautils.ExtendedSchema) []string) []string {
-	getViolationsAtLocationIfProperty := func(schema *schemautils.ExtendedSchema) []string {
+func RecurseProperties(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+	callbackIfProperty := func(schema *schemautils.ExtendedSchema) {
 		if schema.IsProperty() {
-			return getViolationsAtLocation(schema)
+			callback(schema)
 		}
-		return []string{}
 	}
 
-	return RecurseAll(schema, getViolationsAtLocationIfProperty)
+	RecurseAll(schema, callbackIfProperty)
 }
 
-func RecursePropertiesWithDescription(schema *schemautils.ExtendedSchema, getViolationsAtLocation func(schema *schemautils.ExtendedSchema) []string) []string {
-	getViolationsAtLocationIfPropertyWithDescription := func(schema *schemautils.ExtendedSchema) []string {
+func RecursePropertiesWithDescription(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+	callbackIfPropertyWithDescription := func(schema *schemautils.ExtendedSchema) {
 		if schema.IsProperty() && schema.Description != "" {
-			return getViolationsAtLocation(schema)
+			callback(schema)
 		}
-		return []string{}
 	}
 
-	return RecurseAll(schema, getViolationsAtLocationIfPropertyWithDescription)
+	RecurseAll(schema, callbackIfPropertyWithDescription)
 }

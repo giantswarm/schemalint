@@ -11,15 +11,19 @@ import (
 
 type DescriptionMustBeSentenceCase struct{}
 
-func (r DescriptionMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema) []string {
-	return utils.RecursePropertiesWithDescription(schema, checkDescriptionMustBeSentenceCase)
+func (r DescriptionMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+	ruleResults := &lint.RuleResults{}
+	callback := func(schema *schemautils.ExtendedSchema) {
+		checkDescriptionMustBeSentenceCase(schema, ruleResults)
+	}
+	utils.RecursePropertiesWithDescription(schema, callback)
+	return *ruleResults
 }
 
-func checkDescriptionMustBeSentenceCase(schema *schemautils.ExtendedSchema) []string {
+func checkDescriptionMustBeSentenceCase(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
 	if !unicode.IsUpper(rune(schema.Description[0])) {
-		return []string{fmt.Sprintf("Property '%s' description must start with a capital letter.", schema.GetConciseLocation())}
+		ruleResults.Add(fmt.Sprintf("Property '%s' description must start with a capital letter.", schema.GetConciseLocation()))
 	}
-	return []string{}
 }
 
 func (r DescriptionMustBeSentenceCase) GetSeverity() lint.Severity {

@@ -11,15 +11,19 @@ import (
 // Check recursively that all properties have a title
 type TitleExists struct{}
 
-func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) []string {
-	return utils.RecurseProperties(schema, checkTitle)
+func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+	ruleResults := &lint.RuleResults{}
+	callback := func(schema *schemautils.ExtendedSchema) {
+		checkTitle(schema, ruleResults)
+	}
+	utils.RecurseProperties(schema, callback)
+	return *ruleResults
 }
 
-func checkTitle(schema *schemautils.ExtendedSchema) []string {
+func checkTitle(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
 	if schema.Title == "" {
-		return []string{fmt.Sprintf("Property '%s' must have a title.", schema.GetConciseLocation())}
+		ruleResults.Add(fmt.Sprintf("Property '%s' must have a title.", schema.GetConciseLocation()))
 	}
-	return []string{}
 }
 
 func (r TitleExists) GetSeverity() lint.Severity {

@@ -40,19 +40,26 @@ func TestRecurse(t *testing.T) {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 
-			getGoldPath := func(schema *schemautils.ExtendedSchema) []string {
+			goldFoundStruct := &struct {
+				found bool
+				path  string
+			}{
+				found: false,
+				path:  "",
+			}
+			checkForGold := func(schema *schemautils.ExtendedSchema) {
 				if schema.Title == "Gold" {
-					return []string{schema.GetResolvedLocation()}
+					goldFoundStruct.found = true
+					goldFoundStruct.path = schema.GetResolvedLocation()
 				}
-				return []string{}
 			}
 
-			paths := RecurseAll(schema, getGoldPath)
-			if len(paths) != 1 {
-				t.Fatalf("Expected 1 path, got %d", len(paths))
+			RecurseAll(schema, checkForGold)
+			if !goldFoundStruct.found {
+				t.Fatalf("Expected to find property with title 'Gold'")
 			}
-			if paths[0] != tc.goldPath {
-				t.Fatalf("Expected path '%s', got '%s'", tc.goldPath, paths[0])
+			if goldFoundStruct.path != tc.goldPath {
+				t.Fatalf("Expected path '%s', got '%s'", tc.goldPath, goldFoundStruct.path)
 			}
 		})
 	}
@@ -64,9 +71,7 @@ func TestSelfReferencingRecurse(t *testing.T) {
 		t.Fatalf("Unexpected parsing error: %s", err)
 	}
 
-	dummyFunc := func(schema *schemautils.ExtendedSchema) []string {
-		return []string{}
-	}
+	dummyFunc := func(schema *schemautils.ExtendedSchema) {}
 	// if this does not loop forever, the test passes
 	RecurseAll(schema, dummyFunc)
 }
