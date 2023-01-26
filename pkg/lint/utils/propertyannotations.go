@@ -46,13 +46,13 @@ func (a *AnnotationsWithLevel) GetExamples() []interface{} {
 }
 
 func (a *AnnotationsWithLevel) UpdateAnnotationsIfNecessary(schema *schemautils.ExtendedSchema, level int) {
-	if schema.Title != "" && (a.Title == nil || level < a.Title.ReferenceLevel) {
+	if schema.Title != "" && (a.Title == nil || level <= a.Title.ReferenceLevel) {
 		a.Title = &StringWithLevel{Value: schema.Title, ReferenceLevel: level}
 	}
-	if schema.Description != "" && (a.Description == nil || level < a.Description.ReferenceLevel) {
+	if schema.Description != "" && (a.Description == nil || level <= a.Description.ReferenceLevel) {
 		a.Description = &StringWithLevel{Value: schema.Description, ReferenceLevel: level}
 	}
-	if schema.Examples != nil && (a.Examples == nil || level < a.Examples.ReferenceLevel) {
+	if schema.Examples != nil && (a.Examples == nil || level <= a.Examples.ReferenceLevel) {
 		a.Examples = &InterfaceWithLevel{Value: schema.Examples, ReferenceLevel: level}
 	}
 }

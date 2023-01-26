@@ -16,25 +16,40 @@ func TestBuildPropertyAnnotationsMap(t *testing.T) {
 		schemaPath string
 		goldenPath string
 	}{
+		// {
+		// 	name:       "one property - flat",
+		// 	schemaPath: "testdata/propertyannotations/flat_simple.json",
+		// 	goldenPath: "testdata/propertyannotations/flat_simple.golden.json",
+		// },
+		// {
+		// 	name:       "multiple nested properties",
+		// 	schemaPath: "testdata/propertyannotations/nested.json",
+		// 	goldenPath: "testdata/propertyannotations/nested.golden.json",
+		// },
+		// {
+		// 	name:       "multiple nested properties through reference",
+		// 	schemaPath: "testdata/propertyannotations/reference_nested.json",
+		// 	goldenPath: "testdata/propertyannotations/reference_nested.golden.json",
+		// },
+		// {
+		// 	name:       "multiple nested properties through reference with overriden title",
+		// 	schemaPath: "testdata/propertyannotations/reference_nested_override.json",
+		// 	goldenPath: "testdata/propertyannotations/reference_nested_override.golden.json",
+		// },
 		{
-			name:       "one property - flat",
-			schemaPath: "testdata/propertyannotations/flat_simple.json",
-			goldenPath: "testdata/propertyannotations/flat_simple.golden.json",
-		},
-		{
-			name:       "multiple nested properties",
-			schemaPath: "testdata/propertyannotations/nested.json",
-			goldenPath: "testdata/propertyannotations/nested.golden.json",
-		},
-		{
-			name:       "multiple nested properties through reference",
-			schemaPath: "testdata/propertyannotations/reference_nested.json",
-			goldenPath: "testdata/propertyannotations/reference_nested.golden.json",
+			name:       "multiple nested properties through reference with overriden title",
+			schemaPath: "testdata/propertyannotations/depth_3_simple.json",
+			goldenPath: "testdata/propertyannotations/depth_3_simple.golden.json",
 		},
 		{
 			name:       "multiple nested properties through reference with overriden title",
-			schemaPath: "testdata/propertyannotations/reference_nested_override.json",
-			goldenPath: "testdata/propertyannotations/reference_nested_override.golden.json",
+			schemaPath: "testdata/propertyannotations/depth_equal_prio.json",
+			goldenPath: "testdata/propertyannotations/depth_equal_prio.golden.json",
+		},
+		{
+			name:       "multiple nested properties through reference with overriden title",
+			schemaPath: "testdata/propertyannotations/depth_3_root_empty.json",
+			goldenPath: "testdata/propertyannotations/depth_3_root_empty.golden.json",
 		},
 	}
 

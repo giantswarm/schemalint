@@ -4,7 +4,6 @@
             "properties": {
                 "childProp": {
                     "type": "object",
-                    "$ref": "#/$defs/bar",
                     "properties": {
                         "grandchildProp": {
                             "type": "string",
