@@ -4,36 +4,52 @@ import (
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
-type TitleWithLevel struct {
-	Title          string
+type StringWithLevel struct {
+	Value          string
 	ReferenceLevel int
 }
 
-type DescriptionWithLevel struct {
-	Description    string
-	ReferenceLevel int
-}
-
-type ExamplesWithLevel struct {
-	Examples       []interface{}
+type InterfaceWithLevel struct {
+	Value          []interface{}
 	ReferenceLevel int
 }
 
 type AnnotationsWithLevel struct {
-	Title       *TitleWithLevel
-	Description *DescriptionWithLevel
-	Examples    *ExamplesWithLevel
+	Title       *StringWithLevel
+	Description *StringWithLevel
+	Examples    *InterfaceWithLevel
+}
+
+func (a *AnnotationsWithLevel) GetTitle() string {
+	if a == nil || a.Title == nil {
+		return ""
+	}
+	return a.Title.Value
+}
+
+func (a *AnnotationsWithLevel) GetDescription() string {
+	if a == nil || a.Description == nil {
+		return ""
+	}
+	return a.Description.Value
+}
+
+func (a *AnnotationsWithLevel) GetExamples() []interface{} {
+	if a == nil || a.Examples == nil {
+		return nil
+	}
+	return a.Examples.Value
 }
 
 func (a *AnnotationsWithLevel) UpdateAnnotationsIfNecessary(schema *schemautils.ExtendedSchema, level int) {
 	if schema.Title != "" && (a.Title == nil || level < a.Title.ReferenceLevel) {
-		a.Title = &TitleWithLevel{Title: schema.Title, ReferenceLevel: level}
+		a.Title = &StringWithLevel{Value: schema.Title, ReferenceLevel: level}
 	}
 	if schema.Description != "" && (a.Description == nil || level < a.Description.ReferenceLevel) {
-		a.Description = &DescriptionWithLevel{Description: schema.Description, ReferenceLevel: level}
+		a.Description = &StringWithLevel{Value: schema.Description, ReferenceLevel: level}
 	}
 	if schema.Examples != nil && (a.Examples == nil || level < a.Examples.ReferenceLevel) {
-		a.Examples = &ExamplesWithLevel{Examples: schema.Examples, ReferenceLevel: level}
+		a.Examples = &InterfaceWithLevel{Value: schema.Examples, ReferenceLevel: level}
 	}
 }
 

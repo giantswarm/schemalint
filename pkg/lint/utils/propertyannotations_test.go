@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"testing"
 
@@ -32,7 +33,7 @@ func TestBuildPropertyAnnotationsMap(t *testing.T) {
 			goldenPath: "testdata/propertyannotations/reference_nested.golden.json",
 		},
 		{
-			name:       "multiple nested properties through reference",
+			name:       "multiple nested properties through reference with overriden title",
 			schemaPath: "testdata/propertyannotations/reference_nested_override.json",
 			goldenPath: "testdata/propertyannotations/reference_nested_override.golden.json",
 		},

@@ -2,81 +2,81 @@
   "/person": {},
   "/person/addresses": {
     "Title": {
-      "Title": "Addresses",
+      "Value": "Addresses",
       "ReferenceLevel": 1
     },
     "Description": {
-      "Description": "The person's addresses.",
+      "Value": "The person's addresses.",
       "ReferenceLevel": 1
     }
   },
   "/person/addresses/items/city": {
     "Title": {
-      "Title": "City - title override",
+      "Value": "City - title override",
       "ReferenceLevel": 0
     },
     "Description": {
-      "Description": "The city.",
+      "Value": "The city.",
       "ReferenceLevel": 1
     }
   },
   "/person/addresses/items/state": {
     "Title": {
-      "Title": "State",
+      "Value": "State",
       "ReferenceLevel": 1
     },
     "Description": {
-      "Description": "The state.",
+      "Value": "The state.",
       "ReferenceLevel": 1
     }
   },
   "/person/addresses/items/street": {
     "Title": {
-      "Title": "Street",
+      "Value": "Street",
       "ReferenceLevel": 1
     },
     "Description": {
-      "Description": "The street address.",
+      "Value": "The street address.",
       "ReferenceLevel": 1
     }
   },
   "/person/addresses/items/zip": {
     "Title": {
-      "Title": "Zip",
+      "Value": "Zip",
       "ReferenceLevel": 1
     },
     "Description": {
-      "Description": "The zip code.",
+      "Value": "The zip code.",
       "ReferenceLevel": 1
     }
   },
   "/person/age": {
     "Title": {
-      "Title": "Age",
+      "Value": "Age",
       "ReferenceLevel": 1
     },
     "Description": {
-      "Description": "Age in years which must be equal to or greater than zero.",
+      "Value": "Age in years which must be equal to or greater than zero.",
       "ReferenceLevel": 1
     }
   },
   "/person/firstName": {
     "Title": {
-      "Title": "First Name",
+      "Value": "First Name",
       "ReferenceLevel": 1
     },
     "Description": {
-      "Description": "The person's first name.",
+      "Value": "The person's first name.",
       "ReferenceLevel": 1
     }
   },
   "/person/lastName": {
     "Title": {
-      "Title": "Last Name",
+      "Value": "Last Name",
       "ReferenceLevel": 1
     },
     "Description": {
-      "Description": "The person's last name.",
+      "Value": "The person's last name.",
       "ReferenceLevel": 1
     }
   }
