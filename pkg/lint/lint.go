@@ -5,9 +5,10 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/giantswarm/schemalint/pkg/schemautils"
 	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
 	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
+
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type draft struct {
