@@ -14,23 +14,21 @@ type DescriptionShouldNotContainTitle struct{}
 func (r DescriptionShouldNotContainTitle) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
 
-	callback := func(schema *schemautils.ExtendedSchema) {
-		checkDescriptionShouldNotContainTitle(schema, ruleResults)
+	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+	for path, annotations := range propertyAnnotationsMap {
+		if descriptionContainsTitle(annotations.GetDescription(), annotations.GetTitle()) {
+			ruleResults.Add(fmt.Sprintf("Property '%s' description should not repeat the title.", path))
+		}
 	}
-
-	utils.RecursePropertiesWithDescription(schema, callback)
-
 	return *ruleResults
 }
 
-func checkDescriptionShouldNotContainTitle(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
-	if schema.Title == "" {
-		return
+func descriptionContainsTitle(description string, title string) bool {
+	if title == "" {
+		return false
 	}
 
-	if strings.Contains(strings.ToLower(schema.Description), strings.ToLower(schema.Title)) {
-		ruleResults.Add(fmt.Sprintf("Property '%s' description should not repeat the title.", schema.GetConciseLocation()))
-	}
+	return strings.Contains(strings.ToLower(description), strings.ToLower(title))
 }
 
 func (r DescriptionShouldNotContainTitle) GetSeverity() lint.Severity {

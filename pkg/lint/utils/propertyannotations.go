@@ -14,6 +14,10 @@ type InterfaceWithLevel struct {
 	ReferenceLevel int
 }
 
+// Annotations for a property with the reference level at which each was found.
+// The reference level describes how many '$ref's were resolved at the given
+// property path.
+// 0 is the root schema.
 type AnnotationsWithLevel struct {
 	Title       *StringWithLevel
 	Description *StringWithLevel
@@ -69,6 +73,19 @@ func (pam PropertyAnnotationsMap) UpdateAnnotationsIfNecessary(schema *schemauti
 	annotations.UpdateAnnotationsIfNecessary(schema, level)
 }
 
+func (pam PropertyAnnotationsMap) WhereDescriptionsExist() PropertyAnnotationsMap {
+	newMap := NewPropertyAnnotationsMap()
+	for path, annotations := range pam {
+		if annotations.GetDescription() != "" {
+			newMap[path] = annotations
+		}
+	}
+	return newMap
+}
+
+// Builds a map with all properties in the given schema, where the key is the
+// path to the property and the value are the annotations for that property.
+// <path> -> <annotations>
 func BuildPropertyAnnotationsMap(schema *schemautils.ExtendedSchema) PropertyAnnotationsMap {
 	propertyAnnotationsMap := make(PropertyAnnotationsMap)
 	RecurseProperties(schema, func(schema *schemautils.ExtendedSchema) {

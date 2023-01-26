@@ -13,17 +13,21 @@ type DescriptionMustBeSentenceCase struct{}
 
 func (r DescriptionMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
-	callback := func(schema *schemautils.ExtendedSchema) {
-		checkDescriptionMustBeSentenceCase(schema, ruleResults)
+
+	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+
+	for path, annotations := range propertyAnnotationsMap {
+		if !descriptionStartsCapitalized(annotations.GetDescription()) {
+			ruleResults.Add(fmt.Sprintf("Property '%s' description must start with a capital letter.", path))
+		}
 	}
-	utils.RecursePropertiesWithDescription(schema, callback)
+
 	return *ruleResults
 }
 
-func checkDescriptionMustBeSentenceCase(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
-	if !unicode.IsUpper(rune(schema.Description[0])) {
-		ruleResults.Add(fmt.Sprintf("Property '%s' description must start with a capital letter.", schema.GetConciseLocation()))
-	}
+func descriptionStartsCapitalized(description string) bool {
+	return unicode.IsUpper(rune(description[0]))
+
 }
 
 func (r DescriptionMustBeSentenceCase) GetSeverity() lint.Severity {

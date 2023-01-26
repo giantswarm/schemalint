@@ -23,6 +23,11 @@ func TestTitleExists(t *testing.T) {
 			nViolations: 9,
 		},
 		{
+			name:        "referenced has missing titles - override",
+			schemaPath:  "testdata/9_missing_titles_referenced_overridden.json",
+			nViolations: 0,
+		},
+		{
 			name:        "has title",
 			schemaPath:  "testdata/has_titles.json",
 			nViolations: 0,

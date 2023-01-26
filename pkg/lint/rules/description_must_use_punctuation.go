@@ -15,17 +15,16 @@ type DescriptionMustUsePunctuation struct{}
 
 func (r DescriptionMustUsePunctuation) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
-	callback := func(schema *schemautils.ExtendedSchema) {
-		checkDescriptionMustUsePunctuation(schema, ruleResults)
-	}
-	utils.RecursePropertiesWithDescription(schema, callback)
-	return *ruleResults
-}
 
-func checkDescriptionMustUsePunctuation(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
-	if !endsWithPunctuation(schema.Description) {
-		ruleResults.Add(fmt.Sprintf("Property '%s' description must end with punctuation.", schema.GetConciseLocation()))
+	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+
+	for path, annotations := range propertyAnnotationsMap {
+		if !endsWithPunctuation(annotations.GetDescription()) {
+			ruleResults.Add(fmt.Sprintf("Property '%s' description must end with punctuation.", path))
+		}
 	}
+
+	return *ruleResults
 }
 
 func endsWithPunctuation(s string) bool {

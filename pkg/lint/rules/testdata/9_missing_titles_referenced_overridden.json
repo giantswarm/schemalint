@@ -1,0 +1,49 @@
+{
+  "properties": {
+    "person": {
+      "title": "Person",
+      "$ref": "8_missing_titles.json",
+      "properties": {
+        "addresses": {
+          "title": "Addresses",
+          "items": {
+            "properties": {
+              "city": {
+                "title": "City",
+                "type": "string"
+              },
+              "state": {
+                "title": "State",
+                "type": "string"
+              },
+              "street": {
+                "title": "Street",
+                "type": "string"
+              },
+              "zip": {
+                "title": "Zip",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "age": {
+          "title": "Age",
+          "type": "integer"
+        },
+        "firstName": {
+          "title": "First Name",
+          "type": "string"
+        },
+        "lastName": {
+          "title": "Last Name",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

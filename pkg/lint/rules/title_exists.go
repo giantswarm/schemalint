@@ -13,17 +13,13 @@ type TitleExists struct{}
 
 func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
-	callback := func(schema *schemautils.ExtendedSchema) {
-		checkTitle(schema, ruleResults)
+	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
+	for path, annotations := range propertyAnnotationsMap {
+		if annotations.GetTitle() == "" {
+			ruleResults.Add(fmt.Sprintf("Property '%s' must have a title.", path))
+		}
 	}
-	utils.RecurseProperties(schema, callback)
 	return *ruleResults
-}
-
-func checkTitle(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
-	if schema.Title == "" {
-		ruleResults.Add(fmt.Sprintf("Property '%s' must have a title.", schema.GetConciseLocation()))
-	}
 }
 
 func (r TitleExists) GetSeverity() lint.Severity {

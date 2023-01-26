@@ -12,17 +12,16 @@ type DescriptionExists struct{}
 
 func (r DescriptionExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
-	callback := func(schema *schemautils.ExtendedSchema) {
-		checkDescriptionExists(schema, ruleResults)
-	}
-	utils.RecurseProperties(schema, callback)
-	return *ruleResults
-}
 
-func checkDescriptionExists(schema *schemautils.ExtendedSchema, ruleResults *lint.RuleResults) {
-	if schema.Description == "" {
-		ruleResults.Add(fmt.Sprintf("Property '%s' should have a description.", schema.GetConciseLocation()))
+	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
+
+	for path, annotations := range propertyAnnotationsMap {
+		if annotations.GetDescription() == "" {
+			ruleResults.Add(fmt.Sprintf("Property '%s' should have a description.", path))
+		}
 	}
+
+	return *ruleResults
 }
 
 func (r DescriptionExists) GetSeverity() lint.Severity {
