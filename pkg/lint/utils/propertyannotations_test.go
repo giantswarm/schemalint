@@ -18,13 +18,23 @@ func TestBuildPropertyAnnotationsMap(t *testing.T) {
 	}{
 		{
 			name:       "one property - flat",
-			schemaPath: "testdata/flat_simple.json",
-			goldenPath: "testdata/flat_simple.golden.json",
+			schemaPath: "testdata/propertyannotations/flat_simple.json",
+			goldenPath: "testdata/propertyannotations/flat_simple.golden.json",
 		},
 		{
 			name:       "multiple nested properties",
-			schemaPath: "testdata/nested.json",
-			goldenPath: "testdata/nested.golden.json",
+			schemaPath: "testdata/propertyannotations/nested.json",
+			goldenPath: "testdata/propertyannotations/nested.golden.json",
+		},
+		{
+			name:       "multiple nested properties through reference",
+			schemaPath: "testdata/propertyannotations/reference_nested.json",
+			goldenPath: "testdata/propertyannotations/reference_nested.golden.json",
+		},
+		{
+			name:       "multiple nested properties through reference",
+			schemaPath: "testdata/propertyannotations/reference_nested_override.json",
+			goldenPath: "testdata/propertyannotations/reference_nested_override.golden.json",
 		},
 	}
 
@@ -41,7 +51,6 @@ func TestBuildPropertyAnnotationsMap(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Unexpected error parsing golden file in test case '%s': %s", tc.name, err)
 			}
-			// dumpPropertyAnnotationsMap(propertyAnnotationsMap)
 
 			if !cmp.Equal(propertyAnnotationsMap, expectedPropertyAnnotationsMap) {
 				t.Fatalf("Unexpected property annotations map: %s", cmp.Diff(propertyAnnotationsMap, expectedPropertyAnnotationsMap))
@@ -74,7 +83,8 @@ func openGoldenFile(path string) (*os.File, error) {
 	return goldenFile, nil
 }
 
-func dumpPropertyAnnotationsMap(propertyAnnotationsMap PropertyAnnotationsMap) {
+// use this function as a template when creating golden files for new tests
+func DumpPropertyAnnotationsMap(propertyAnnotationsMap PropertyAnnotationsMap) {
 	json, err := json.MarshalIndent(propertyAnnotationsMap, "", "  ")
 	if err != nil {
 		panic(err)

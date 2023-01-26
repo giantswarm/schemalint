@@ -26,13 +26,13 @@ type AnnotationsWithLevel struct {
 }
 
 func (a *AnnotationsWithLevel) UpdateAnnotationsIfNecessary(schema *schemautils.ExtendedSchema, level int) {
-	if a.Title == nil || level < a.Title.ReferenceLevel {
+	if schema.Title != "" && (a.Title == nil || level < a.Title.ReferenceLevel) {
 		a.Title = &TitleWithLevel{Title: schema.Title, ReferenceLevel: level}
 	}
-	if a.Description == nil || level < a.Description.ReferenceLevel {
+	if schema.Description != "" && (a.Description == nil || level < a.Description.ReferenceLevel) {
 		a.Description = &DescriptionWithLevel{Description: schema.Description, ReferenceLevel: level}
 	}
-	if a.Examples == nil || level < a.Examples.ReferenceLevel {
+	if schema.Examples != nil && (a.Examples == nil || level < a.Examples.ReferenceLevel) {
 		a.Examples = &ExamplesWithLevel{Examples: schema.Examples, ReferenceLevel: level}
 	}
 }
@@ -47,7 +47,7 @@ func (pam PropertyAnnotationsMap) UpdateAnnotationsIfNecessary(schema *schemauti
 	path := schema.GetConciseLocation()
 	annotations, ok := pam[path]
 	if !ok {
-		annotations = &AnnotationsWithLevel{}
+		annotations = &AnnotationsWithLevel{Title: nil, Description: nil, Examples: nil}
 		pam[path] = annotations
 	}
 	annotations.UpdateAnnotationsIfNecessary(schema, level)

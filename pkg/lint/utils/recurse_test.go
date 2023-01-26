@@ -23,12 +23,12 @@ func TestRecurse(t *testing.T) {
 	}{
 		{
 			name:       "$ref to external reference",
-			schemaPath: "testdata/with_external_ref.json",
+			schemaPath: "testdata/recurse/with_external_ref.json",
 			goldPath:   "/properties/address/properties/gold",
 		},
 		{
 			name:       "$ref to internal entry in $defs",
-			schemaPath: "testdata/with_internal_defs_ref.json",
+			schemaPath: "testdata/recurse/with_internal_defs_ref.json",
 			goldPath:   "/properties/refProperty/properties/gold",
 		},
 	}
@@ -66,7 +66,7 @@ func TestRecurse(t *testing.T) {
 }
 
 func TestSelfReferencingRecurse(t *testing.T) {
-	schema, err := lint.Compile("testdata/self_referencing_ref.json")
+	schema, err := lint.Compile("testdata/recurse/self_referencing_ref.json")
 	if err != nil {
 		t.Fatalf("Unexpected parsing error: %s", err)
 	}

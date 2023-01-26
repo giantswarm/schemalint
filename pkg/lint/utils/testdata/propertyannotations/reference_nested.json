@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "person": {
+      "$ref": "nested.json"
+    }
+  },
+  "type": "object"
+}
