@@ -20,7 +20,7 @@ func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.E
 
 	for path, annotations := range propertyAnnotationsMap {
 		description := annotations.GetDescription()
-		if isInvalid, containedIllegalChars := containsIllegalCharacter(description); isInvalid {
+		if containedIllegalChars := getIllegalCharacterIn(description); len(containedIllegalChars) > 0 {
 			ruleResults.Add(fmt.Sprintf("Property '%s' description must not contain illegal characters: %s", path, containedIllegalChars))
 		}
 		if containsLeadingOrTrailingSpace(description) {
@@ -30,14 +30,14 @@ func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.E
 	return *ruleResults
 }
 
-func containsIllegalCharacter(s string) (contains bool, containedIllegalCharacters []string) {
+func getIllegalCharacterIn(s string) (containedIllegalCharacters []string) {
 	for _, illegalCharacter := range descriptionIllegalCharacters {
 		if strings.Contains(s, illegalCharacter) {
 			containedIllegalCharacters = append(containedIllegalCharacters, illegalCharacter)
 		}
 	}
 
-	return len(containedIllegalCharacters) > 0, containedIllegalCharacters
+	return containedIllegalCharacters
 }
 
 func containsLeadingOrTrailingSpace(s string) bool {
