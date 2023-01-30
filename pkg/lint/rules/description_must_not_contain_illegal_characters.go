@@ -2,7 +2,6 @@ package rules
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/lint/utils"
@@ -20,28 +19,14 @@ func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.E
 
 	for path, annotations := range propertyAnnotationsMap {
 		description := annotations.GetDescription()
-		if containedIllegalChars := getIllegalCharacterIn(description); len(containedIllegalChars) > 0 {
-			ruleResults.Add(fmt.Sprintf("Property '%s' description must not contain illegal characters: %s", path, containedIllegalChars))
+		if containedIllegalChars := getIllegalCharacterIn(description, descriptionIllegalCharacters); len(containedIllegalChars) > 0 {
+			ruleResults.Add(fmt.Sprintf("Property '%s' description must not contain illegal characters: %q", path, containedIllegalChars))
 		}
 		if containsLeadingOrTrailingSpace(description) {
 			ruleResults.Add(fmt.Sprintf("Property '%s' description must not contain leading or trailing spaces", path))
 		}
 	}
 	return *ruleResults
-}
-
-func getIllegalCharacterIn(s string) (containedIllegalCharacters []string) {
-	for _, illegalCharacter := range descriptionIllegalCharacters {
-		if strings.Contains(s, illegalCharacter) {
-			containedIllegalCharacters = append(containedIllegalCharacters, illegalCharacter)
-		}
-	}
-
-	return containedIllegalCharacters
-}
-
-func containsLeadingOrTrailingSpace(s string) bool {
-	return strings.HasPrefix(s, " ") || strings.HasSuffix(s, " ")
 }
 
 func (r DescriptionMustNotContainIllegalCharacters) GetSeverity() lint.Severity {

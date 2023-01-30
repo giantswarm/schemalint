@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "controlPlane": {
+      "properties": {
+        "availabilityZones": {
+          "type": "string",
+          "title": "Control Plane Availability Zones"
+        }
+      },
+      "title": "Control Plane",
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
