@@ -1,0 +1,10 @@
+{
+  "$id": "https://example.com/person.schema.json",
+  "properties": {
+    "lastName": {
+      "title": "cluster name",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

@@ -20,6 +20,9 @@ const (
 var ClusterApp = &RuleSet{
 	rules: []lint.Rule{
 		rules.TitleExists{},
+		rules.TitleMustBeSentenceCase{},
+		rules.TitleMustNotContainIllegalCharacters{},
+		rules.TitleShouldNotContainParentsTitle{},
 		rules.DescriptionExists{},
 		rules.DescriptionMustNotContainIllegalCharacters{},
 		rules.DescriptionMustBeSentenceCase{},

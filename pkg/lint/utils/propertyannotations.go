@@ -83,6 +83,27 @@ func (pam PropertyAnnotationsMap) WhereDescriptionsExist() PropertyAnnotationsMa
 	return newMap
 }
 
+func (pam PropertyAnnotationsMap) WhereTitlesExist() PropertyAnnotationsMap {
+	newMap := NewPropertyAnnotationsMap()
+	for path, annotations := range pam {
+		if annotations.GetTitle() != "" {
+			newMap[path] = annotations
+		}
+	}
+	return newMap
+}
+
+func (pam PropertyAnnotationsMap) GetParentAnnotations(path string) *AnnotationsWithLevel {
+	parentPath := schemautils.GetParentPropertyPath(path)
+
+	annotations, ok := pam[parentPath]
+	if !ok {
+		return nil
+	}
+
+	return annotations
+}
+
 // Builds a map with all properties in the given schema, where the key is the
 // path to the property and the value are the annotations for that property.
 // <path> -> <annotations>

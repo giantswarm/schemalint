@@ -28,7 +28,7 @@ func (schema *ExtendedSchema) GetRefSchema() *ExtendedSchema {
 
 	refSchema.Parent = schema
 	refSchema.ParentPath = schema.GetResolvedLocation()
-	refSchema.TrimFromLocation = RemoveIdFromLocation(schema.Ref.Location)
+	refSchema.TrimFromLocation = removeIdFromLocation(schema.Ref.Location)
 
 	return refSchema
 }
@@ -70,14 +70,14 @@ func (schema *ExtendedSchema) GetConciseLocation() string {
 
 // Gets the location, excluding ids, including potential parent schemas
 func (schema *ExtendedSchema) GetResolvedLocation() string {
-	location := RemoveIdFromLocation(schema.Location)
+	location := removeIdFromLocation(schema.Location)
 	if schema.TrimFromLocation != "" {
 		location = strings.Replace(location, schema.TrimFromLocation, "", 1)
 	}
 	return schema.ParentPath + location
 }
 
-func RemoveIdFromLocation(location string) string {
+func removeIdFromLocation(location string) string {
 	return strings.Split(location, "#")[1]
 }
 
@@ -88,7 +88,7 @@ func (schema *ExtendedSchema) IsProperty() bool {
 }
 
 func (schema *ExtendedSchema) IsSelfReference() bool {
-	parentLocations := schema.getParentLocations()
+	parentLocations := schema.getParentEntryLocations()
 	for _, parentLocation := range parentLocations {
 		if parentLocation == schema.Location {
 			return true
@@ -97,11 +97,11 @@ func (schema *ExtendedSchema) IsSelfReference() bool {
 	return false
 }
 
-func (schema *ExtendedSchema) getParentLocations() []string {
+func (schema *ExtendedSchema) getParentEntryLocations() []string {
 	locations := []string{}
 	if schema.Parent != nil {
 		locations = append(locations, schema.Parent.Location)
-		locations = append(locations, schema.Parent.getParentLocations()...)
+		locations = append(locations, schema.Parent.getParentEntryLocations()...)
 	}
 	return locations
 }
@@ -111,4 +111,12 @@ func (schema *ExtendedSchema) GetReferenceLevel() int {
 		return 0
 	}
 	return schema.Parent.GetReferenceLevel() + 1
+}
+
+func GetParentPropertyPath(conciseLocation string) string {
+	path := strings.Split(conciseLocation, "/")
+	if len(path) <= 1 {
+		return ""
+	}
+	return strings.Join(path[:len(path)-1], "/")
 }
