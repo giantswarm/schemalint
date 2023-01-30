@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2023-01-30
+
 - Resolve schemas referenced through the `$ref` keyword while checking rules.
 - Wrap all table-based tests in `t.Run`.
 - Add check that an description exists on every property to `cluster-app` rule set.
@@ -41,7 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/giantswarm/schemalint/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/giantswarm/schemalint/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/giantswarm/schemalint/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/giantswarm/schemalint/compare/v0.1.0...v0.2.0
