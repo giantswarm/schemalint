@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add check for draft version.
 - Add check that an existing title follows requirements as defined in [this RFC](https://github.com/giantswarm/rfc/pull/55).
 
 ## [0.5.0] - 2023-01-30
