@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Resolve schemas referenced through the `$ref` keyword while checking rules.
 - Wrap all table-based tests in `t.Run`.
 - Add check that an description exists on every property to `cluster-app` rule set.
 - Add check that an existing description follows requirements as defined in [this RFC](https://github.com/giantswarm/rfc/pull/55).

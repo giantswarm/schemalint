@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
 	"github.com/spf13/cobra"
 
 	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/lint/rulesets"
 	"github.com/giantswarm/schemalint/pkg/normalize"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type runner struct {
@@ -40,7 +40,7 @@ func (r *runner) run(cmd *cobra.Command, args []string) {
 
 func (r *runner) runVerificatonSteps(path string) ([]TestResult, bool) {
 	results := []TestResult{}
-	var schema *jsonschema.Schema
+	var schema *schemautils.ExtendedSchema
 
 	flags := r.flag
 
@@ -68,7 +68,7 @@ func (r *runner) runVerificatonSteps(path string) ([]TestResult, bool) {
 	return results, success
 }
 
-func verifySchemaValidity(path string) (TestResult, *jsonschema.Schema) {
+func verifySchemaValidity(path string) (TestResult, *schemautils.ExtendedSchema) {
 	schema, err := lint.Compile(path)
 
 	compileErrors := []string{}
@@ -122,7 +122,7 @@ func verifyNormalization(path string) TestResult {
 
 }
 
-func verifyRuleSet(ruleSet string, schema *jsonschema.Schema) TestResult {
+func verifyRuleSet(ruleSet string, schema *schemautils.ExtendedSchema) TestResult {
 	errors, recommendations := rulesets.VerifyRuleSet(ruleSet, schema)
 
 	success := len(errors) == 0

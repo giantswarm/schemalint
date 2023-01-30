@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "person": {
+      "$ref": "8_missing_titles.json"
+    }
+  },
+  "type": "object"
+}

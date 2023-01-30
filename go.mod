@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/fatih/color v1.13.0
+	github.com/google/go-cmp v0.5.9
 	github.com/santhosh-tekuri/jsonschema/v5 v5.1.1
 	github.com/spf13/cobra v1.6.1
 )

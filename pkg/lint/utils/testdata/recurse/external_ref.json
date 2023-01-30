@@ -1,0 +1,12 @@
+{
+  "$id": "https://example.com/schemas/address",
+
+  "type": "object",
+  "properties": {
+    "street_address": { "type": "string" },
+    "city": { "type": "string" },
+    "state": { "type": "string" },
+    "gold": { "type": "string", "title": "Gold" }
+  },
+  "required": ["street_address", "city", "state"]
+}

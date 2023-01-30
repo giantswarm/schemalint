@@ -3,9 +3,8 @@ package rules
 import (
 	"fmt"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
-
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
@@ -14,20 +13,30 @@ const minDescriptionLength = 50
 
 type DescriptionShouldHaveCorrectLength struct{}
 
-func (r DescriptionShouldHaveCorrectLength) Verify(schema *jsonschema.Schema) []string {
-	return lint.RecursePropertiesWithDescription(schema, checkDescriptionShouldHaveCorrectLength)
+func (r DescriptionShouldHaveCorrectLength) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+	ruleResults := &lint.RuleResults{}
+
+	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+
+	for path, annotations := range propertyAnnotationsMap {
+		if descriptionIsTooShort(annotations.GetDescription()) {
+			ruleResults.Add(fmt.Sprintf("Property '%s' description should be more than %d characters.", path, minDescriptionLength))
+		}
+
+		if descriptionIsTooLong(annotations.GetDescription()) {
+			ruleResults.Add(fmt.Sprintf("Property '%s' description should be less than %d characters.", path, maxDescriptionLength))
+		}
+	}
+
+	return *ruleResults
 }
 
-func checkDescriptionShouldHaveCorrectLength(schema *jsonschema.Schema) []string {
-	if len(schema.Description) > maxDescriptionLength {
-		return []string{fmt.Sprintf("Property '%s' description should be less than %d characters.", schemautils.GetConciseLocation(schema), maxDescriptionLength)}
-	}
+func descriptionIsTooLong(description string) bool {
+	return len(description) > maxDescriptionLength
+}
 
-	if len(schema.Description) < minDescriptionLength {
-		return []string{fmt.Sprintf("Property '%s' description should be more than %d characters.", schemautils.GetConciseLocation(schema), minDescriptionLength)}
-	}
-
-	return []string{}
+func descriptionIsTooShort(description string) bool {
+	return len(description) < minDescriptionLength
 }
 
 func (r DescriptionShouldHaveCorrectLength) GetSeverity() lint.Severity {

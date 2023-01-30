@@ -1,0 +1,10 @@
+{
+  "/rootProp": {},
+  "/rootProp/childProp": {},
+  "/rootProp/childProp/grandchildProp": {
+    "Title": {
+      "Value": "Grandchild Ref Prop",
+      "ReferenceLevel": 1
+    }
+  }
+}

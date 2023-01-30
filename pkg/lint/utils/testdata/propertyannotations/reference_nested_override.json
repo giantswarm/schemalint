@@ -1,0 +1,24 @@
+{
+  "properties": {
+    "person": {
+      "$ref": "nested.json",
+
+      "properties": {
+        "addresses": {
+          "items": {
+            "properties": {
+              "city": {
+                "title": "City - title override",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

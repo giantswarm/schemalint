@@ -4,28 +4,31 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
-
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type DescriptionShouldNotContainTitle struct{}
 
-func (r DescriptionShouldNotContainTitle) Verify(schema *jsonschema.Schema) []string {
-	return lint.RecursePropertiesWithDescription(schema, checkDescriptionShouldNotContainTitle)
+func (r DescriptionShouldNotContainTitle) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+	ruleResults := &lint.RuleResults{}
+
+	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+	for path, annotations := range propertyAnnotationsMap {
+		if descriptionContainsTitle(annotations.GetDescription(), annotations.GetTitle()) {
+			ruleResults.Add(fmt.Sprintf("Property '%s' description should not repeat the title.", path))
+		}
+	}
+	return *ruleResults
 }
 
-func checkDescriptionShouldNotContainTitle(schema *jsonschema.Schema) []string {
-	if schema.Title == "" {
-		return []string{}
+func descriptionContainsTitle(description string, title string) bool {
+	if title == "" {
+		return false
 	}
 
-	if strings.Contains(strings.ToLower(schema.Description), strings.ToLower(schema.Title)) {
-		return []string{fmt.Sprintf("Property '%s' description should not repeat the title.", schemautils.GetConciseLocation(schema))}
-	}
-
-	return []string{}
+	return strings.Contains(strings.ToLower(description), strings.ToLower(title))
 }
 
 func (r DescriptionShouldNotContainTitle) GetSeverity() lint.Severity {

@@ -1,0 +1,83 @@
+{
+  "/person": {},
+  "/person/addresses": {
+    "Title": {
+      "Value": "Addresses",
+      "ReferenceLevel": 1
+    },
+    "Description": {
+      "Value": "The person's addresses.",
+      "ReferenceLevel": 1
+    }
+  },
+  "/person/addresses/items/city": {
+    "Title": {
+      "Value": "City",
+      "ReferenceLevel": 1
+    },
+    "Description": {
+      "Value": "The city.",
+      "ReferenceLevel": 1
+    }
+  },
+  "/person/addresses/items/state": {
+    "Title": {
+      "Value": "State",
+      "ReferenceLevel": 1
+    },
+    "Description": {
+      "Value": "The state.",
+      "ReferenceLevel": 1
+    }
+  },
+  "/person/addresses/items/street": {
+    "Title": {
+      "Value": "Street",
+      "ReferenceLevel": 1
+    },
+    "Description": {
+      "Value": "The street address.",
+      "ReferenceLevel": 1
+    }
+  },
+  "/person/addresses/items/zip": {
+    "Title": {
+      "Value": "Zip",
+      "ReferenceLevel": 1
+    },
+    "Description": {
+      "Value": "The zip code.",
+      "ReferenceLevel": 1
+    }
+  },
+  "/person/age": {
+    "Title": {
+      "Value": "Age",
+      "ReferenceLevel": 1
+    },
+    "Description": {
+      "Value": "Age in years which must be equal to or greater than zero.",
+      "ReferenceLevel": 1
+    }
+  },
+  "/person/firstName": {
+    "Title": {
+      "Value": "First Name",
+      "ReferenceLevel": 1
+    },
+    "Description": {
+      "Value": "The person's first name.",
+      "ReferenceLevel": 1
+    }
+  },
+  "/person/lastName": {
+    "Title": {
+      "Value": "Last Name",
+      "ReferenceLevel": 1
+    },
+    "Description": {
+      "Value": "The person's last name.",
+      "ReferenceLevel": 1
+    }
+  }
+}

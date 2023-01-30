@@ -7,6 +7,8 @@ import (
 
 	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
 	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
+
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type draft struct {
@@ -87,7 +89,7 @@ func (l *Linter) CompileAllDrafts(url string) (success []string, errors map[stri
 // If the schema provides a valid `$schema` property, the one given will
 // be used. If not, the latest draft will be used.
 // In case of success, a string will be returned, otherwise an error.
-func Compile(path string) (*jsonschema.Schema, error) {
+func Compile(path string) (*schemautils.ExtendedSchema, error) {
 	url, err := ToFileURL(path)
 
 	if err != nil {
@@ -97,7 +99,11 @@ func Compile(path string) (*jsonschema.Schema, error) {
 	compiler := jsonschema.NewCompiler()
 	compiler.ExtractAnnotations = true
 
-	return compiler.Compile(url)
+	schema, err := compiler.Compile(url)
+	if err != nil {
+		return nil, err
+	}
+	return schemautils.NewExtendedSchema(schema), nil
 }
 
 func ToFileURL(path string) (string, error) {

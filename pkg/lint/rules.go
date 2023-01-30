@@ -1,7 +1,7 @@
 package lint
 
 import (
-	"github.com/santhosh-tekuri/jsonschema/v5"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type Severity int
@@ -11,7 +11,15 @@ const (
 	SeverityRecommendation
 )
 
+type RuleResults struct {
+	Violations []string
+}
+
+func (r *RuleResults) Add(violation string) {
+	r.Violations = append(r.Violations, violation)
+}
+
 type Rule interface {
-	Verify(*jsonschema.Schema) []string
+	Verify(*schemautils.ExtendedSchema) RuleResults
 	GetSeverity() Severity
 }
