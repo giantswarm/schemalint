@@ -9,9 +9,9 @@ import (
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
-type TitleMustNotContainParentsTitle struct{}
+type TitleShouldNotContainParentsTitle struct{}
 
-func (r TitleMustNotContainParentsTitle) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+func (r TitleShouldNotContainParentsTitle) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereTitlesExist()
@@ -31,6 +31,6 @@ func (r TitleMustNotContainParentsTitle) Verify(schema *schemautils.ExtendedSche
 	return *ruleResults
 }
 
-func (r TitleMustNotContainParentsTitle) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r TitleShouldNotContainParentsTitle) GetSeverity() lint.Severity {
+	return lint.SeverityRecommendation
 }

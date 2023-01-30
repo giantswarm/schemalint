@@ -30,7 +30,7 @@ func TestTitleCorrect(t *testing.T) {
 			name:        "title is should not contain the parents title",
 			schemaPath:  "testdata/title_contains_parents_title.json",
 			nViolations: 1,
-			rules:       []lint.Rule{TitleMustNotContainParentsTitle{}},
+			rules:       []lint.Rule{TitleShouldNotContainParentsTitle{}},
 		},
 		{
 			name:        "title is correct",
@@ -39,7 +39,7 @@ func TestTitleCorrect(t *testing.T) {
 			rules: []lint.Rule{
 				TitleMustNotContainIllegalCharacters{},
 				TitleMustBeSentenceCase{},
-				TitleMustNotContainParentsTitle{},
+				TitleShouldNotContainParentsTitle{},
 			},
 		},
 		{
@@ -49,7 +49,7 @@ func TestTitleCorrect(t *testing.T) {
 			rules: []lint.Rule{
 				TitleMustNotContainIllegalCharacters{},
 				TitleMustBeSentenceCase{},
-				TitleMustNotContainParentsTitle{},
+				TitleShouldNotContainParentsTitle{},
 			},
 		},
 	}
