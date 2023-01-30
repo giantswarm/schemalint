@@ -14,22 +14,22 @@ func TestTitleExists(t *testing.T) {
 	}{
 		{
 			name:        "has no title",
-			schemaPath:  "testdata/8_missing_titles.json",
+			schemaPath:  "testdata/title_exists/8_missing_titles.json",
 			nViolations: 8,
 		},
 		{
 			name:        "has no title - referenced",
-			schemaPath:  "testdata/9_missing_titles_referenced.json",
+			schemaPath:  "testdata/title_exists/9_missing_titles_referenced.json",
 			nViolations: 9,
 		},
 		{
 			name:        "referenced has missing titles - override",
-			schemaPath:  "testdata/9_missing_titles_referenced_overridden.json",
+			schemaPath:  "testdata/title_exists/9_missing_titles_referenced_overridden.json",
 			nViolations: 0,
 		},
 		{
 			name:        "has title",
-			schemaPath:  "testdata/has_titles.json",
+			schemaPath:  "testdata/title_exists/has_titles.json",
 			nViolations: 0,
 		},
 	}
