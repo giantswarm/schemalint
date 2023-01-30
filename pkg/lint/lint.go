@@ -103,7 +103,9 @@ func Compile(path string) (*schemautils.ExtendedSchema, error) {
 	if err != nil {
 		return nil, err
 	}
-	return schemautils.NewExtendedSchema(schema), nil
+	extendedSchema := schemautils.NewExtendedSchema(schema)
+	extendedSchema.RootFilePath = path
+	return extendedSchema, nil
 }
 
 func ToFileURL(path string) (string, error) {
