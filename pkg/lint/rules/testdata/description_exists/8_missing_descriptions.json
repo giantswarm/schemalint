@@ -1,23 +1,20 @@
 {
     "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "properties": {
         "addresses": {
             "items": {
                 "properties": {
                     "city": {
-                        "title": "City",
                         "type": "string"
                     },
                     "state": {
-                        "title": "State",
                         "type": "string"
                     },
                     "street": {
-                        "title": "Street",
                         "type": "string"
                     },
                     "zip": {
-                        "title": "Zip",
                         "type": "string"
                     }
                 },
@@ -28,15 +25,12 @@
         },
         "age": {
             "minimum": 0,
-            "title": "Age",
             "type": "integer"
         },
         "firstName": {
-            "title": "First Name",
             "type": "string"
         },
         "lastName": {
-            "title": "Last Name",
             "type": "string"
         }
     },
