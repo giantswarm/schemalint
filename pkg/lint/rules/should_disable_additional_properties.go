@@ -10,7 +10,6 @@ import (
 
 type ShouldDisableAdditionalProperties struct{}
 
-
 func (r ShouldDisableAdditionalProperties) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
 
