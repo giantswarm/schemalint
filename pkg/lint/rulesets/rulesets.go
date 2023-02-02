@@ -31,6 +31,7 @@ var ClusterApp = &RuleSet{
 		rules.DescriptionShouldHaveCorrectLength{},
 		rules.MustUseCorrectDialect{},
 		rules.ShouldDisableAdditionalProperties{},
+		rules.ArraysMustHaveItems{},
 	},
 }
 

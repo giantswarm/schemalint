@@ -119,13 +119,21 @@ func (schema *ExtendedSchema) IsProperty() bool {
 }
 
 func (schema *ExtendedSchema) IsObject() bool {
-	isObject := false
+	return schema.isType("object")
+}
+
+func (schema *ExtendedSchema) IsArray() bool {
+	return schema.isType("array")
+}
+
+func (schema *ExtendedSchema) isType(typeName string) bool {
+	isType := false
 	for _, t := range schema.Types {
-		if t == "object" {
-			isObject = true
+		if t == typeName {
+			isType = true
 		}
 	}
-	return isObject
+	return isType
 }
 
 func (schema *ExtendedSchema) IsSelfReference() bool {
