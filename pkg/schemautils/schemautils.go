@@ -105,7 +105,6 @@ func (schema *ExtendedSchema) IsObject() bool {
 	return isObject
 }
 
-
 func (schema *ExtendedSchema) IsSelfReference() bool {
 	parentLocations := schema.getParentEntryLocations()
 	for _, parentLocation := range parentLocations {
