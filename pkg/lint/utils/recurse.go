@@ -34,3 +34,13 @@ func RecurseProperties(schema *schemautils.ExtendedSchema, callback func(schema 
 
 	RecurseAll(schema, callbackIfProperty)
 }
+
+func RecurseObjects(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+	callbackIfProperty := func(schema *schemautils.ExtendedSchema) {
+		if schema.IsObject() {
+			callback(schema)
+		}
+	}
+
+	RecurseAll(schema, callbackIfProperty)
+}

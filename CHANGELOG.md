@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+- Add check that `additionalProperties` is disabled on all objects.
+
 ## [0.6.0] - 2023-02-02
 
 - Add check for draft version.

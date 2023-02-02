@@ -68,6 +68,14 @@ func (schema *ExtendedSchema) GetConciseLocation() string {
 	return location
 }
 
+func (schema *ExtendedSchema) GetHumanReadableLocation() string {
+	location := schema.GetConciseLocation()
+	if location == "" {
+		location = "/"
+	}
+	return location
+}
+
 // Gets the location, excluding ids, including potential parent schemas
 func (schema *ExtendedSchema) GetResolvedLocation() string {
 	location := removeIdFromLocation(schema.Location)
@@ -85,6 +93,16 @@ func (schema *ExtendedSchema) IsProperty() bool {
 	location := schema.GetResolvedLocation()
 	path := strings.Split(location, "/")
 	return len(path) > 1 && path[len(path)-2] == "properties"
+}
+
+func (schema *ExtendedSchema) IsObject() bool {
+	isObject := false
+	for _, t := range schema.Types {
+		if t == "object" {
+			isObject = true
+		}
+	}
+	return isObject
 }
 
 func (schema *ExtendedSchema) IsSelfReference() bool {
