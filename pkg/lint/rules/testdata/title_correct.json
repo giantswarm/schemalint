@@ -1,16 +1,17 @@
 {
-  "$id": "https://example.com/person.schema.json",
-  "properties": {
-    "cluster": {
-      "title": "Cluster",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "title": "Name"
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "cluster": {
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "type": "string"
+                }
+            },
+            "title": "Cluster",
+            "type": "object"
         }
-      }
-    }
-  },
-  "type": "object"
+    },
+    "type": "object"
 }

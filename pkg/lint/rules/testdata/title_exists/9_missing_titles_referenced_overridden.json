@@ -1,49 +1,50 @@
 {
-  "properties": {
-    "person": {
-      "title": "Person",
-      "$ref": "8_missing_titles.json",
-      "properties": {
-        "addresses": {
-          "title": "Addresses",
-          "items": {
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "person": {
+            "$ref": "8_missing_titles.json",
             "properties": {
-              "city": {
-                "title": "City",
-                "type": "string"
-              },
-              "state": {
-                "title": "State",
-                "type": "string"
-              },
-              "street": {
-                "title": "Street",
-                "type": "string"
-              },
-              "zip": {
-                "title": "Zip",
-                "type": "string"
-              }
+                "addresses": {
+                    "items": {
+                        "properties": {
+                            "city": {
+                                "title": "City",
+                                "type": "string"
+                            },
+                            "state": {
+                                "title": "State",
+                                "type": "string"
+                            },
+                            "street": {
+                                "title": "Street",
+                                "type": "string"
+                            },
+                            "zip": {
+                                "title": "Zip",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "title": "Addresses",
+                    "type": "array"
+                },
+                "age": {
+                    "title": "Age",
+                    "type": "integer"
+                },
+                "firstName": {
+                    "title": "First Name",
+                    "type": "string"
+                },
+                "lastName": {
+                    "title": "Last Name",
+                    "type": "string"
+                }
             },
+            "title": "Person",
             "type": "object"
-          },
-          "type": "array"
-        },
-        "age": {
-          "title": "Age",
-          "type": "integer"
-        },
-        "firstName": {
-          "title": "First Name",
-          "type": "string"
-        },
-        "lastName": {
-          "title": "Last Name",
-          "type": "string"
         }
-      },
-      "type": "object"
-    }
-  },
-  "type": "object"
+    },
+    "type": "object"
 }

@@ -59,6 +59,29 @@ func (schema *ExtendedSchema) GetItems2020() *ExtendedSchema {
 	return newSchema
 }
 
+func (schema *ExtendedSchema) GetItems() []*ExtendedSchema {
+	if schema.Items == nil {
+		return nil
+	}
+
+	schemas := []*jsonschema.Schema{}
+	switch schema.Items.(type) {
+	case *jsonschema.Schema:
+		schemas = append(schemas, schema.Items.(*jsonschema.Schema))
+	case []*jsonschema.Schema:
+		schemas = append(schemas, schema.Items.([]*jsonschema.Schema)...)
+	}
+
+	extendedSchemas := make([]*ExtendedSchema, len(schemas))
+	for i, item := range schemas {
+		newSchema := NewExtendedSchema(item)
+		newSchema.InheritParentFrom(schema)
+		extendedSchemas[i] = newSchema
+	}
+
+	return extendedSchemas
+}
+
 // Gets current location without '/properties' in path
 // e.g. /properties/cluster/properties/azure/properties/credentialSecret/properties/namespace
 // becomes /cluster/azure/credentialSecret/namespace

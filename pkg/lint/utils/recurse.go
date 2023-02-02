@@ -23,6 +23,14 @@ func RecurseAll(schema *schemautils.ExtendedSchema, callback func(schema *schema
 	if schema.Items2020 != nil {
 		RecurseAll(schema.GetItems2020(), callback)
 	}
+
+	if schema.Items != nil {
+		schemas := schema.GetItems()
+		for _, itemSchema := range schemas {
+			RecurseAll(itemSchema, callback)
+		}
+	}
+
 }
 
 func RecurseProperties(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
