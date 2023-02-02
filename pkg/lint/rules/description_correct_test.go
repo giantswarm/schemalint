@@ -15,43 +15,43 @@ func TestDescriptionCorrect(t *testing.T) {
 	}{
 		{
 			name:        "description contains line breaks",
-			schemaPath:  "testdata/description_with_illegal_chars.json",
+			schemaPath:  "testdata/description_correct/description_with_illegal_chars.json",
 			nViolations: 6,
 			rules:       []lint.Rule{DescriptionMustNotContainIllegalCharacters{}},
 		},
 		{
 			name:        "description is not sentence case",
-			schemaPath:  "testdata/description_not_sentence_case.json",
+			schemaPath:  "testdata/description_correct/description_not_sentence_case.json",
 			nViolations: 1,
 			rules:       []lint.Rule{DescriptionMustBeSentenceCase{}},
 		},
 		{
 			name:        "description contains title",
-			schemaPath:  "testdata/description_contains_title.json",
+			schemaPath:  "testdata/description_correct/description_contains_title.json",
 			nViolations: 1,
 			rules:       []lint.Rule{DescriptionShouldNotContainTitle{}},
 		},
 		{
 			name:        "description is too short",
-			schemaPath:  "testdata/description_too_short.json",
+			schemaPath:  "testdata/description_correct/description_too_short.json",
 			nViolations: 1,
 			rules:       []lint.Rule{DescriptionShouldHaveCorrectLength{}},
 		},
 		{
 			name:        "description is too long",
-			schemaPath:  "testdata/description_too_long.json",
+			schemaPath:  "testdata/description_correct/description_too_long.json",
 			nViolations: 1,
 			rules:       []lint.Rule{DescriptionShouldHaveCorrectLength{}},
 		},
 		{
 			name:        "description does not use punctuation",
-			schemaPath:  "testdata/description_no_punctuation.json",
+			schemaPath:  "testdata/description_correct/description_no_punctuation.json",
 			nViolations: 1,
 			rules:       []lint.Rule{DescriptionMustUsePunctuation{}},
 		},
 		{
 			name:        "description is missing",
-			schemaPath:  "testdata/8_missing_descriptions.json",
+			schemaPath:  "testdata/description_correct/8_missing_descriptions.json",
 			nViolations: 0,
 			rules: []lint.Rule{
 				DescriptionMustNotContainIllegalCharacters{},
@@ -63,7 +63,7 @@ func TestDescriptionCorrect(t *testing.T) {
 		},
 		{
 			name:        "description is correct",
-			schemaPath:  "testdata/description_correct.json",
+			schemaPath:  "testdata/description_correct/description_correct.json",
 			nViolations: 0,
 			rules: []lint.Rule{
 				DescriptionMustNotContainIllegalCharacters{},
@@ -75,7 +75,7 @@ func TestDescriptionCorrect(t *testing.T) {
 		},
 		{
 			name:        "all rules fail",
-			schemaPath:  "testdata/description_all_rules_fail.json",
+			schemaPath:  "testdata/description_correct/description_all_rules_fail.json",
 			nViolations: 5,
 			rules: []lint.Rule{
 				DescriptionMustNotContainIllegalCharacters{},

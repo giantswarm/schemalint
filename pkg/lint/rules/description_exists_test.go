@@ -14,12 +14,12 @@ func TestDescriptionExists(t *testing.T) {
 	}{
 		{
 			name:        "has no description",
-			schemaPath:  "testdata/8_missing_descriptions.json",
+			schemaPath:  "testdata/description_exists/8_missing_descriptions.json",
 			nViolations: 8,
 		},
 		{
 			name:        "has description",
-			schemaPath:  "testdata/has_descriptions.json",
+			schemaPath:  "testdata/description_exists/has_descriptions.json",
 			nViolations: 0,
 		},
 	}

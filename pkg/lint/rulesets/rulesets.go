@@ -29,6 +29,7 @@ var ClusterApp = &RuleSet{
 		rules.DescriptionMustUsePunctuation{},
 		rules.DescriptionShouldNotContainTitle{},
 		rules.DescriptionShouldHaveCorrectLength{},
+		rules.MustUseCorrectDialect{},
 	},
 }
 

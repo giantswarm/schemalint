@@ -8,7 +8,6 @@ import (
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
-// Check recursively that all properties have a title
 type TitleExists struct{}
 
 func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {

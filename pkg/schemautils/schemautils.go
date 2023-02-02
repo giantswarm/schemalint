@@ -11,6 +11,7 @@ type ExtendedSchema struct {
 	Parent           *ExtendedSchema
 	ParentPath       string
 	TrimFromLocation string
+	RootFilePath     string
 }
 
 func NewExtendedSchema(schema *jsonschema.Schema) *ExtendedSchema {
@@ -46,6 +47,7 @@ func (schema *ExtendedSchema) InheritParentFrom(other *ExtendedSchema) {
 	schema.Parent = other.Parent
 	schema.ParentPath = other.ParentPath
 	schema.TrimFromLocation = other.TrimFromLocation
+	schema.RootFilePath = other.RootFilePath
 }
 
 func (schema *ExtendedSchema) GetItems2020() *ExtendedSchema {
