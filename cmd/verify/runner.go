@@ -99,7 +99,7 @@ func verifyNormalization(path string) TestResult {
 		var isNormalized bool
 		isNormalized, err = normalize.CheckIsNormalized(content)
 		if err == nil && !isNormalized {
-			err = errors.New("schema is not normalized")
+			err = errors.New("Schema is not normalized.")
 		}
 
 	}

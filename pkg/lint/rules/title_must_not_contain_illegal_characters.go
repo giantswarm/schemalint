@@ -23,7 +23,7 @@ func (r TitleMustNotContainIllegalCharacters) Verify(schema *schemautils.Extende
 			ruleResults.Add(fmt.Sprintf(`Property '%s' title must not contain illegal characters: %q`, path, containedIllegalChars))
 		}
 		if containsLeadingOrTrailingSpace(title) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' title must not contain leading or trailing spaces", path))
+			ruleResults.Add(fmt.Sprintf("Property '%s' title must not contain leading or trailing spaces.", path))
 		}
 	}
 	return *ruleResults

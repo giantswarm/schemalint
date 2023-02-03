@@ -50,9 +50,9 @@ func printSummary(results []TestResult) {
 	var summary string
 	for _, r := range results {
 		if r.Success {
-			summary += "- " + cli.SprintSuccessMessage(r.Message) + "\n"
+			summary += cli.SprintSuccessMessage(r.Message) + "\n"
 		} else {
-			summary += "- " + cli.SprintErrorMessage(r.Message) + "\n"
+			summary += cli.SprintErrorMessage(r.Message) + "\n"
 		}
 	}
 
