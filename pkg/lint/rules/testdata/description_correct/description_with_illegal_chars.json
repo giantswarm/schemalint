@@ -1,36 +1,37 @@
 {
-  "$id": "https://example.com/person.schema.json",
-  "properties": {
-    "lastName": {
-      "description": "Identifies the cluster uniquely within the installation.\n",
-      "title": "Cluster name",
-      "type": "string"
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "fifthName": {
+            "description": "Identifies the cluster uniquely within the installation. ",
+            "title": "First name",
+            "type": "string"
+        },
+        "firstName": {
+            "description": "Identifies the cluster uniquely within the installation.\r",
+            "title": "First name",
+            "type": "string"
+        },
+        "fourthName": {
+            "description": "Identifies the cluster uniquely   within the installation.",
+            "title": "First name",
+            "type": "string"
+        },
+        "lastName": {
+            "description": "Identifies the cluster uniquely within the installation.\n",
+            "title": "Cluster name",
+            "type": "string"
+        },
+        "sixthName": {
+            "description": " Identifies the cluster uniquely within the installation. ",
+            "title": "First name",
+            "type": "string"
+        },
+        "thirdName": {
+            "description": "Identifies the cluster uniquely\t within the installation.",
+            "title": "First name",
+            "type": "string"
+        }
     },
-    "firstName": {
-      "description": "Identifies the cluster uniquely within the installation.\r",
-      "title": "First name",
-      "type": "string"
-    },
-    "thirdName": {
-      "description": "Identifies the cluster uniquely\t within the installation.",
-      "title": "First name",
-      "type": "string"
-    },
-    "fourthName": {
-      "description": "Identifies the cluster uniquely   within the installation.",
-      "title": "First name",
-      "type": "string"
-    },
-    "fifthName": {
-      "description": "Identifies the cluster uniquely within the installation. ",
-      "title": "First name",
-      "type": "string"
-    },
-    "sixthName": {
-      "description": " Identifies the cluster uniquely within the installation. ",
-      "title": "First name",
-      "type": "string"
-    }
-  },
-  "type": "object"
+    "type": "object"
 }

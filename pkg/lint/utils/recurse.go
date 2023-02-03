@@ -23,6 +23,14 @@ func RecurseAll(schema *schemautils.ExtendedSchema, callback func(schema *schema
 	if schema.Items2020 != nil {
 		RecurseAll(schema.GetItems2020(), callback)
 	}
+
+	if schema.Items != nil {
+		schemas := schema.GetItems()
+		for _, itemSchema := range schemas {
+			RecurseAll(itemSchema, callback)
+		}
+	}
+
 }
 
 func RecurseProperties(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
@@ -36,11 +44,21 @@ func RecurseProperties(schema *schemautils.ExtendedSchema, callback func(schema 
 }
 
 func RecurseObjects(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
-	callbackIfProperty := func(schema *schemautils.ExtendedSchema) {
+	callbackIfObject := func(schema *schemautils.ExtendedSchema) {
 		if schema.IsObject() {
 			callback(schema)
 		}
 	}
 
-	RecurseAll(schema, callbackIfProperty)
+	RecurseAll(schema, callbackIfObject)
+}
+
+func RecurseArrays(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+	callbackIfArray := func(schema *schemautils.ExtendedSchema) {
+		if schema.IsArray() {
+			callback(schema)
+		}
+	}
+
+	RecurseAll(schema, callbackIfArray)
 }

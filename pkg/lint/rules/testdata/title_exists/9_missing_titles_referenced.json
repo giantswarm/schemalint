@@ -1,8 +1,9 @@
 {
-  "properties": {
-    "person": {
-      "$ref": "8_missing_titles.json"
-    }
-  },
-  "type": "object"
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "person": {
+            "$ref": "8_missing_titles.json"
+        }
+    },
+    "type": "object"
 }

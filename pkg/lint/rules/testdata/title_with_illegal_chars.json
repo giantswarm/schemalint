@@ -1,46 +1,47 @@
 {
-  "$id": "https://example.com/person.schema.json",
-  "properties": {
-    "firstName": {
-      "title": "First name!",
-      "type": "string"
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "eighthName": {
+            "title": "First name\t",
+            "type": "string"
+        },
+        "fifthName": {
+            "title": "First name ",
+            "type": "string"
+        },
+        "firstName": {
+            "title": "First name!",
+            "type": "string"
+        },
+        "fourthName": {
+            "title": "First name,",
+            "type": "string"
+        },
+        "ninthName": {
+            "title": "First  name",
+            "type": "string"
+        },
+        "secondName": {
+            "title": "Cluster name.",
+            "type": "string"
+        },
+        "seventhName": {
+            "title": "First name\n",
+            "type": "string"
+        },
+        "sixthName": {
+            "title": " First name",
+            "type": "string"
+        },
+        "tenthName": {
+            "title": "First name\r",
+            "type": "string"
+        },
+        "thirdName": {
+            "title": "First name?",
+            "type": "string"
+        }
     },
-    "secondName": {
-      "title": "Cluster name.",
-      "type": "string"
-    },
-    "thirdName": {
-      "title": "First name?",
-      "type": "string"
-    },
-    "fourthName": {
-      "title": "First name,",
-      "type": "string"
-    },
-    "fifthName": {
-      "title": "First name ",
-      "type": "string"
-    },
-    "sixthName": {
-      "title": " First name",
-      "type": "string"
-    },
-    "seventhName": {
-      "title": "First name\n",
-      "type": "string"
-    },
-    "eighthName": {
-      "title": "First name\t",
-      "type": "string"
-    },
-    "ninthName": {
-      "title": "First  name",
-      "type": "string"
-    },
-    "tenthName": {
-      "title": "First name\r",
-      "type": "string"
-    }
-  },
-  "type": "object"
+    "type": "object"
 }

@@ -1,15 +1,16 @@
 {
-  "properties": {
-    "controlPlane": {
-      "properties": {
-        "availabilityZones": {
-          "type": "string",
-          "title": "Control Plane Availability Zones"
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "controlPlane": {
+            "properties": {
+                "availabilityZones": {
+                    "title": "Control Plane Availability Zones",
+                    "type": "string"
+                }
+            },
+            "title": "Control Plane",
+            "type": "object"
         }
-      },
-      "title": "Control Plane",
-      "type": "object"
-    }
-  },
-  "type": "object"
+    },
+    "type": "object"
 }

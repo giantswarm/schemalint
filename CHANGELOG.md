@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add check that every array specifies the schema of its items with the `items` keyword.
 - Simplify output of `schemalint verify` to improve appearance in GitHub actions log.
 - Add check that `additionalProperties` is disabled on all objects.
 
