@@ -24,5 +24,5 @@ func (r DeprecatedPropertiesShouldHaveComment) Verify(schema *schemautils.Extend
 }
 
 func (r DeprecatedPropertiesShouldHaveComment) GetSeverity() lint.Severity {
-	return lint.SeverityError
+	return lint.SeverityRecommendation
 }
