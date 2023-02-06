@@ -27,5 +27,5 @@ func (r NumbersShouldBeConstrained) Verify(schema *schemautils.ExtendedSchema) l
 }
 
 func (r NumbersShouldBeConstrained) GetSeverity() lint.Severity {
-	return lint.SeverityError
+	return lint.SeverityRecommendation
 }

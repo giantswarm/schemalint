@@ -29,5 +29,5 @@ func (r StringsShouldBeConstrained) Verify(schema *schemautils.ExtendedSchema) l
 }
 
 func (r StringsShouldBeConstrained) GetSeverity() lint.Severity {
-	return lint.SeverityError
+	return lint.SeverityRecommendation
 }
