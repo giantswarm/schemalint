@@ -34,6 +34,9 @@ var ClusterApp = &RuleSet{
 		rules.ArraysMustHaveItems{},
 		rules.StringsShouldBeConstrained{},
 		rules.NumbersShouldBeConstrained{},
+		rules.ExampleExists{},
+		rules.DeprecatedPropertiesShouldHaveComment{},
+		rules.ExamplesShouldNotBeTooMany{},
 	},
 }
 

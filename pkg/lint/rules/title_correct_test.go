@@ -16,25 +16,25 @@ func TestTitleCorrect(t *testing.T) {
 	}{
 		{
 			name:        "title contains line breaks",
-			schemaPath:  "testdata/title_with_illegal_chars.json",
+			schemaPath:  "testdata/title_correct/title_with_illegal_chars.json",
 			nViolations: 10,
 			rules:       []lint.Rule{TitleMustNotContainIllegalCharacters{}},
 		},
 		{
 			name:        "title is not sentence case",
-			schemaPath:  "testdata/title_not_sentence_case.json",
+			schemaPath:  "testdata/title_correct/title_not_sentence_case.json",
 			nViolations: 1,
 			rules:       []lint.Rule{TitleMustBeSentenceCase{}},
 		},
 		{
 			name:        "title is should not contain the parents title",
-			schemaPath:  "testdata/title_contains_parents_title.json",
+			schemaPath:  "testdata/title_correct/title_contains_parents_title.json",
 			nViolations: 1,
 			rules:       []lint.Rule{TitleShouldNotContainParentsTitle{}},
 		},
 		{
 			name:        "title is correct",
-			schemaPath:  "testdata/title_correct.json",
+			schemaPath:  "testdata/title_correct/title_correct.json",
 			nViolations: 0,
 			rules: []lint.Rule{
 				TitleMustNotContainIllegalCharacters{},
@@ -44,7 +44,7 @@ func TestTitleCorrect(t *testing.T) {
 		},
 		{
 			name:        "all rules fail",
-			schemaPath:  "testdata/title_all_rules_fail.json",
+			schemaPath:  "testdata/title_correct/title_all_rules_fail.json",
 			nViolations: 4,
 			rules: []lint.Rule{
 				TitleMustNotContainIllegalCharacters{},
