@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "name": {
+            "examples": [
+                "Jane Doe",
+                "John Smith",
+                "Jane Smith",
+                "John Doe-Smith",
+                "Jane Doe-Smith"
+            ],
+            "type": "string"
+        }
+    },
+    "type": "object"
+}
