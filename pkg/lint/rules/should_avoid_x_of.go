@@ -14,10 +14,10 @@ func (r ShouldAvoidXOf) Verify(schema *schemautils.ExtendedSchema) lint.RuleResu
 	ruleResults := &lint.RuleResults{}
 	callback := func(schema *schemautils.ExtendedSchema) {
 		if schema.AnyOf != nil {
-			ruleResults.Add(fmt.Sprintf("Schema at path '%s' should not use anyOf", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Schema at path '%s' should not use anyOf.", schema.GetHumanReadableLocation()))
 		}
 		if schema.OneOf != nil {
-			ruleResults.Add(fmt.Sprintf("Schema at path '%s' should not use oneOf", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Schema at path '%s' should not use oneOf.", schema.GetHumanReadableLocation()))
 		}
 	}
 	utils.RecurseAll(schema, callback)
