@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add check that every deprecated property has a comment.
 - Add check that properties don't provide more than 5 examples.
 
 ## [0.7.0] - 2023-02-06
