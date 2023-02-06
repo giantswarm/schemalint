@@ -33,6 +33,7 @@ var ClusterApp = &RuleSet{
 		rules.ShouldDisableAdditionalProperties{},
 		rules.ArraysMustHaveItems{},
 		rules.DeprecatedPropertiesShouldHaveComment{},
+		rules.ExamplesShouldNotBeTooMany{},
 	},
 }
 
