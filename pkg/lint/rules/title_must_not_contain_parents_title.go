@@ -25,7 +25,7 @@ func (r TitleShouldNotContainParentsTitle) Verify(schema *schemautils.ExtendedSc
 		}
 
 		if strings.Contains(strings.ToLower(title), strings.ToLower(parentTitle)) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' title must not contain parent title '%s'.", path, parentTitle))
+			ruleResults.Add(fmt.Sprintf("Property '%s' title should not contain the parent's title '%s'.", path, parentTitle))
 		}
 	}
 	return *ruleResults
