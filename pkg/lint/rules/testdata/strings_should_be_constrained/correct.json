@@ -2,31 +2,31 @@
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "properties": {
         "foo1": {
-            "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "type": "string"
         },
         "foo2": {
-            "type": "string",
-            "maxLength": 1
+            "maxLength": 1,
+            "type": "string"
         },
         "foo3": {
-            "type": "string",
-            "pattern": "^[a-z]+$"
+            "pattern": "^[a-z]+$",
+            "type": "string"
         },
         "foo4": {
-            "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "type": "string"
         },
         "foo5": {
-            "type": "string",
             "enum": [
                 "foo",
                 "bar"
-            ]
+            ],
+            "type": "string"
         },
         "foo6": {
-            "type": "string",
-            "const": "foo"
+            "const": "foo",
+            "type": "string"
         }
     },
     "type": "object"
