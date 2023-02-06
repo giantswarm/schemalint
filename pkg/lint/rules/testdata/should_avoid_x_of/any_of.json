@@ -1,0 +1,19 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": false,
+    "properties": {
+        "age": {
+            "anyOf": [
+                {
+                    "maxLength": 5,
+                    "type": "string"
+                },
+                {
+                    "minimum": 0,
+                    "type": "number"
+                }
+            ]
+        }
+    },
+    "type": "object"
+}

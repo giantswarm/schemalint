@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add check that schema does not use `anyOf` or `oneOf`.
+
 ## [0.7.0] - 2023-02-06
 
 - Add check that every array specifies the schema of its items with the `items` keyword.
