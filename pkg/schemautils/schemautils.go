@@ -126,6 +126,22 @@ func (schema *ExtendedSchema) IsArray() bool {
 	return schema.isType("array")
 }
 
+func (schema *ExtendedSchema) IsString() bool {
+	return schema.isType("string")
+}
+
+func (schema *ExtendedSchema) IsNumber() bool {
+	return schema.isType("number")
+}
+
+func (schema *ExtendedSchema) IsInteger() bool {
+	return schema.isType("integer")
+}
+
+func (schema *ExtendedSchema) IsNumeric() bool {
+	return schema.IsNumber() || schema.IsInteger()
+}
+
 func (schema *ExtendedSchema) isType(typeName string) bool {
 	isType := false
 	for _, t := range schema.Types {

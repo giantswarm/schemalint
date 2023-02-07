@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "foo1": {
+            "minLength": 1,
+            "type": "string"
+        },
+        "foo2": {
+            "maxLength": 1,
+            "type": "string"
+        },
+        "foo3": {
+            "pattern": "^[a-z]+$",
+            "type": "string"
+        },
+        "foo4": {
+            "format": "date-time",
+            "type": "string"
+        },
+        "foo5": {
+            "enum": [
+                "foo",
+                "bar"
+            ],
+            "type": "string"
+        },
+        "foo6": {
+            "const": "foo",
+            "type": "string"
+        }
+    },
+    "type": "object"
+}

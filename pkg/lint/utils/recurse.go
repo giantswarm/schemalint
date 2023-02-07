@@ -62,3 +62,23 @@ func RecurseArrays(schema *schemautils.ExtendedSchema, callback func(schema *sch
 
 	RecurseAll(schema, callbackIfArray)
 }
+
+func RecurseStrings(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+	callbackIfString := func(schema *schemautils.ExtendedSchema) {
+		if schema.IsString() {
+			callback(schema)
+		}
+	}
+
+	RecurseAll(schema, callbackIfString)
+}
+
+func RecurseNumerics(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+	callbackIfString := func(schema *schemautils.ExtendedSchema) {
+		if schema.IsNumeric() {
+			callback(schema)
+		}
+	}
+
+	RecurseAll(schema, callbackIfString)
+}
