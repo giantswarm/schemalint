@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add check that every numeric property is constrained through 'minimum', 'maximum', 'exclusiveMinimum' or 'exclusiveMaximum'.
+- Add check that every string property is constrained through 'pattern', 'minLength', 'maxLength', 'enum', 'constant' or 'format'.
 - Add check that every property provides one or more examples with the `examples` keyword.
 - Add check that every deprecated property has a comment.
 - Add check that properties don't provide more than 5 examples.

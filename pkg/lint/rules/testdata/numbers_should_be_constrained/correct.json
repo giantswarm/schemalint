@@ -1,0 +1,38 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "properties": {
+        "foo1": {
+            "minimum": 0,
+            "type": "number"
+        },
+        "foo2": {
+            "minimum": 0,
+            "type": "integer"
+        },
+        "foo3": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+        },
+        "foo4": {
+            "exclusiveMinimum": 0,
+            "type": "integer"
+        },
+        "foo5": {
+            "maximum": 0,
+            "type": "number"
+        },
+        "foo6": {
+            "maximum": 0,
+            "type": "integer"
+        },
+        "foo7": {
+            "exclusiveMaximum": 0,
+            "type": "number"
+        },
+        "foo8": {
+            "exclusiveMaximum": 0,
+            "type": "integer"
+        }
+    },
+    "type": "object"
+}
