@@ -1,15 +1,14 @@
 {
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "additionalProperties": false,
     "properties": {
         "age": {
-            "anyOf": [
+            "oneOf": [
                 {
-                    "maxLength": 5,
-                    "type": "string"
+                    "multipleOf": 5,
+                    "type": "number"
                 },
                 {
-                    "minimum": 0,
+                    "multipleOf": 3,
                     "type": "number"
                 }
             ]

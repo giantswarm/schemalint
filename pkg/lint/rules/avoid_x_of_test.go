@@ -14,22 +14,22 @@ func TestShouldAvoidXOf(t *testing.T) {
 	}{
 		{
 			name:        "uses anyOf",
-			schemaPath:  "testdata/should_avoid_x_of/any_of.json",
+			schemaPath:  "testdata/avoid_x_of/any_of.json",
 			nViolations: 1,
 		},
 		{
 			name:        "uses oneOf",
-			schemaPath:  "testdata/should_avoid_x_of/one_of.json",
+			schemaPath:  "testdata/avoid_x_of/one_of.json",
 			nViolations: 1,
 		},
 		{
 			name:        "uses anyOf and oneOf",
-			schemaPath:  "testdata/should_avoid_x_of/any_of_and_one_of.json",
+			schemaPath:  "testdata/avoid_x_of/any_of_and_one_of.json",
 			nViolations: 2,
 		},
 		{
 			name:        "does not use anyOf or oneOf",
-			schemaPath:  "testdata/should_avoid_x_of/correct.json",
+			schemaPath:  "testdata/avoid_x_of/correct.json",
 			nViolations: 0,
 		},
 	}
@@ -40,7 +40,7 @@ func TestShouldAvoidXOf(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
-			titleExistsRule := ShouldAvoidXOf{}
+			titleExistsRule := AvoidXOf{}
 			ruleResults := titleExistsRule.Verify(schema)
 
 			if len(ruleResults.Violations) != tc.nViolations {

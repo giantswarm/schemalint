@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Add check that schema does not use `anyOf` or `oneOf`.
+- Add check that schemas only use `anyOf` and `oneOf` for specific purposes.
 - Add check that every numeric property is constrained through 'minimum', 'maximum', 'exclusiveMinimum' or 'exclusiveMaximum'.
 - Add check that every string property is constrained through 'pattern', 'minLength', 'maxLength', 'enum', 'constant' or 'format'.
 - Add check that every property provides one or more examples with the `examples` keyword.
@@ -61,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v0.7.0...HEAD
+[unreleased]: https://github.com/giantswarm/schemalint/compare/v0.7.0...HEAD
 [0.7.0]: https://github.com/giantswarm/schemalint/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/giantswarm/schemalint/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/giantswarm/schemalint/compare/v0.4.0...v0.5.0

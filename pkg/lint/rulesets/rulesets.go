@@ -32,7 +32,7 @@ var ClusterApp = &RuleSet{
 		rules.MustUseCorrectDialect{},
 		rules.ShouldDisableAdditionalProperties{},
 		rules.ArraysMustHaveItems{},
-		rules.ShouldAvoidXOf{},
+		rules.AvoidXOf{},
 		rules.StringsShouldBeConstrained{},
 		rules.NumbersShouldBeConstrained{},
 		rules.ExampleExists{},
