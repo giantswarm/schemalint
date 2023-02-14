@@ -11,7 +11,7 @@ import (
 
 type MustUseCorrectDialect struct{}
 
-const correctDraft = "https://json-schema.org/draft/2019-09/schema"
+const correctDraft = "https://json-schema.org/draft/2020-12/schema"
 const draftKey = "$schema"
 
 func (r MustUseCorrectDialect) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
