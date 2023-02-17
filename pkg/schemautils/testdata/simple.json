@@ -1,0 +1,9 @@
+{
+    "properties": {
+        "rootProp": {
+            "type": "string",
+            "title": "gold"
+        }
+    },
+    "type": "object"
+}
