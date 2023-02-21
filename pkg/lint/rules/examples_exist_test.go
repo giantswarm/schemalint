@@ -22,6 +22,11 @@ func TestExampleExists(t *testing.T) {
 			schemaPath:  "testdata/examples_exist/has_examples.json",
 			nViolations: 0,
 		},
+		{
+			name:        "no examples, but boolean",
+			schemaPath:  "testdata/examples_exist/no_examples_but_boolean.json",
+			nViolations: 0,
+		},
 	}
 
 	for _, tc := range testCases {

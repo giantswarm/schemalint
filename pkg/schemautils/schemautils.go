@@ -3,7 +3,7 @@ package schemautils
 import (
 	"strings"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
+	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
 )
 
 type ExtendedSchema struct {
@@ -142,6 +142,10 @@ func (schema *ExtendedSchema) IsNumeric() bool {
 	return schema.IsNumber() || schema.IsInteger()
 }
 
+func (schema *ExtendedSchema) IsBoolean() bool {
+	return schema.isType("boolean")
+}
+
 func (schema *ExtendedSchema) isType(typeName string) bool {
 	isType := false
 	for _, t := range schema.Types {
@@ -184,4 +188,24 @@ func GetParentPropertyPath(conciseLocation string) string {
 		return ""
 	}
 	return strings.Join(path[:len(path)-1], "/")
+}
+
+// Returns a list of all schemas, whose location matches the given location.
+// Due to the usage of '$ref', multiple schemas can have the same path.
+func (schema *ExtendedSchema) GetSchemasAt(resolvedLocation string) []*ExtendedSchema {
+	schemas := []*ExtendedSchema{}
+	currentResolvedLocation := schema.GetConciseLocation()
+	if currentResolvedLocation == resolvedLocation {
+		schemas = append(schemas, schema)
+	}
+	for _, property := range schema.GetProperties() {
+		schemas = append(schemas, property.GetSchemasAt(resolvedLocation)...)
+	}
+	for _, item := range schema.GetItems() {
+		schemas = append(schemas, item.GetSchemasAt(resolvedLocation)...)
+	}
+	if schema.GetRefSchema() != nil {
+		schemas = append(schemas, schema.GetRefSchema().GetSchemasAt(resolvedLocation)...)
+	}
+	return schemas
 }
