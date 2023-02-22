@@ -35,6 +35,10 @@ func Normalize(jsonBytes []byte) ([]byte, error) {
 func marshalIndentWithoutEscape(t interface{}, prefix, indent string) ([]byte, error) {
 	marshalled, err := marshalWithoutEscape(t)
 
+	if err != nil {
+		return nil, err
+	}
+
 	var buffer bytes.Buffer
 	err = json.Indent(&buffer, marshalled, prefix, indent)
 
@@ -47,11 +51,7 @@ func marshalWithoutEscape(t interface{}) ([]byte, error) {
 	encoder.SetEscapeHTML(false)
 	err := encoder.Encode(t)
 
-	if err != nil {
-		return nil, err
-	}
-
-	return buffer.Bytes(), nil
+	return buffer.Bytes(), err
 }
 
 func CheckIsNormalized(jsonBytes []byte) (bool, error) {
