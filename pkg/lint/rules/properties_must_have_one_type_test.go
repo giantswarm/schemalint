@@ -6,25 +6,30 @@ import (
 	"github.com/giantswarm/schemalint/pkg/lint"
 )
 
-func TestExampleExists(t *testing.T) {
+func TestPropertiesMustHaveOneType(t *testing.T) {
 	testCases := []struct {
 		name        string
 		schemaPath  string
 		nViolations int
 	}{
 		{
-			name:        "has no example",
-			schemaPath:  "testdata/examples_exist/no_examples.json",
+			name:        "property with multiple types",
+			schemaPath:  "testdata/properties_must_have_one_type/multiple_types.json",
 			nViolations: 1,
 		},
 		{
-			name:        "has example",
-			schemaPath:  "testdata/examples_exist/has_examples.json",
+			name:        "property with no types",
+			schemaPath:  "testdata/properties_must_have_one_type/no_type.json",
+			nViolations: 1,
+		},
+		{
+			name:        "property with one type",
+			schemaPath:  "testdata/properties_must_have_one_type/one_type.json",
 			nViolations: 0,
 		},
 		{
-			name:        "no examples, but boolean",
-			schemaPath:  "testdata/examples_exist/no_examples_but_boolean.json",
+			name:        "property with no type but ref",
+			schemaPath:  "testdata/properties_must_have_one_type/no_type_reference.json",
 			nViolations: 0,
 		},
 	}
@@ -35,7 +40,7 @@ func TestExampleExists(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
-			exampleExistsRule := ExampleExists{}
+			exampleExistsRule := PropertiesMustHaveOneType{}
 			ruleResults := exampleExistsRule.Verify(schema)
 
 			if len(ruleResults.Violations) != tc.nViolations {

@@ -13,12 +13,22 @@ type ExampleExists struct{}
 func (r ExampleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
-	for path, annotations := range propertyAnnotationsMap {
-		if len(annotations.GetExamples()) == 0 {
-			ruleResults.Add(fmt.Sprintf("Property '%s' should provide one or more examples.", path))
+	for location, annotations := range propertyAnnotationsMap {
+		if len(annotations.GetExamples()) == 0 && !annotationBelongsToBoolean(schema, location) {
+			ruleResults.Add(fmt.Sprintf("Property '%s' should provide one or more examples.", location))
 		}
 	}
 	return *ruleResults
+}
+
+func annotationBelongsToBoolean(schema *schemautils.ExtendedSchema, location string) bool {
+	schemas := schema.GetSchemasAt(location)
+	for _, s := range schemas {
+		if s.IsBoolean() {
+			return true
+		}
+	}
+	return false
 }
 
 func (r ExampleExists) GetSeverity() lint.Severity {
