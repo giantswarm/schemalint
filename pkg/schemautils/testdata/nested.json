@@ -1,0 +1,19 @@
+{
+    "properties": {
+        "rootProp": {
+            "properties": {
+                "childProp": {
+                    "type": "object",
+                    "properties": {
+                        "grandchildProp": {
+                            "type": "string",
+                            "title": "gold"
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

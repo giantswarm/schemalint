@@ -1,0 +1,45 @@
+{
+    "$defs": {
+        "foo": {
+            "properties": {
+                "childProp": {
+                    "type": "object",
+                    "$ref": "#/$defs/bar",
+                    "properties": {
+                        "grandchildProp": {
+                            "type": "string",
+                            "title": "gold_ref"
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "bar": {
+            "properties": {
+                "grandchildProp": {
+                    "type": "string",
+                    "title": "gold_ref_ref"
+                }
+            }
+        }
+    },
+    "properties": {
+        "rootProp": {
+            "$ref": "#/$defs/foo",
+            "properties": {
+                "childProp": {
+                    "type": "object",
+                    "properties": {
+                        "grandchildProp": {
+                            "type": "string",
+                            "title": "gold"
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

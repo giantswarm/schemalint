@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
 - Add check that schemas only use `anyOf` and `oneOf` for specific purposes.
+- Add rule to check whether all properties have exactly one type.
+- Don't require examples for boolean properties.
 - Change required draft back to 2020-12.
 - Add check that every numeric property is constrained through 'minimum', 'maximum', 'exclusiveMinimum' or 'exclusiveMaximum'.
 - Add check that every string property is constrained through 'pattern', 'minLength', 'maxLength', 'enum', 'constant' or 'format'.
