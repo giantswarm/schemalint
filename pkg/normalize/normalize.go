@@ -3,13 +3,14 @@
 package normalize
 
 import (
+	"bytes"
 	"encoding/json"
 	"reflect"
 )
 
 const (
 	// Four spaces indentation.
-	indendation = "    "
+	indentation = "    "
 	prefix      = ""
 )
 
@@ -23,15 +24,27 @@ func Normalize(jsonBytes []byte) ([]byte, error) {
 
 	// We use the fact that MarshalIndent applies a specific sorting
 	// of object keys, apart from normalizing indentation.
-	output, err := json.MarshalIndent(data, prefix, indendation)
+	output, err := marshalIndentWithoutEscape(data, prefix, indentation)
 	if err != nil {
 		return nil, err
 	}
 
-	// trailing newline
-	output = append(output, []byte("\n")...)
-
 	return output, nil
+}
+
+func marshalIndentWithoutEscape(t interface{}, prefix, indent string) ([]byte, error) {
+	buffer := &bytes.Buffer{}
+	encoder := json.NewEncoder(buffer)
+	encoder.SetEscapeHTML(false)
+	err := encoder.Encode(t)
+	if err != nil {
+		return nil, err
+	}
+
+	var buf bytes.Buffer
+	err = json.Indent(&buf, buffer.Bytes(), prefix, indent)
+
+	return buf.Bytes(), err
 }
 
 func CheckIsNormalized(jsonBytes []byte) (bool, error) {
