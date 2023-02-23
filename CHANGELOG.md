@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Prevent normalize from escaping <,> and &.
 - Add rule to check whether all properties have exactly one type.
 - Don't require examples for boolean properties.
 - Change required draft back to 2020-12.

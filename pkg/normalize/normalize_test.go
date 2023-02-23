@@ -8,6 +8,8 @@ import (
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 var (
@@ -68,6 +70,12 @@ func TestNormalize(t *testing.T) {
 			goldenPath: "7.golden",
 			wantErr:    false,
 		},
+		{
+			name:       "Eighth, don't escape < and >",
+			inputPath:  "8.json",
+			goldenPath: "8.golden",
+			wantErr:    false,
+		},
 	}
 
 	for _, tt := range tests {
@@ -89,7 +97,7 @@ func TestNormalize(t *testing.T) {
 				if tt.goldenPath != "" {
 					want = goldenValue(t, "testdata/"+tt.goldenPath, got, *update)
 					if !reflect.DeepEqual(got, want) {
-						t.Errorf("Normalize() = %v, want %v", string(got), string(want))
+						t.Errorf("Unexpected output from Normalize(): %s", cmp.Diff(string(got), string(want)))
 					}
 				}
 			} else {
