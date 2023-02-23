@@ -38,6 +38,7 @@ var ClusterApp = &RuleSet{
 		rules.DeprecatedPropertiesShouldHaveComment{},
 		rules.ExamplesShouldNotBeTooMany{},
 		rules.PropertiesMustHaveOneType{},
+		rules.AvoidLogicalConstruct{},
 	},
 }
 
