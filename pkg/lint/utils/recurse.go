@@ -11,23 +11,37 @@ func RecurseAll(schema *schemautils.ExtendedSchema, callback func(schema *schema
 
 	callback(schema)
 
+	CallChildren(schema, func(schema *schemautils.ExtendedSchema) {
+		RecurseAll(schema, callback)
+	})
+}
+
+func RecurseAllUnsafe(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+	callback(schema)
+
+	CallChildren(schema, func(schema *schemautils.ExtendedSchema) {
+		RecurseAllUnsafe(schema, callback)
+	})
+}
+
+func CallChildren(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
 	if schema.Ref != nil {
 		refSchema := schema.GetRefSchema()
-		RecurseAll(refSchema, callback)
+		callback(refSchema)
 	}
 
 	for _, property := range schema.GetProperties() {
-		RecurseAll(property, callback)
+		callback(property)
 	}
 
 	if schema.Items2020 != nil {
-		RecurseAll(schema.GetItems2020(), callback)
+		callback(schema.GetItems2020())
 	}
 
 	if schema.Items != nil {
 		schemas := schema.GetItems()
 		for _, itemSchema := range schemas {
-			RecurseAll(itemSchema, callback)
+			callback(itemSchema)
 		}
 	}
 
