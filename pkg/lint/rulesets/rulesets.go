@@ -40,6 +40,7 @@ var ClusterApp = &RuleSet{
 		rules.ExamplesShouldNotBeTooMany{},
 		rules.AvoidUnevaluated{},
 		rules.PropertiesMustHaveOneType{},
+		rules.AvoidLogicalConstruct{},
 	},
 }
 
