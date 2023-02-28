@@ -18,10 +18,10 @@ func (r AdheresToCommonSchemaStructureRecommendations) Verify(schema *schemautil
 	for _, recommendedProperty := range recommendedProperties {
 		if property, ok := schemaProperties[recommendedProperty.Name]; ok {
 			if !property.IsType(recommendedProperty.Type) {
-				ruleResults.Add(fmt.Sprintf("Property '%s' should be of type '%s'.", recommendedProperty.Name, recommendedProperty.Type))
+				ruleResults.Add(fmt.Sprintf("Root level property '%s' should be of type '%s'.", recommendedProperty.Name, recommendedProperty.Type))
 			}
 		} else {
-			ruleResults.Add(fmt.Sprintf("Property '%s' should be present.", recommendedProperty.Name))
+			ruleResults.Add(fmt.Sprintf("Root level property '%s' should be present.", recommendedProperty.Name))
 		}
 
 	}
