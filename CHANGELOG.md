@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add check that schemas only use `anyOf` and `oneOf` for specific purposes.
+
 ## [0.8.0] - 2023-02-24
 
 - Avoid `unevaluatedItems` and `unevaluatedProperties`.

@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "diskSize": {
+            "examples": [
+                "10 GB",
+                "10000 MB"
+            ],
+            "oneOf": [
+                {
+                    "pattern": "^[0-9]+ GB$"
+                },
+                {
+                    "pattern": "^[0-9]+ MB$"
+                }
+            ],
+            "title": "Volume size",
+            "type": "string"
+        },
+        "replicas": {
+            "anyOf": [
+                {
+                    "$comment": "to be removed in the next major version, please use the integer type instead",
+                    "deprecated": true,
+                    "type": "string"
+                },
+                {
+                    "maximum": 100,
+                    "title": "Size",
+                    "type": "integer"
+                }
+            ]
+        }
+    },
+    "type": "object"
+}
