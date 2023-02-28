@@ -18,10 +18,10 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(schema *schemautils.E
 	for _, requiredProperty := range requiredProperties {
 		if property, ok := schemaProperties[requiredProperty.Name]; ok {
 			if !property.IsType(requiredProperty.Type) {
-				ruleResults.Add(fmt.Sprintf("Root level property '%s' must be of type '%s'.", requiredProperty.Name, requiredProperty.Type))
+				ruleResults.Add(fmt.Sprintf("Root-level property '%s' must be of type '%s'.", requiredProperty.Name, requiredProperty.Type))
 			}
 		} else {
-			ruleResults.Add(fmt.Sprintf("Root level property '%s' must be present.", requiredProperty.Name))
+			ruleResults.Add(fmt.Sprintf("Root-level property '%s' must be present.", requiredProperty.Name))
 		}
 
 	}
