@@ -28,7 +28,12 @@ func TestAdheheresToCommonSchemaStructureRecommendations(t *testing.T) {
 			nViolations: 2,
 		},
 		{
-			name:        "case 3: correct",
+			name:        "case 3: wrong types",
+			schemaPath:  "testdata/common_schema_structure_recommendations/wrong_types.json",
+			nViolations: 2,
+		},
+		{
+			name:        "case 4: correct",
 			schemaPath:  "testdata/common_schema_structure_recommendations/correct.json",
 			nViolations: 0,
 		},

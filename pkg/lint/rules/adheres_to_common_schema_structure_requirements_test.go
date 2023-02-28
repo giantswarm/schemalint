@@ -38,7 +38,12 @@ func TestAdheheresToCommonSchemaStructureRequirements(t *testing.T) {
 			nViolations: 4,
 		},
 		{
-			name:        "case 5: correct",
+			name:        "case 5: wrong types",
+			schemaPath:  "testdata/common_schema_structure_requirements/wrong_types.json",
+			nViolations: 4,
+		},
+		{
+			name:        "case 6: correct",
 			schemaPath:  "testdata/common_schema_structure_requirements/correct.json",
 			nViolations: 0,
 		},
