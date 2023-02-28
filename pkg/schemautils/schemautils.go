@@ -34,7 +34,7 @@ func (schema *ExtendedSchema) GetRefSchema() *ExtendedSchema {
 }
 
 func (schema *ExtendedSchema) GetProperties() []*ExtendedSchema {
-	properties := []*ExtendedSchema{}
+	properties := make([]*ExtendedSchema, 0, len(schema.Properties))
 	for _, property := range schema.Properties {
 		newSchema := NewExtendedSchema(property)
 		newSchema.InheritParentFrom(schema)
@@ -57,6 +57,32 @@ func (schema *ExtendedSchema) GetItems2020() *ExtendedSchema {
 	newSchema := NewExtendedSchema(schema.Items2020)
 	newSchema.InheritParentFrom(schema)
 	return newSchema
+}
+
+func (schema *ExtendedSchema) GetAnyOf() []*ExtendedSchema {
+	if schema.AnyOf == nil {
+		return nil
+	}
+	newSchemas := make([]*ExtendedSchema, len(schema.AnyOf))
+	for i, anyOf := range schema.AnyOf {
+		newSchema := NewExtendedSchema(anyOf)
+		newSchema.InheritParentFrom(schema)
+		newSchemas[i] = newSchema
+	}
+	return newSchemas
+}
+
+func (schema *ExtendedSchema) GetOneOf() []*ExtendedSchema {
+	if schema.OneOf == nil {
+		return nil
+	}
+	newSchemas := make([]*ExtendedSchema, len(schema.OneOf))
+	for i, oneOf := range schema.OneOf {
+		newSchema := NewExtendedSchema(oneOf)
+		newSchema.InheritParentFrom(schema)
+		newSchemas[i] = newSchema
+	}
+	return newSchemas
 }
 
 func (schema *ExtendedSchema) GetItems() []*ExtendedSchema {
