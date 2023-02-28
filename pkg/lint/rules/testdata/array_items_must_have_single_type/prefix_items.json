@@ -1,18 +1,18 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "properties": {
-    "foo": {
-      "items": {
-        "type": "string"
-      },
-      "type": "array",
-      "prefixItems": [
-        {
-          "type": "string",
-          "format": "date"
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "foo": {
+            "items": {
+                "type": "string"
+            },
+            "prefixItems": [
+                {
+                    "format": "date",
+                    "type": "string"
+                }
+            ],
+            "type": "array"
         }
-      ]
-    }
-  },
-  "type": "object"
+    },
+    "type": "object"
 }
