@@ -1,0 +1,14 @@
+{
+    "$defs": {
+        "content": {
+            "$dynamicAnchor": "T",
+            "not": true
+        }
+    },
+    "$id": "https://json-schema.blog/list-of-t",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "items": {
+        "$dynamicRef": "#T"
+    },
+    "type": "array"
+}
