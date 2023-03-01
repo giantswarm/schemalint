@@ -11,20 +11,24 @@ func RecurseAll(schema *schemautils.ExtendedSchema, callback func(schema *schema
 
 	callback(schema)
 
-	CallChildren(schema, func(schema *schemautils.ExtendedSchema) {
+	callChildren(schema, func(schema *schemautils.ExtendedSchema) {
 		RecurseAll(schema, callback)
 	})
 }
 
-func RecurseAllUnsafe(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+func RecurseAllPre(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
 	callback(schema)
 
-	CallChildren(schema, func(schema *schemautils.ExtendedSchema) {
-		RecurseAllUnsafe(schema, callback)
+	if schema.IsSelfReference() {
+		return
+	}
+
+	callChildren(schema, func(schema *schemautils.ExtendedSchema) {
+		RecurseAllPre(schema, callback)
 	})
 }
 
-func CallChildren(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
+func callChildren(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {
 	if schema.Ref != nil {
 		refSchema := schema.GetRefSchema()
 		callback(refSchema)
