@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Check if normalization is already applied when calling normalize with output argument.
 - Add rules to forbid infinite recursion and recursion-related keywords.
 - Add possibility to output version with `schemalint -v` or `schemalint --version`.
 - Add rule to check whether logical constructs (if, then & else) are not used.
