@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add rules to forbid infinite recursion and recursion-related keywords.
+- Add possibility to output version with `schemalint -v` or `schemalint --version`.
 - Add rule to check whether logical constructs (if, then & else) are not used.
 - Add check that schemas only use `anyOf` and `oneOf` for specific purposes.
 - Add rule to check that arrays only specify one type for their items.
