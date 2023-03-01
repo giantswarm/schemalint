@@ -43,6 +43,8 @@ var ClusterApp = &RuleSet{
 		rules.AvoidLogicalConstruct{},
 		rules.AdheresToCommonSchemaStructureRecommendations{},
 		rules.AdheresToCommonSchemaStructureRequirements{},
+		rules.AvoidRecursion{},
+		rules.AvoidRecursionKeywords{},
 	},
 }
 

@@ -5,6 +5,7 @@ import (
 
 	"github.com/giantswarm/schemalint/cmd/normalize"
 	"github.com/giantswarm/schemalint/cmd/verify"
+	"github.com/giantswarm/schemalint/pkg/project"
 )
 
 var (
@@ -14,6 +15,7 @@ var (
 		Args:         cobra.MinimumNArgs(1),
 		ArgAliases:   []string{"PATH"},
 		SilenceUsage: true,
+		Version:      project.Version(),
 	}
 )
 
