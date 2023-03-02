@@ -5,9 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
-
 	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestBuildPropertyAnnotationsMap(t *testing.T) {
@@ -99,11 +98,17 @@ func openGoldenFile(path string) (*os.File, error) {
 }
 
 // use this function as a template when creating golden files for new tests
-func DumpPropertyAnnotationsMap(propertyAnnotationsMap PropertyAnnotationsMap) {
+func DumpPropertyAnnotationsMap(propertyAnnotationsMap PropertyAnnotationsMap, path string) {
+	goldenFile, err := os.Create(path)
+	if err != nil {
+		panic(err)
+	}
 	json, err := json.MarshalIndent(propertyAnnotationsMap, "", "  ")
 	if err != nil {
 		panic(err)
 	}
 
-	os.Stdout.Write(json)
+	_, err = goldenFile.Write(json)
+
+	// os.Stdout.Write(json)
 }
