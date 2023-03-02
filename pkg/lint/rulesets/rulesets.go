@@ -42,6 +42,9 @@ var ClusterApp = &RuleSet{
 		rules.AvoidUnevaluated{},
 		rules.PropertiesMustHaveOneType{},
 		rules.AvoidLogicalConstruct{},
+		rules.ArrayItemsMustHaveSingleType{},
+		rules.AvoidRecursion{},
+		rules.AvoidRecursionKeywords{},
 	},
 	excludeLocations: []string{
 		"/properties/internal",
