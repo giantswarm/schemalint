@@ -109,7 +109,5 @@ func DumpPropertyAnnotationsMap(propertyAnnotationsMap PropertyAnnotationsMap, p
 		panic(err)
 	}
 
-	_, err = goldenFile.Write(json)
-
-	// os.Stdout.Write(json)
+	goldenFile.Write(json)
 }
