@@ -15,9 +15,12 @@ func (r DescriptionMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
 
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if !stringStartsCapitalized(annotations.GetDescription()) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' description must start with a capital letter.", path))
+			ruleResults.Add(
+				fmt.Sprintf("Property '%s' description must start with a capital letter.", schemautils.ConvertToConciseLocation(resolvedLocation)),
+				resolvedLocation,
+			)
 		}
 	}
 

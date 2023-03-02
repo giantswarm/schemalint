@@ -14,7 +14,7 @@ func (r DeprecatedPropertiesShouldHaveComment) Verify(schema *schemautils.Extend
 	ruleResults := &lint.RuleResults{}
 	callback := func(schema *schemautils.ExtendedSchema) {
 		if schema.Deprecated && schema.Comment == "" {
-			ruleResults.Add(fmt.Sprintf("Deprecated property '%s' should have a $comment.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Deprecated property '%s' should have a $comment.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
 		}
 	}
 

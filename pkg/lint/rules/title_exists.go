@@ -13,9 +13,14 @@ type TitleExists struct{}
 func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if annotations.GetTitle() == "" {
-			ruleResults.Add(fmt.Sprintf("Property '%s' must have a title.", path))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Property '%s' must have a title.",
+					schemautils.ConvertToConciseLocation(resolvedLocation)),
+				resolvedLocation,
+			)
 		}
 	}
 	return *ruleResults

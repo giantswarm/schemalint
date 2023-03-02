@@ -15,10 +15,10 @@ func (r AvoidUnevaluated) Verify(schema *schemautils.ExtendedSchema) lint.RuleRe
 
 	callback := func(schema *schemautils.ExtendedSchema) {
 		if schema.UnevaluatedItems != nil {
-			ruleResults.Add(fmt.Sprintf("Property '%s' must not use unevaluatedItems.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Property '%s' must not use unevaluatedItems.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
 		}
 		if schema.UnevaluatedProperties != nil {
-			ruleResults.Add(fmt.Sprintf("Property '%s' must not use unevaluatedProperties.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Property '%s' must not use unevaluatedProperties.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
 		}
 	}
 
