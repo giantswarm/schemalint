@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2023-03-02
+
 - Check if normalization is already applied when calling normalize with output argument.
 - Add rules to forbid infinite recursion and recursion-related keywords.
 - Add possibility to output version with `schemalint -v` or `schemalint --version`.
@@ -74,7 +76,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/giantswarm/schemalint/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/giantswarm/schemalint/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/giantswarm/schemalint/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/giantswarm/schemalint/compare/v0.5.0...v0.6.0
