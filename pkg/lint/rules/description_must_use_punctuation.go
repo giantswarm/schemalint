@@ -18,9 +18,12 @@ func (r DescriptionMustUsePunctuation) Verify(schema *schemautils.ExtendedSchema
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
 
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if !endsWithPunctuation(annotations.GetDescription()) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' description must end with punctuation.", path))
+			ruleResults.Add(
+				fmt.Sprintf("Property '%s' description must end with punctuation.", schemautils.ConvertToConciseLocation(resolvedLocation)),
+				resolvedLocation,
+			)
 		}
 	}
 

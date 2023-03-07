@@ -16,7 +16,14 @@ func (r ArrayItemsMustHaveSingleType) Verify(schema *schemautils.ExtendedSchema)
 
 	callback := func(schema *schemautils.ExtendedSchema) {
 		if containedKeywords := getContainedIllegalArrayKeywords(schema); len(containedKeywords) != 0 {
-			ruleResults.Add(fmt.Sprintf("Array at '%s' must not use keyword(s): %s.", schema.GetHumanReadableLocation(), strings.Join(containedKeywords, ", ")))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Array at '%s' must not use keyword(s): %s.",
+					schema.GetHumanReadableLocation(),
+					strings.Join(containedKeywords, ", "),
+				),
+				schema.GetResolvedLocation(),
+			)
 		}
 	}
 

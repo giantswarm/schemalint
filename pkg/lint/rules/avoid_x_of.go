@@ -21,7 +21,7 @@ func (r AvoidXOf) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 					"Schema at path '%s' must only use anyOf for one of the following purposes:\n%s",
 					schema.GetHumanReadableLocation(),
 					error,
-				))
+				), schema.GetResolvedLocation())
 			}
 		}
 		if schema.OneOf != nil {
@@ -31,7 +31,7 @@ func (r AvoidXOf) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 					"Schema at path '%s' must only use oneOf for one of the following purposes:\n%s",
 					schema.GetHumanReadableLocation(),
 					error,
-				))
+				), schema.GetResolvedLocation())
 			}
 		}
 	}

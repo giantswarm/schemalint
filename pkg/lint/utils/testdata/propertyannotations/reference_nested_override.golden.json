@@ -1,6 +1,10 @@
 {
-  "/person": {},
-  "/person/addresses": {
+  "/properties/person": {
+    "Title": null,
+    "Description": null,
+    "Examples": null
+  },
+  "/properties/person/properties/addresses": {
     "Title": {
       "Value": "Addresses",
       "ReferenceLevel": 1
@@ -8,9 +12,10 @@
     "Description": {
       "Value": "The person's addresses.",
       "ReferenceLevel": 1
-    }
+    },
+    "Examples": null
   },
-  "/person/addresses/items/city": {
+  "/properties/person/properties/addresses/items/properties/city": {
     "Title": {
       "Value": "City - title override",
       "ReferenceLevel": 0
@@ -18,9 +23,10 @@
     "Description": {
       "Value": "The city.",
       "ReferenceLevel": 1
-    }
+    },
+    "Examples": null
   },
-  "/person/addresses/items/state": {
+  "/properties/person/properties/addresses/items/properties/state": {
     "Title": {
       "Value": "State",
       "ReferenceLevel": 1
@@ -28,9 +34,10 @@
     "Description": {
       "Value": "The state.",
       "ReferenceLevel": 1
-    }
+    },
+    "Examples": null
   },
-  "/person/addresses/items/street": {
+  "/properties/person/properties/addresses/items/properties/street": {
     "Title": {
       "Value": "Street",
       "ReferenceLevel": 1
@@ -38,9 +45,10 @@
     "Description": {
       "Value": "The street address.",
       "ReferenceLevel": 1
-    }
+    },
+    "Examples": null
   },
-  "/person/addresses/items/zip": {
+  "/properties/person/properties/addresses/items/properties/zip": {
     "Title": {
       "Value": "Zip",
       "ReferenceLevel": 1
@@ -48,9 +56,10 @@
     "Description": {
       "Value": "The zip code.",
       "ReferenceLevel": 1
-    }
+    },
+    "Examples": null
   },
-  "/person/age": {
+  "/properties/person/properties/age": {
     "Title": {
       "Value": "Age",
       "ReferenceLevel": 1
@@ -58,9 +67,10 @@
     "Description": {
       "Value": "Age in years which must be equal to or greater than zero.",
       "ReferenceLevel": 1
-    }
+    },
+    "Examples": null
   },
-  "/person/firstName": {
+  "/properties/person/properties/firstName": {
     "Title": {
       "Value": "First Name",
       "ReferenceLevel": 1
@@ -68,9 +78,10 @@
     "Description": {
       "Value": "The person's first name.",
       "ReferenceLevel": 1
-    }
+    },
+    "Examples": null
   },
-  "/person/lastName": {
+  "/properties/person/properties/lastName": {
     "Title": {
       "Value": "Last Name",
       "ReferenceLevel": 1
@@ -78,6 +89,7 @@
     "Description": {
       "Value": "The person's last name.",
       "ReferenceLevel": 1
-    }
+    },
+    "Examples": null
   }
 }

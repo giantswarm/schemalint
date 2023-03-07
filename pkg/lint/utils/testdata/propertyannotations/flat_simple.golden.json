@@ -1,8 +1,10 @@
 {
-  "/lastName": {
+  "/properties/lastName": {
     "Title": {
       "Value": "Last Name",
       "ReferenceLevel": 0
-    }
+    },
+    "Description": null,
+    "Examples": null
   }
 }

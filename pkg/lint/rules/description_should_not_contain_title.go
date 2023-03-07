@@ -15,9 +15,15 @@ func (r DescriptionShouldNotContainTitle) Verify(schema *schemautils.ExtendedSch
 	ruleResults := &lint.RuleResults{}
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if descriptionContainsTitle(annotations.GetDescription(), annotations.GetTitle()) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' description should not repeat the title.", path))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Property '%s' description should not repeat the title.",
+					schemautils.ConvertToConciseLocation(resolvedLocation),
+				),
+				resolvedLocation,
+			)
 		}
 	}
 	return *ruleResults

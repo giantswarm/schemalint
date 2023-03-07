@@ -1,7 +1,7 @@
 {
-  "/rootProp": {},
-  "/rootProp/childProp": {},
-  "/rootProp/childProp/grandchildProp": {
+  "/properties/rootProp": {},
+  "/properties/rootProp/properties/childProp": {},
+  "/properties/rootProp/properties/childProp/properties/grandchildProp": {
     "Title": {
       "Value": "Grandchild Prop",
       "ReferenceLevel": 0

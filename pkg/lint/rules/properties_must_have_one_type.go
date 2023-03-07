@@ -15,10 +15,10 @@ func (r PropertiesMustHaveOneType) Verify(schema *schemautils.ExtendedSchema) li
 
 	callback := func(schema *schemautils.ExtendedSchema) {
 		if len(schema.Types) > 1 {
-			ruleResults.Add(fmt.Sprintf("Property '%s' has %d types, but must have exactly one.", schema.GetHumanReadableLocation(), len(schema.Types)))
+			ruleResults.Add(fmt.Sprintf("Property '%s' has %d types, but must have exactly one.", schema.GetHumanReadableLocation(), len(schema.Types)), schema.GetResolvedLocation())
 		}
 		if len(schema.Types) == 0 && schema.Ref == nil {
-			ruleResults.Add(fmt.Sprintf("Property '%s' must have exactly one type unless '$ref' is used.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Property '%s' must have exactly one type unless '$ref' is used.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
 		}
 	}
 

@@ -16,16 +16,27 @@ func (r TitleShouldNotContainParentsTitle) Verify(schema *schemautils.ExtendedSc
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereTitlesExist()
 
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		title := annotations.GetTitle()
-		parentTitle := propertyAnnotationsMap.GetParentAnnotations(path).GetTitle()
+		parentAnnotations, err := propertyAnnotationsMap.GetParentAnnotations(resolvedLocation)
+		if err != nil {
+			continue
+		}
+		parentTitle := parentAnnotations.GetTitle()
 
 		if parentTitle == "" {
 			continue
 		}
 
 		if strings.Contains(strings.ToLower(title), strings.ToLower(parentTitle)) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' title should not contain the parent's title '%s'.", path, parentTitle))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Property '%s' title should not contain the parent's title '%s'.",
+					schemautils.ConvertToConciseLocation(resolvedLocation),
+					parentTitle,
+				),
+				resolvedLocation,
+			)
 		}
 	}
 	return *ruleResults

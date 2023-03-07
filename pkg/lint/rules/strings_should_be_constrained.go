@@ -19,7 +19,12 @@ func (r StringsShouldBeConstrained) Verify(schema *schemautils.ExtendedSchema) l
 			schema.Enum == nil &&
 			schema.Constant == nil &&
 			schema.Format == "" {
-			ruleResults.Add(fmt.Sprintf("String property '%s' should be constrained through 'pattern', 'minLength', 'maxLength', 'enum', 'constant' or 'format'.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"String property '%s' should be constrained through 'pattern', 'minLength', 'maxLength', 'enum', 'constant' or 'format'.",
+					schema.GetHumanReadableLocation()),
+				schema.GetResolvedLocation(),
+			)
 		}
 	}
 

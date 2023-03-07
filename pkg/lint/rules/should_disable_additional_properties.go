@@ -15,7 +15,7 @@ func (r ShouldDisableAdditionalProperties) Verify(schema *schemautils.ExtendedSc
 
 	callback := func(schema *schemautils.ExtendedSchema) {
 		if !isAdditionalPropertiesDisabled(schema) {
-			ruleResults.Add(fmt.Sprintf("Object '%s' should disable additional properties.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Object '%s' should disable additional properties.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
 		}
 	}
 

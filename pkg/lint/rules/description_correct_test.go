@@ -94,7 +94,7 @@ func TestDescriptionCorrect(t *testing.T) {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 
-			ruleResults := []string{}
+			ruleResults := []lint.RuleViolation{}
 			for _, rule := range tc.rules {
 				ruleResults = append(ruleResults, rule.Verify(schema).Violations...)
 			}

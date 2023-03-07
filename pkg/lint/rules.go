@@ -11,12 +11,44 @@ const (
 	SeverityRecommendation
 )
 
-type RuleResults struct {
-	Violations []string
+type RuleViolation struct {
+	message  string
+	location string
 }
 
-func (r *RuleResults) Add(violation string) {
-	r.Violations = append(r.Violations, violation)
+type RuleResults struct {
+	Violations []RuleViolation
+}
+
+func (r *RuleResults) Add(message string, location string) {
+	r.Violations = append(r.Violations, RuleViolation{message: message, location: location})
+}
+
+// Filter out all violations whose location is in the excluded list or in any
+// child locations.
+func (r *RuleResults) Filter(excludedLocations []string) *RuleResults {
+	filteredViolations := make([]RuleViolation, 0, len(r.Violations))
+	for _, violation := range r.Violations {
+		keep := true
+		for _, excludedLocation := range excludedLocations {
+			if violation.location == excludedLocation || schemautils.IsChildLocation(excludedLocation, violation.location) {
+				keep = false
+				break
+			}
+		}
+		if keep {
+			filteredViolations = append(filteredViolations, violation)
+		}
+	}
+	return &RuleResults{Violations: filteredViolations}
+}
+
+func (r *RuleResults) GetMessages() []string {
+	messages := make([]string, 0, len(r.Violations))
+	for _, violation := range r.Violations {
+		messages = append(messages, violation.message)
+	}
+	return messages
 }
 
 type Rule interface {

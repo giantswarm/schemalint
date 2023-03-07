@@ -18,13 +18,28 @@ func (r DescriptionShouldHaveCorrectLength) Verify(schema *schemautils.ExtendedS
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
 
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if descriptionIsTooShort(annotations.GetDescription()) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' description should be more than %d characters.", path, minDescriptionLength))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Property '%s' description should be more than %d characters.",
+					schemautils.ConvertToConciseLocation(resolvedLocation),
+					minDescriptionLength,
+				),
+				resolvedLocation,
+			)
 		}
 
 		if descriptionIsTooLong(annotations.GetDescription()) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' description should be less than %d characters.", path, maxDescriptionLength))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Property '%s' description should be less than %d characters.",
+					schemautils.ConvertToConciseLocation(resolvedLocation),
+					maxDescriptionLength,
+				),
+				resolvedLocation,
+			)
+
 		}
 	}
 

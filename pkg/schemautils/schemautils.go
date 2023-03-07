@@ -1,6 +1,7 @@
 package schemautils
 
 import (
+	"fmt"
 	"strings"
 
 	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
@@ -113,7 +114,7 @@ func (schema *ExtendedSchema) GetItems() []*ExtendedSchema {
 // becomes /cluster/azure/credentialSecret/namespace
 func (schema *ExtendedSchema) GetConciseLocation() string {
 	location := schema.GetResolvedLocation()
-	location = strings.ReplaceAll(location, "/properties", "")
+	location = ConvertToConciseLocation(location)
 	return location
 }
 
@@ -140,7 +141,11 @@ func removeIdFromLocation(location string) string {
 
 func (schema *ExtendedSchema) IsProperty() bool {
 	location := schema.GetResolvedLocation()
-	path := strings.Split(location, "/")
+	return locationIsProperty(location)
+}
+
+func locationIsProperty(resolvedLocation string) bool {
+	path := strings.Split(resolvedLocation, "/")
 	return len(path) > 1 && path[len(path)-2] == "properties"
 }
 
@@ -208,19 +213,23 @@ func (schema *ExtendedSchema) GetReferenceLevel() int {
 	return schema.Parent.GetReferenceLevel() + 1
 }
 
-func GetParentPropertyPath(conciseLocation string) string {
-	path := strings.Split(conciseLocation, "/")
-	if len(path) <= 1 {
-		return ""
+func GetParentPropertyPath(resolvedLocation string) (string, error) {
+	if !locationIsProperty(resolvedLocation) {
+		return "", fmt.Errorf("location is not a property: %s", resolvedLocation)
 	}
-	return strings.Join(path[:len(path)-1], "/")
+
+	path := strings.Split(resolvedLocation, "/")
+	if len(path) <= 2 {
+		return "", nil
+	}
+	return strings.Join(path[:len(path)-2], "/"), nil
 }
 
 // Returns a list of all schemas, whose location matches the given location.
 // Due to the usage of '$ref', multiple schemas can have the same path.
 func (schema *ExtendedSchema) GetSchemasAt(resolvedLocation string) []*ExtendedSchema {
 	schemas := []*ExtendedSchema{}
-	currentResolvedLocation := schema.GetConciseLocation()
+	currentResolvedLocation := schema.GetResolvedLocation()
 	if currentResolvedLocation == resolvedLocation {
 		schemas = append(schemas, schema)
 	}
@@ -234,4 +243,22 @@ func (schema *ExtendedSchema) GetSchemasAt(resolvedLocation string) []*ExtendedS
 		schemas = append(schemas, schema.GetRefSchema().GetSchemasAt(resolvedLocation)...)
 	}
 	return schemas
+}
+
+func IsChildLocation(parentLocation string, childLocation string) bool {
+	parentPaths := strings.Split(parentLocation, "/")
+	childPaths := strings.Split(childLocation, "/")
+	if len(childPaths) <= len(parentPaths) {
+		return false
+	}
+	for i, parentPath := range parentPaths {
+		if parentPath != childPaths[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func ConvertToConciseLocation(resolvedLocation string) string {
+	return strings.ReplaceAll(resolvedLocation, "/properties", "")
 }

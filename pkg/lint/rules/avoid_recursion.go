@@ -15,7 +15,13 @@ func (r AvoidRecursion) Verify(schema *schemautils.ExtendedSchema) lint.RuleResu
 
 	utils.RecurseAllPre(schema, func(schema *schemautils.ExtendedSchema) {
 		if schema.IsSelfReference() {
-			ruleResults.Add(fmt.Sprintf("Schema at '%s' must not reference itself.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Schema at '%s' must not reference itself.",
+					schema.GetHumanReadableLocation(),
+				),
+				schema.GetResolvedLocation(),
+			)
 		}
 	})
 	return *ruleResults
