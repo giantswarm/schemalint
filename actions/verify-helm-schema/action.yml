@@ -3,8 +3,6 @@ description: Verfies values.schema.json with schemalint verify and the specified
 inputs:
   rule-set:
     description: Rule set to use for verify command
-    required: true
-    default: ''
 runs: 
   using: composite
   steps:
