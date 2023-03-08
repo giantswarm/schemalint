@@ -1,0 +1,24 @@
+name: Verify values.schema.json
+description: Verfies values.schema.json with schemalint verify and the specified rule set
+inputs:
+  rule-set:
+    description: Rule set to use for verify command
+    required: true
+    default: ''
+runs: 
+  using: composite
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - uses: actions/setup-go@v3
+      with:
+        go-version: "^1.19"
+
+    - name: Install schemalint
+      shell: bash
+      run: go install github.com/giantswarm/schemalint@latest
+
+    - name: Run schemalint
+      shell: bash
+      run: verify-helm-schema.sh
