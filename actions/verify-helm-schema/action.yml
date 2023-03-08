@@ -21,4 +21,4 @@ runs:
 
     - name: Run schemalint
       shell: bash
-      run: verify-helm-schema.sh
+      run: ${{ github.action_path }}/verify-helm-schema.sh
