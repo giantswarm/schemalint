@@ -54,3 +54,36 @@ $ schemalint normalize myschema.json > normalized.json
 ```
 
 Use `--help` to learn about more options.
+
+
+## GitHub Action
+
+An action to run `schemalint verify` on the `values.schema.json` in app repositories in provided in `actions/verify-helm-schema`.
+
+**Example workflow**:
+
+```yaml
+name: JSON schema validation
+on:
+  push: {}
+
+jobs:
+  validate:
+    name: Verify values.schema.json with schemalint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run schemalint
+        id: run-schemalint
+        uses: giantswarm/schemalint/actions/verify-helm-schema@v1.0.0
+        with:
+          rule-set: 'cluster-app'
+```
+
+Note that it is possible to define the rule set to be used for the `verify` command with the `with` keyword.
+```yaml
+with:
+  rule-set: 'RULE_SET'
+```
+If the rule set is not specified, no rule set will be used.
