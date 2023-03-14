@@ -28,12 +28,16 @@ jobs:
           else
             echo "Version found: ${{ steps.regex-match.outputs.group1 }}"
           fi
+
+          
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
       - name: Echo git head commit hash
         run: |
           echo $(git rev-parse HEAD) 
-          echo $(git show) 
+          echo $(git log -1) 
       - name: Update version in action.yml
         uses: mikefarah/yq@master
         with:
