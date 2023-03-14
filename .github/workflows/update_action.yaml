@@ -30,6 +30,9 @@ jobs:
           fi
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Echo git head commit hash
+        run: |
+          echo $(git rev-parse HEAD~) 
       - name: Update version in action.yml
         uses: mikefarah/yq@master
         with:
