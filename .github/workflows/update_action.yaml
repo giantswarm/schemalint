@@ -47,6 +47,6 @@ jobs:
       - name: Push changes
         env:
           remote_repo: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          branch_name: ${{ github.head_ref || github.ref_name }} 
         run: |
-          git push "${remote_repo}"
-
+          git push "${remote_repo}" "HEAD:${branch_name}"
