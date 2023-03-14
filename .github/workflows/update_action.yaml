@@ -50,4 +50,5 @@ jobs:
           remote_repo: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           branch_name: ${{ github.head_ref || github.ref_name }} 
         run: |
+          git pull "${remote_repo}" "HEAD:${branch_name}"
           git push "${remote_repo}" "HEAD:${branch_name}"
