@@ -6,18 +6,11 @@ inputs:
 runs: 
   using: composite
   steps:
-    - id: get_version
-      uses: battila7/get-version-action@v2
     - name: Install schemalint
       uses: giantswarm/install-binary-action@v1.1.0
       with:
         binary: "schemalint"
-        version: ${{ steps.get_version.outputs.version-without-v }}
-
-    - run: echo ${{ steps.get_version.outputs.version }}
-      shell: bash
-    - run: echo ${{ steps.get_version.outputs.version-without-v }}
-      shell: bash
+        version: "0.10.0"
 
     - name: Run schemalint
       shell: bash
