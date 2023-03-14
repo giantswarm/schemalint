@@ -33,6 +33,7 @@ jobs:
       - name: Echo git head commit hash
         run: |
           echo $(git rev-parse HEAD) 
+          echo $(git show) 
       - name: Update version in action.yml
         uses: mikefarah/yq@master
         with:
