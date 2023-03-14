@@ -52,4 +52,4 @@ jobs:
         run: |
           # git pull "${remote_repo}" "HEAD:${branch_name}"
           # git push "${remote_repo}" "HEAD:${branch_name}"
-          echo $(git rev-parse HEAD) 
+          echo $(git rev-parse HEAD~) 
