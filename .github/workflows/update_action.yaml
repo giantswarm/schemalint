@@ -3,7 +3,7 @@ on:
   pull_request:
     types: 
       - opened
-
+      - reopened
 jobs:
   get_version:
     name: Get version from PR title
@@ -11,6 +11,8 @@ jobs:
     outputs: 
       version: ${{ steps.regex-match.outputs.group1 }}
     steps:
+      - name: Echo title
+        run: echo ${{ github.event.pull_request.title }}
       - name: Run regex match action
         uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
