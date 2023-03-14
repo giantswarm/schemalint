@@ -3,7 +3,7 @@ on:
   pull_request:
     types: 
       - opened
-
+      - reopened
 jobs:
   get_version:
     name: Get version from PR title
