@@ -1,0 +1,52 @@
+name: Update action yml
+on:
+  pull_request:
+    types: 
+      - opened
+
+jobs:
+  update_version:
+    name: Get version from PR title
+    runs-on: ubuntu-latest
+    outputs: 
+      version: ${{ steps.regex-match.outputs.group1 }}
+    steps:
+      - name: Run regex match action
+        uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match
+        with:
+          text: ${{ github.event.pull_request.title }}
+          # (modified) official semver regix: https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string 
+          regex: '^Release v((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$'
+          flags: 'g'
+      - name: Check that the version is defined
+        run: |
+          if [ -z "${{ steps.regex-match.outputs.group1 }}" ]; then
+            echo "No version found"
+            exit 1
+          else
+            echo "Version found: ${{ steps.regex-match.outputs.group1 }}"
+          fi
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Update version in action.yml
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.runs.steps[0].with.version = "${{ steps.regex-match.outputs.group1 }}"' actions/verify-helm-schema/action.yml
+      - name: Set up git identity
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - name: Create release commit
+        run: |
+          git add -A
+          git commit -m "Update version in action.yml"
+      - name: Print current branch
+        run: |
+          echo "Current branch: $(git branch --show-current)"
+      - name: Push changes
+        env:
+          remote_repo: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+        run: |
+          git push "${remote_repo}"
+
