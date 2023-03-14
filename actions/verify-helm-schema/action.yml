@@ -3,14 +3,15 @@ description: Verfies values.schema.json with schemalint verify and the specified
 inputs:
   rule-set:
     description: Rule set to use for verify command
-runs:
+runs: 
   using: composite
   steps:
     - name: Install schemalint
       uses: giantswarm/install-binary-action@v1.1.0
       with:
         binary: "schemalint"
-        version: "0.10.0"
+        version: "wrong version"
+
     - name: Run schemalint
       shell: bash
       run: ${{ github.action_path }}/verify-helm-schema.sh ${{ inputs.rule-set }}
