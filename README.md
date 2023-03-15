@@ -76,7 +76,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Run schemalint
         id: run-schemalint
-        uses: giantswarm/schemalint/actions/verify-helm-schema@v1.0.0
+        uses: giantswarm/schemalint/actions/verify-helm-schema@v1
         with:
           rule-set: 'cluster-app'
 ```
@@ -87,3 +87,14 @@ with:
   rule-set: 'RULE_SET'
 ```
 If the rule set is not specified, no rule set will be used.
+
+## Major Releases
+
+This repository uses [floating tags](https://github.com/giantswarm/floating-tags-action).
+Other repositories that use schemalint point to major floating tag versions,
+like `v1`. That means that all minor and patch releases will be automatically
+rolled out to these repositories.
+When doing a major release the following steps have to be completed:
+1. Create a new major floating tag under "Actions -> Ensure major version tags -> Run Workflow"
+2. Update all references to schemalint.
+    1. devctl: `pkg/gen/input/workflows/internal/file/cluster_app_schema_validation.yaml.template`
