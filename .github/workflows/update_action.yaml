@@ -1,3 +1,6 @@
+# This action runs when a release PR is opened and updates the version of 
+# schemalint in `actions/verify-helm-schema/action.yml` to the one of the PR.
+
 name: Update action yml
 on:
   pull_request:
