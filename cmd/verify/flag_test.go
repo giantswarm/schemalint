@@ -3,7 +3,7 @@ package verify
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/pkg/lint/rulesets"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/rulesets"
 )
 
 func TestValidateFlags(t *testing.T) {
