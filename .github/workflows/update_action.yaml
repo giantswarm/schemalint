@@ -1,0 +1,59 @@
+# This action runs when a release PR is opened and updates the version of 
+# schemalint in `actions/verify-helm-schema/action.yml` to the one of the PR.
+
+name: Update action yml
+on:
+  pull_request:
+    types: 
+      - opened
+jobs:
+  get_version:
+    name: Get version from PR title
+    runs-on: ubuntu-latest
+    outputs: 
+      version: ${{ steps.regex-match.outputs.group1 }}
+    steps:
+      - name: Run regex match action
+        uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match
+        with:
+          text: ${{ github.event.pull_request.title }}
+          # (modified) official semver regix: https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string 
+          regex: '^Release v((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$'
+          flags: 'g'
+      - name: Check that the version is defined
+        run: |
+          if [ -z "${{ steps.regex-match.outputs.group1 }}" ]; then
+            echo "No version found"
+          else
+            echo "Version found: ${{ steps.regex-match.outputs.group1 }}"
+          fi
+
+  update_version:
+    name: Update version in action.yml
+    runs-on: ubuntu-latest
+    needs: get_version
+    if: needs.get_version.outputs.version 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - name: Update version in action.yml
+        uses: mikefarah/yq@v4.31.2
+        with:
+          cmd: yq -i '.runs.steps[0].with.version = "${{ needs.get_version.outputs.version }}"' actions/verify-helm-schema/action.yml
+      - name: Set up git identity
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - name: Create release commit
+        run: |
+          git add -A
+          git commit -m "Update version in action.yml"
+      - name: Push changes
+        env:
+          remote_repo: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          branch_name: ${{ github.head_ref || github.ref_name }} 
+        run: |
+          git push "${remote_repo}" "HEAD:${branch_name}"

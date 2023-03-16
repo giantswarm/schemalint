@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add a reusable composite GitHub action that calls `schemalint verify`. 
+
 ## [0.10.0] - 2023-03-07
 
 - Add possibility to exclude locations from rule set validation.
