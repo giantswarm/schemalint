@@ -28,7 +28,7 @@ async function mainE() {
 }
 
 async function findReleasePRNumber() {
-    const { code, output, error } = await gh(['pr', 'list', '--repo', 'giantswarm/helm-values-gen', '--state', 'open', '--json', 'title,number'])
+    const { code, output, error } = await gh(['pr', 'list', '--repo', 'giantswarm/schemalint', '--state', 'open', '--json', 'title,number'])
     if (code != 0) {
         throw new Error(error);
     }
