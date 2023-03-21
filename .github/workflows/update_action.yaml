@@ -7,7 +7,6 @@ on:
     workflows: ["Create Release PR"]
     types:
       - completed
-  push: {} # for testing
 jobs:
   get_version:
     name: Get version from PR title
