@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/v2/pkg/lint"
 )
 
 func TestBuildPropertyAnnotationsMap(t *testing.T) {
