@@ -3,31 +3,36 @@
 
 name: Update action yml
 on:
-  pull_request:
-    types: 
-      - opened
+  workflow_run:
+    workflows: ["Create Release PR"]
+    types:
+      - completed
 jobs:
   get_version:
     name: Get version from PR title
     runs-on: ubuntu-latest
     outputs: 
-      version: ${{ steps.regex-match.outputs.group1 }}
+      version: ${{ steps.get_version.outputs.version }}
+      branch: ${{ steps.get_version.outputs.branch }}
     steps:
-      - name: Run regex match action
-        uses: actions-ecosystem/action-regex-match@v2
-        id: regex-match
+      - name: Check gh cli
+        run: gh --version
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup node.js
+        uses: actions/setup-node@v3
         with:
-          text: ${{ github.event.pull_request.title }}
-          # (modified) official semver regix: https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string 
-          regex: '^Release v((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$'
-          flags: 'g'
-      - name: Check that the version is defined
-        run: |
-          if [ -z "${{ steps.regex-match.outputs.group1 }}" ]; then
-            echo "No version found"
-          else
-            echo "Version found: ${{ steps.regex-match.outputs.group1 }}"
-          fi
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: .github/find_release_pr/package-lock.json
+      - name: Install npm packages
+        working-directory: .github/find_release_pr
+        run: "npm ci"
+      - name: "Run local js action"
+        id: get_version
+        run: node .github/find_release_pr/index.js
+        env:
+          GH_TOKEN: ${{ github.token }}
 
   update_version:
     name: Update version in action.yml
@@ -38,7 +43,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.head_ref || github.ref_name }}
+          ref: ${{ needs.get_version.outputs.branch }}
       - name: Update version in action.yml
         uses: mikefarah/yq@v4.31.2
         with:
@@ -54,6 +59,6 @@ jobs:
       - name: Push changes
         env:
           remote_repo: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
-          branch_name: ${{ github.head_ref || github.ref_name }} 
+          branch_name: ${{ needs.get_version.outputs.branch }} 
         run: |
           git push "${remote_repo}" "HEAD:${branch_name}"
