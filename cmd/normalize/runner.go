@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/giantswarm/schemalint/v2/pkg/cli"
-	"github.com/giantswarm/schemalint/v2/pkg/normalize"
+	"github.com/giantswarm/schemalint/pkg/cli"
+	"github.com/giantswarm/schemalint/pkg/normalize"
 )
 
 type runner struct {

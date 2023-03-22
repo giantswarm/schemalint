@@ -1,7 +1,7 @@
 package lint
 
 import (
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type Severity int

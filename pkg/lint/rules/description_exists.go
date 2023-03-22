@@ -3,9 +3,9 @@ package rules
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/utils"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type DescriptionExists struct{}

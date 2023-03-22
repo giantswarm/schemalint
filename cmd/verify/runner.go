@@ -7,10 +7,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/rulesets"
-	"github.com/giantswarm/schemalint/v2/pkg/normalize"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/lint/rulesets"
+	"github.com/giantswarm/schemalint/pkg/normalize"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type runner struct {
