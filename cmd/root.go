@@ -3,9 +3,9 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/giantswarm/schemalint/v2/cmd/normalize"
-	"github.com/giantswarm/schemalint/v2/cmd/verify"
-	"github.com/giantswarm/schemalint/v2/pkg/project"
+	"github.com/giantswarm/schemalint/cmd/normalize"
+	"github.com/giantswarm/schemalint/cmd/verify"
+	"github.com/giantswarm/schemalint/pkg/project"
 )
 
 var (

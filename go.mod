@@ -1,4 +1,4 @@
-module github.com/giantswarm/schemalint/v2
+module github.com/giantswarm/schemalint
 
 go 1.19
 

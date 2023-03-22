@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/giantswarm/schemalint/v2/cmd"
+	"github.com/giantswarm/schemalint/cmd"
 )
 
 func main() {

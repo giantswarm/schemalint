@@ -8,7 +8,7 @@ import (
 	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
 	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
 type draft struct {
