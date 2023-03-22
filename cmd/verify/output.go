@@ -6,7 +6,7 @@ import (
 
 	"github.com/fatih/color"
 
-	"github.com/giantswarm/schemalint/pkg/cli"
+	"github.com/giantswarm/schemalint/v2/pkg/cli"
 )
 
 func printOutput(results []TestResult) {
