@@ -44,6 +44,20 @@ func (schema *ExtendedSchema) GetProperties() []*ExtendedSchema {
 	return properties
 }
 
+// GetAdditionalProperties returns nil or bool or *ExtendedSchema
+func (schema *ExtendedSchema) GetAdditionalProperties() interface{} {
+	if schema.AdditionalProperties == nil {
+		return nil
+	}
+	if schema.AdditionalProperties == true {
+		return true
+	}
+	if schema.AdditionalProperties == false {
+		return false
+	}
+	return NewExtendedSchema(schema.AdditionalProperties.(*jsonschema.Schema))
+}
+
 func (schema *ExtendedSchema) InheritParentFrom(other *ExtendedSchema) {
 	schema.Parent = other.Parent
 	schema.ParentPath = other.ParentPath
