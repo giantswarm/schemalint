@@ -47,6 +47,16 @@ func TestAdheheresToCommonSchemaStructureRequirements(t *testing.T) {
 			schemaPath:  "testdata/common_schema_structure_requirements/correct.json",
 			nViolations: 0,
 		},
+		{
+			name:        "case 7: correct with optional fields",
+			schemaPath:  "testdata/common_schema_structure_requirements/correct_with_optional_fields.json",
+			nViolations: 0,
+		},
+		{
+			name:        "case 8: too many",
+			schemaPath:  "testdata/common_schema_structure_requirements/too_many.json",
+			nViolations: 1,
+		},
 	}
 
 	for _, tc := range testCases {
@@ -59,7 +69,12 @@ func TestAdheheresToCommonSchemaStructureRequirements(t *testing.T) {
 			ruleResults := titleExistsRule.Verify(schema)
 
 			if len(ruleResults.Violations) != tc.nViolations {
-				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults.Violations))
+				t.Fatalf(
+					"Unexpected number of rule violations in test case '%s': Expected %d, got %d",
+					tc.name,
+					tc.nViolations,
+					len(ruleResults.Violations),
+				)
 			}
 		})
 	}

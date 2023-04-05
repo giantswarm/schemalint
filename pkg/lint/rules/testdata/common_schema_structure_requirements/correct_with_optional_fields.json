@@ -1,0 +1,37 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "connectivity": {
+            "type": "object"
+        },
+        "controlPlane": {
+            "type": "object"
+        },
+        "metadata": {
+            "type": "object"
+        },
+        "nodePools": {
+            "type": "array"
+        },
+        "internal": {
+            "type": "object"
+        },
+        "providerSpecific": {
+            "type": "object"
+        },
+        "managementCluster": {
+            "type": "object"
+        },
+        "baseDomain": {
+            "type": "object"
+        },
+        "provider": {
+            "type": "object"
+        },
+        "cluster-shared": {
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

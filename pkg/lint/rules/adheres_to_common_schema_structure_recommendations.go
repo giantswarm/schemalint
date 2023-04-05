@@ -9,19 +9,35 @@ import (
 
 type AdheresToCommonSchemaStructureRecommendations struct{}
 
-func (r AdheresToCommonSchemaStructureRecommendations) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
+func (r AdheresToCommonSchemaStructureRecommendations) Verify(
+	schema *schemautils.ExtendedSchema,
+) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
 
-	recommendedProperties := getRecommendedProperties()
+	recommendedProperties := getRecommendedRootProperties()
 
 	schemaProperties := schema.GetProperties()
 	for _, recommendedProperty := range recommendedProperties {
-		if property, ok := schemaProperties[recommendedProperty.Name]; ok {
-			if !property.IsType(recommendedProperty.Type) {
-				ruleResults.Add(fmt.Sprintf("Root-level property '%s' should be of type '%s'.", recommendedProperty.Name, recommendedProperty.Type))
-			}
-		} else {
-			ruleResults.Add(fmt.Sprintf("Root-level property '%s' should be present.", recommendedProperty.Name))
+		property, ok := schemaProperties[recommendedProperty.Name]
+		if ok && !property.IsType(recommendedProperty.Type) {
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Root-level property '%s' should be of type '%s'.",
+					recommendedProperty.Name,
+					recommendedProperty.Type,
+				),
+				property.GetResolvedLocation(),
+			)
+		}
+
+		if !ok {
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Root-level property '%s' should be present.",
+					recommendedProperty.Name,
+				),
+				schema.GetResolvedLocation(),
+			)
 		}
 
 	}
@@ -29,13 +45,8 @@ func (r AdheresToCommonSchemaStructureRecommendations) Verify(schema *schemautil
 	return *ruleResults
 }
 
-type propertyRecommendation struct {
-	Name string
-	Type string
-}
-
-func getRecommendedProperties() []propertyRecommendation {
-	recommendedProperties := []propertyRecommendation{
+func getRecommendedRootProperties() []propertyNameWithType {
+	recommendedProperties := []propertyNameWithType{
 		{
 			Name: "internal",
 			Type: "object",
