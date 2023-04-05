@@ -34,14 +34,28 @@ func (schema *ExtendedSchema) GetRefSchema() *ExtendedSchema {
 	return refSchema
 }
 
-func (schema *ExtendedSchema) GetProperties() []*ExtendedSchema {
-	properties := make([]*ExtendedSchema, 0, len(schema.Properties))
-	for _, property := range schema.Properties {
+func (schema *ExtendedSchema) GetProperties() map[string]*ExtendedSchema {
+	properties := map[string]*ExtendedSchema{}
+	for key, property := range schema.Properties {
 		newSchema := NewExtendedSchema(property)
 		newSchema.InheritParentFrom(schema)
-		properties = append(properties, newSchema)
+		properties[key] = newSchema
 	}
 	return properties
+}
+
+// GetAdditionalProperties returns nil or bool or *ExtendedSchema
+func (schema *ExtendedSchema) GetAdditionalProperties() interface{} {
+	if schema.AdditionalProperties == nil {
+		return nil
+	}
+	if schema.AdditionalProperties == true {
+		return true
+	}
+	if schema.AdditionalProperties == false {
+		return false
+	}
+	return NewExtendedSchema(schema.AdditionalProperties.(*jsonschema.Schema))
 }
 
 func (schema *ExtendedSchema) InheritParentFrom(other *ExtendedSchema) {
@@ -150,23 +164,23 @@ func locationIsProperty(resolvedLocation string) bool {
 }
 
 func (schema *ExtendedSchema) IsObject() bool {
-	return schema.isType("object")
+	return schema.IsType("object")
 }
 
 func (schema *ExtendedSchema) IsArray() bool {
-	return schema.isType("array")
+	return schema.IsType("array")
 }
 
 func (schema *ExtendedSchema) IsString() bool {
-	return schema.isType("string")
+	return schema.IsType("string")
 }
 
 func (schema *ExtendedSchema) IsNumber() bool {
-	return schema.isType("number")
+	return schema.IsType("number")
 }
 
 func (schema *ExtendedSchema) IsInteger() bool {
-	return schema.isType("integer")
+	return schema.IsType("integer")
 }
 
 func (schema *ExtendedSchema) IsNumeric() bool {
@@ -174,10 +188,10 @@ func (schema *ExtendedSchema) IsNumeric() bool {
 }
 
 func (schema *ExtendedSchema) IsBoolean() bool {
-	return schema.isType("boolean")
+	return schema.IsType("boolean")
 }
 
-func (schema *ExtendedSchema) isType(typeName string) bool {
+func (schema *ExtendedSchema) IsType(typeName string) bool {
 	isType := false
 	for _, t := range schema.Types {
 		if t == typeName {
