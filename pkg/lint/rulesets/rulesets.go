@@ -43,12 +43,16 @@ var ClusterApp = &RuleSet{
 		rules.AvoidUnevaluated{},
 		rules.PropertiesMustHaveOneType{},
 		rules.AvoidLogicalConstruct{},
+		rules.AdheresToCommonSchemaStructureRecommendations{},
+		rules.AdheresToCommonSchemaStructureRequirements{},
 		rules.ArrayItemsMustHaveSingleType{},
 		rules.AvoidRecursion{},
 		rules.AvoidRecursionKeywords{},
+		rules.ObjectsMustHaveProperties{},
 	},
 	excludeLocations: []string{
 		"/properties/internal",
+		"/properties/cluster-shared",
 	},
 	referenceURL: "https://github.com/giantswarm/rfc/pull/55", // should be updated when PR is merged
 }

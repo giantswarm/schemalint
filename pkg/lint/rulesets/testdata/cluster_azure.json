@@ -4,7 +4,8 @@
     "description": "Configuration of an Azure cluster using Cluster API",
     "properties": {
         "baseDomain": {
-            "title": "The base dns domain",
+            "default": "azuretest.gigantic.io",
+            "title": "Base DNS domain",
             "type": "string"
         },
         "cluster-shared": {
@@ -22,11 +23,12 @@
                         },
                         "instanceType": {
                             "default": "Standard_D2s_v5",
-                            "title": "Bastion node instance size",
+                            "description": "Type of virtual machine to use for the bastion host.",
+                            "title": "VM size",
                             "type": "string"
                         }
                     },
-                    "title": "Bastion settings",
+                    "title": "Bastion host",
                     "type": "object"
                 },
                 "network": {
@@ -50,6 +52,7 @@
                         },
                         "mode": {
                             "default": "public",
+                            "description": "Specifying if the cluster resources are publicly accessible or not.",
                             "enum": [
                                 "public",
                                 "private"
@@ -81,7 +84,7 @@
                             "type": "object"
                         }
                     },
-                    "title": "Network settings",
+                    "title": "Network",
                     "type": "object"
                 },
                 "sshSSOPublicKey": {
@@ -90,7 +93,7 @@
                     "type": "string"
                 }
             },
-            "title": "Connectivity settings",
+            "title": "Connectivity",
             "type": "object"
         },
         "controlPlane": {
@@ -134,7 +137,7 @@
                             "type": "string"
                         }
                     },
-                    "title": "OIDC settings",
+                    "title": "OIDC authentication",
                     "type": "object"
                 },
                 "replicas": {
@@ -148,7 +151,7 @@
                     "type": "integer"
                 }
             },
-            "title": "Control plane settings",
+            "title": "Control plane",
             "type": "object"
         },
         "internal": {
@@ -181,30 +184,121 @@
                 },
                 "identity": {
                     "properties": {
-                        "attachCapzControllerIdentity": {
+                        "attachCapzControllerUserAssignedIdentity": {
                             "default": false,
-                            "title": "Attach controller identity",
+                            "title": "Attach CAPZ controller UserAssigned identity",
                             "type": "boolean"
                         },
-                        "enablePerClusterIdentity": {
-                            "default": false,
-                            "title": "Enable identity per cluster",
-                            "type": "boolean"
+                        "type": {
+                            "default": "SystemAssigned",
+                            "enum": [
+                                "SystemAssigned",
+                                "UserAssigned"
+                            ],
+                            "title": "Type of Identity",
+                            "type": "string"
+                        },
+                        "userAssignedCustomIdentities": {
+                            "default": [],
+                            "title": "List of custom UserAssigned Identities to attach to all nodes",
+                            "type": "array"
                         }
                     },
                     "title": "Identity",
                     "type": "object"
                 },
+                "image": {
+                    "properties": {
+                        "gallery": {
+                            "default": "gsCapzFlatcar-41c2d140-ac44-4d8b-b7e1-7b2f1ddbe4d0",
+                            "description": "Name of the community gallery hosting the image",
+                            "title": "Gallery",
+                            "type": "string"
+                        },
+                        "name": {
+                            "default": "",
+                            "description": "Name of the image definition in the Gallery",
+                            "title": "Image Definition",
+                            "type": "string"
+                        },
+                        "version": {
+                            "default": "3374.2.4",
+                            "title": "Image version",
+                            "type": "string"
+                        }
+                    },
+                    "title": "Node Image",
+                    "type": "object"
+                },
                 "kubernetesVersion": {
-                    "default": "1.24.8",
+                    "default": "1.24.11",
                     "title": "Kubernetes version",
                     "type": "string"
+                },
+                "network": {
+                    "description": "Internal network configuration that is susceptible to more frequent change",
+                    "properties": {
+                        "vpn": {
+                            "description": "Internal VPN configuration that is susceptible to more frequent change",
+                            "properties": {
+                                "gatewayMode": {
+                                    "default": "remote",
+                                    "enum": [
+                                        "local",
+                                        "remote"
+                                    ],
+                                    "title": "VPN gateway mode",
+                                    "type": "string"
+                                }
+                            },
+                            "title": "VPN configuration",
+                            "type": "object"
+                        }
+                    },
+                    "title": "Network configuration",
+                    "type": "object"
                 }
             },
             "title": "Internal settings",
             "type": "object"
         },
-        "machineDeployments": {
+        "managementCluster": {
+            "title": "The capi MC managing this cluster",
+            "type": "string"
+        },
+        "metadata": {
+            "properties": {
+                "description": {
+                    "description": "User-friendly description of the cluster's purpose.",
+                    "title": "Cluster description",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Unique identifier, cannot be changed after creation.",
+                    "title": "Cluster name",
+                    "type": "string"
+                },
+                "organization": {
+                    "title": "Organization",
+                    "type": "string"
+                },
+                "servicePriority": {
+                    "$comment": "Defined in https://github.com/giantswarm/rfc/tree/main/classify-cluster-priority",
+                    "default": "highest",
+                    "description": "The relative importance of this cluster.",
+                    "enum": [
+                        "highest",
+                        "medium",
+                        "lowest"
+                    ],
+                    "title": "Service priority",
+                    "type": "string"
+                }
+            },
+            "title": "Metadata",
+            "type": "object"
+        },
+        "nodePools": {
             "default": [
                 {
                     "customNodeLabels": [],
@@ -263,6 +357,15 @@
                         "title": "Disable HealthChecks for the MachineDeployment",
                         "type": "boolean"
                     },
+                    "failureDomain": {
+                        "enum": [
+                            "1",
+                            "2",
+                            "3"
+                        ],
+                        "title": "Select zone where to deploy the nodePool",
+                        "type": "string"
+                    },
                     "instanceType": {
                         "title": "VM size",
                         "type": "string"
@@ -273,7 +376,7 @@
                         "type": "string"
                     },
                     "replicas": {
-                        "title": "Number of nodes in the MachineDeployment",
+                        "title": "Number of nodes",
                         "type": "integer"
                     },
                     "rootVolumeSizeGB": {
@@ -287,126 +390,8 @@
             "title": "Node pools",
             "type": "array"
         },
-        "machinePools": {
-            "$comment": "/machineDeployments is used instead.",
-            "default": [],
-            "deprecated": true,
-            "items": {
-                "properties": {
-                    "customNodeLabels": {
-                        "items": {
-                            "title": "Label",
-                            "type": "string"
-                        },
-                        "title": "Custom node labels",
-                        "type": "array"
-                    },
-                    "customNodeTaints": {
-                        "descriptions": "Taints that will be set on all nodes in the node pool, to avoid the scheduling of certain workloads.",
-                        "items": {
-                            "properties": {
-                                "effect": {
-                                    "enum": [
-                                        "NoSchedule",
-                                        "PreferNoSchedule",
-                                        "NoExecute"
-                                    ],
-                                    "title": "Effect",
-                                    "type": "string"
-                                },
-                                "key": {
-                                    "title": "Key",
-                                    "type": "string"
-                                },
-                                "value": {
-                                    "title": "Value",
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "effect",
-                                "key",
-                                "value"
-                            ],
-                            "title": "Node taint",
-                            "type": "object"
-                        },
-                        "title": "Custom node taints",
-                        "type": "array"
-                    },
-                    "instanceType": {
-                        "title": "VM size",
-                        "type": "string"
-                    },
-                    "location": {
-                        "title": "Location",
-                        "type": "string"
-                    },
-                    "maxSize": {
-                        "title": "Maximum number of nodes",
-                        "type": "integer"
-                    },
-                    "minSize": {
-                        "title": "Minimum number of nodes",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "description": "Unique identifier, cannot be changed after creation.",
-                        "title": "Name",
-                        "type": "string"
-                    },
-                    "rootVolumeSizeGB": {
-                        "title": "Root volume size (GB)",
-                        "type": "integer"
-                    }
-                },
-                "title": "Node pool",
-                "type": "object"
-            },
-            "title": "Machine pools (deprecated)",
-            "type": "array"
-        },
-        "managementCluster": {
-            "title": "The capi MC managing this cluster",
-            "type": "string"
-        },
-        "metadata": {
-            "properties": {
-                "description": {
-                    "default": "test",
-                    "description": "User-friendly description of the cluster's purpose.",
-                    "title": "Cluster description",
-                    "type": "string"
-                },
-                "name": {
-                    "default": "",
-                    "description": "Unique identifier, cannot be changed after creation.",
-                    "title": "Cluster name",
-                    "type": "string"
-                },
-                "organization": {
-                    "default": "",
-                    "title": "Organization",
-                    "type": "string"
-                },
-                "servicePriority": {
-                    "$comment": "Defined in https://github.com/giantswarm/rfc/tree/main/classify-cluster-priority",
-                    "default": "highest",
-                    "description": "The relative importance of this cluster.",
-                    "enum": [
-                        "highest",
-                        "medium",
-                        "lowest"
-                    ],
-                    "title": "Service priority",
-                    "type": "string"
-                }
-            },
-            "title": "Metadata",
-            "type": "object"
-        },
         "provider": {
-            "title": "The capi Provider for this cluster",
+            "title": "Cluster API provider name",
             "type": "string"
         },
         "providerSpecific": {
@@ -432,6 +417,44 @@
                     "default": "westeurope",
                     "title": "Location",
                     "type": "string"
+                },
+                "network": {
+                    "additionalProperties": false,
+                    "description": "Azure VNet peering and other Azure-specific network settings.",
+                    "properties": {
+                        "peerings": {
+                            "default": [],
+                            "description": "Specifying VNets (their resource groups and names) to which the peering is established.",
+                            "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "remoteVnetName": {
+                                        "description": "Name of the remote VNet to which the peering is established.",
+                                        "maxLength": 64,
+                                        "minLength": 2,
+                                        "pattern": "^[-\\w\\._]+$",
+                                        "title": "VNet name",
+                                        "type": "string"
+                                    },
+                                    "resourceGroup": {
+                                        "description": "Resource group for the remote VNet to which the peering is established.",
+                                        "maxLength": 90,
+                                        "minLength": 1,
+                                        "pattern": "^[-\\w\\._\\(\\)]+$",
+                                        "title": "Resource group name",
+                                        "type": "string"
+                                    }
+                                },
+                                "title": "VNet peering",
+                                "type": "object",
+                                "uniqueItems": true
+                            },
+                            "title": "VNet peerings",
+                            "type": "array"
+                        }
+                    },
+                    "title": "Azure network settings",
+                    "type": "object"
                 },
                 "subscriptionId": {
                     "default": "PLACEHOLDER",

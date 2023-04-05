@@ -11,6 +11,9 @@
             },
             "title": "Internal settings",
             "type": "object"
+        },
+        "no-cluster-shared": {
+            "type": "object"
         }
     },
     "title": "Cluster configuration",
