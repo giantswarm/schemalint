@@ -56,7 +56,6 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 		)
 	}
 
-
 	return *ruleResults
 }
 
