@@ -49,6 +49,7 @@ var ClusterApp = &RuleSet{
 	},
 	excludeLocations: []string{
 		"/properties/internal",
+		"/properties/cluster-shared",
 	},
 }
 
@@ -94,14 +95,20 @@ func GetRuleSet(name RuleSetName) *RuleSet {
 	return ruleSet
 }
 
-func VerifyRuleSet(name string, schema *schemautils.ExtendedSchema) (errors []string, recommendations []string) {
+func VerifyRuleSet(
+	name string,
+	schema *schemautils.ExtendedSchema,
+) (errors []string, recommendations []string) {
 	nameEnum := RuleSetName(name)
 	ruleSet := GetRuleSet(nameEnum)
 
 	return LintWithRuleSet(schema, ruleSet)
 }
 
-func LintWithRuleSet(schema *schemautils.ExtendedSchema, ruleSet *RuleSet) (errors []string, recommendations []string) {
+func LintWithRuleSet(
+	schema *schemautils.ExtendedSchema,
+	ruleSet *RuleSet,
+) (errors []string, recommendations []string) {
 	errors = []string{}
 	recommendations = []string{}
 	for _, rule := range ruleSet.rules {

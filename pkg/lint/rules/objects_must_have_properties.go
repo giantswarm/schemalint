@@ -23,7 +23,7 @@ func (r ObjectsMustHaveProperties) Verify(schema *schemautils.ExtendedSchema) li
 		if nProperties == 0 {
 			ruleResults.Add(
 				fmt.Sprintf(
-					"Object at %s must have at least one property.",
+					"Object at '%s' must have at least one property.",
 					schema.GetHumanReadableLocation(),
 				),
 				schema.GetResolvedLocation(),
