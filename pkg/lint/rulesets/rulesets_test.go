@@ -19,21 +19,21 @@ func TestLintWithRules(t *testing.T) {
 			schemaPath:       "testdata/cluster_azure.json",
 			ruleSetName:      "cluster-app",
 			nErrors:          0,
-			nRecommendations: 177,
+			nRecommendations: 174,
 		},
 		{
-			name:             "case 1: with ignored location",
-			schemaPath:       "testdata/with_internal.json",
+			name:             "case 1: with ignored locations",
+			schemaPath:       "testdata/with_ignored.json",
 			ruleSetName:      "cluster-app",
 			nErrors:          0,
 			nRecommendations: 0,
 		},
 		{
-			name:             "case 1: without ignored location",
-			schemaPath:       "testdata/no_internal.json",
+			name:             "case 2: without ignored locations",
+			schemaPath:       "testdata/no_ignored.json",
 			ruleSetName:      "cluster-app",
-			nErrors:          1,
-			nRecommendations: 6,
+			nErrors:          3,
+			nRecommendations: 9,
 		},
 	}
 
