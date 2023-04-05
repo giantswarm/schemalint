@@ -42,6 +42,8 @@ var ClusterApp = &RuleSet{
 		rules.AvoidUnevaluated{},
 		rules.PropertiesMustHaveOneType{},
 		rules.AvoidLogicalConstruct{},
+		rules.AdheresToCommonSchemaStructureRecommendations{},
+		rules.AdheresToCommonSchemaStructureRequirements{},
 		rules.ArrayItemsMustHaveSingleType{},
 		rules.AvoidRecursion{},
 		rules.AvoidRecursionKeywords{},

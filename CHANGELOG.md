@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add rule to check whether root-level specifies properties of the common schema structure.
 - Add rule to check that objects are non-empty.
 
 ## [1.0.1] - 2023-03-22
