@@ -12,17 +12,23 @@ import (
 func printOutput(results []TestResult) {
 	recommendations := []string{}
 	errors := []string{}
+	moreInfo := []string{}
 
 	for _, r := range results {
 		recommendations = append(recommendations, r.Recommendations...)
 		errors = append(errors, r.Errors...)
+		moreInfo = append(moreInfo, r.MoreInfo)
 	}
 
 	sort.Strings(recommendations)
 	sort.Strings(errors)
 
 	printRecommendations(recommendations)
+	printSeparator()
 	printErrors(errors)
+	printSeparator()
+	printMoreInfo(moreInfo)
+	printSeparator()
 	printSummary(results)
 }
 
@@ -38,11 +44,18 @@ func printGenericList(title string, items []string, color *color.Color) {
 	if len(items) == 0 {
 		return
 	}
-	fmt.Println()
 	color.Printf("%s (%d)\n", title, len(items))
 	fmt.Println()
 	for _, i := range items {
 		fmt.Printf("- %s\n", i)
+	}
+}
+
+func printMoreInfo(moreInfo []string) {
+	for _, m := range moreInfo {
+		if m != "" {
+			fmt.Println(m)
+		}
 	}
 }
 
@@ -56,8 +69,11 @@ func printSummary(results []TestResult) {
 		}
 	}
 
-	fmt.Println()
 	fmt.Println("Verification result")
 	fmt.Println()
 	fmt.Println(summary)
+}
+
+func printSeparator() {
+	fmt.Println()
 }
