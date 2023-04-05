@@ -15,6 +15,5 @@
             "type": "array"
         }
     },
-    "additionalProperties": false,
     "type": "object"
 }

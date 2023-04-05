@@ -49,6 +49,14 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 		}
 	}
 
+	if schema.AdditionalProperties != false {
+		ruleResults.Add(
+			"Additional properties must not be allowed at the root level.",
+			schema.GetResolvedLocation(),
+		)
+	}
+
+
 	return *ruleResults
 }
 

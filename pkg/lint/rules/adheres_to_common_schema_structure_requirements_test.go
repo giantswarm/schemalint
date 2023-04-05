@@ -57,6 +57,11 @@ func TestAdheheresToCommonSchemaStructureRequirements(t *testing.T) {
 			schemaPath:  "testdata/common_schema_structure_requirements/too_many.json",
 			nViolations: 1,
 		},
+		{
+			name:        "case 9: additional properties not set to false",
+			schemaPath:  "testdata/common_schema_structure_requirements/additional_properties_not_set_to_false.json",
+			nViolations: 1,
+		},
 	}
 
 	for _, tc := range testCases {
