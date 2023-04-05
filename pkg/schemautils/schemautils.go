@@ -226,7 +226,7 @@ func GetParentPropertyPath(resolvedLocation string) (string, error) {
 }
 
 // Returns a list of all schemas, whose location matches the given location.
-// Due to the usage of '$ref', there can be multiple schema definitions for 
+// Due to the usage of '$ref', there can be multiple schema definitions for
 // the same location.
 //
 // For more information on this is look at the '"Overriding" Properties and

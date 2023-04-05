@@ -122,7 +122,7 @@ func (pam PropertyAnnotationsMap) GetParentAnnotations(
 // path to the property and the value are the annotations for that property.
 // <path> -> <annotations>
 //
-// For more information on why this is necessary look at the '"Overriding" 
+// For more information on why this is necessary look at the '"Overriding"
 // Properties and Understanding `PropertyAnnotationsMap`' section in the README.
 func BuildPropertyAnnotationsMap(schema *schemautils.ExtendedSchema) PropertyAnnotationsMap {
 	propertyAnnotationsMap := make(PropertyAnnotationsMap)
