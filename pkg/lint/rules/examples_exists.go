@@ -14,7 +14,7 @@ func (r ExampleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResul
 	ruleResults := &lint.RuleResults{}
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
-		if len(annotations.GetExamples()) == 0 && !annotationBelongsToBoolean(schema, resolvedLocation) {
+		if len(annotations.GetExamples()) == 0 && recommendExamplesAt(schema, resolvedLocation) {
 			ruleResults.Add(
 				fmt.Sprintf(
 					"Property '%s' should provide one or more examples.",
@@ -27,10 +27,28 @@ func (r ExampleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResul
 	return *ruleResults
 }
 
-func annotationBelongsToBoolean(schema *schemautils.ExtendedSchema, location string) bool {
+func recommendExamplesAt(schema *schemautils.ExtendedSchema, location string) bool {
 	schemas := schema.GetSchemasAt(location)
-	for _, s := range schemas {
-		if s.IsBoolean() {
+	isString := allSchemasAreString(schemas)
+	if !isString {
+		return false
+	}
+	isRestricted := oneStringSchemaIsRestricted(schemas)
+	return isRestricted
+}
+
+func allSchemasAreString(schemas []*schemautils.ExtendedSchema) bool {
+	for _, schema := range schemas {
+		if !schema.IsString() {
+			return false
+		}
+	}
+	return true
+}
+
+func oneStringSchemaIsRestricted(schemas []*schemautils.ExtendedSchema) bool {
+	for _, schema := range schemas {
+		if schema.Pattern != nil || schema.Format != "" {
 			return true
 		}
 	}
