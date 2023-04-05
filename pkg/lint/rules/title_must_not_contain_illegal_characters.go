@@ -17,13 +17,20 @@ func (r TitleMustNotContainIllegalCharacters) Verify(schema *schemautils.Extende
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereTitlesExist()
 
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		title := annotations.GetTitle()
 		if containedIllegalChars := getIllegalCharacterIn(title, titleIllegalCharacters); len(containedIllegalChars) > 0 {
-			ruleResults.Add(fmt.Sprintf(`Property '%s' title must not contain illegal characters: %q`, path, containedIllegalChars))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Property '%s' title must not contain illegal characters: %q",
+					schemautils.ConvertToConciseLocation(resolvedLocation),
+					containedIllegalChars,
+				),
+				resolvedLocation,
+			)
 		}
 		if containsLeadingOrTrailingSpace(title) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' title must not contain leading or trailing spaces.", path))
+			ruleResults.Add(fmt.Sprintf("Property '%s' title must not contain leading or trailing spaces.", resolvedLocation), schema.GetResolvedLocation())
 		}
 	}
 	return *ruleResults

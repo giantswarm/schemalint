@@ -18,7 +18,12 @@ func (r NumbersShouldBeConstrained) Verify(schema *schemautils.ExtendedSchema) l
 			schema.Maximum == nil &&
 			schema.ExclusiveMinimum == nil &&
 			schema.ExclusiveMaximum == nil {
-			ruleResults.Add(fmt.Sprintf("Numeric property '%s' should be constrained through 'minimum', 'maximum', 'exclusiveMinimum' or 'exclusiveMaximum'", schema.GetHumanReadableLocation()))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Numeric property '%s' should be constrained through 'minimum', 'maximum', 'exclusiveMinimum' or 'exclusiveMaximum'",
+					schema.GetHumanReadableLocation(),
+				), schema.GetResolvedLocation(),
+			)
 		}
 	}
 

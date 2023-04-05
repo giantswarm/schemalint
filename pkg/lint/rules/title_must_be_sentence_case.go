@@ -15,9 +15,15 @@ func (r TitleMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema) lint
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereTitlesExist()
 
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if !stringStartsCapitalized(annotations.GetTitle()) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' title must start with a capital letter.", path))
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Property '%s' title must start with a capital letter.",
+					resolvedLocation,
+				),
+				resolvedLocation,
+			)
 		}
 	}
 

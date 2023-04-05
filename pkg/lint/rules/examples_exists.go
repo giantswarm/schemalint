@@ -13,9 +13,15 @@ type ExampleExists struct{}
 func (r ExampleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
 	ruleResults := &lint.RuleResults{}
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
-	for location, annotations := range propertyAnnotationsMap {
-		if len(annotations.GetExamples()) == 0 && !annotationBelongsToBoolean(schema, location) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' should provide one or more examples.", location))
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
+		if len(annotations.GetExamples()) == 0 && !annotationBelongsToBoolean(schema, resolvedLocation) {
+			ruleResults.Add(
+				fmt.Sprintf(
+					"Property '%s' should provide one or more examples.",
+					schemautils.ConvertToConciseLocation(resolvedLocation),
+				),
+				resolvedLocation,
+			)
 		}
 	}
 	return *ruleResults

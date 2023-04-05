@@ -1,6 +1,6 @@
 {
-  "/person": {},
-  "/person/addresses": {
+  "/properties/person": {},
+  "/properties/person/properties/addresses": {
     "Title": {
       "Value": "Addresses",
       "ReferenceLevel": 1
@@ -10,7 +10,7 @@
       "ReferenceLevel": 1
     }
   },
-  "/person/addresses/items/city": {
+  "/properties/person/properties/addresses/items/properties/city": {
     "Title": {
       "Value": "City",
       "ReferenceLevel": 1
@@ -20,7 +20,7 @@
       "ReferenceLevel": 1
     }
   },
-  "/person/addresses/items/state": {
+  "/properties/person/properties/addresses/items/properties/state": {
     "Title": {
       "Value": "State",
       "ReferenceLevel": 1
@@ -30,7 +30,7 @@
       "ReferenceLevel": 1
     }
   },
-  "/person/addresses/items/street": {
+  "/properties/person/properties/addresses/items/properties/street": {
     "Title": {
       "Value": "Street",
       "ReferenceLevel": 1
@@ -40,7 +40,7 @@
       "ReferenceLevel": 1
     }
   },
-  "/person/addresses/items/zip": {
+  "/properties/person/properties/addresses/items/properties/zip": {
     "Title": {
       "Value": "Zip",
       "ReferenceLevel": 1
@@ -50,7 +50,7 @@
       "ReferenceLevel": 1
     }
   },
-  "/person/age": {
+  "/properties/person/properties/age": {
     "Title": {
       "Value": "Age",
       "ReferenceLevel": 1
@@ -60,7 +60,7 @@
       "ReferenceLevel": 1
     }
   },
-  "/person/firstName": {
+  "/properties/person/properties/firstName": {
     "Title": {
       "Value": "First Name",
       "ReferenceLevel": 1
@@ -70,7 +70,7 @@
       "ReferenceLevel": 1
     }
   },
-  "/person/lastName": {
+  "/properties/person/properties/lastName": {
     "Title": {
       "Value": "Last Name",
       "ReferenceLevel": 1

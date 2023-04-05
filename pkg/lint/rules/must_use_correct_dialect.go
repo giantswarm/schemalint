@@ -27,12 +27,12 @@ func (r MustUseCorrectDialect) Verify(schema *schemautils.ExtendedSchema) lint.R
 	draft, ok := schemaJson[draftKey].(string)
 
 	if !ok {
-		ruleResults.Add(fmt.Sprintf("Schema does not specify a draft/dialect, but must use '%s'.", correctDraft))
+		ruleResults.Add(fmt.Sprintf("Schema does not specify a draft/dialect, but must use '%s'.", correctDraft), schema.GetResolvedLocation())
 		return *ruleResults
 	}
 
 	if draft != correctDraft {
-		ruleResults.Add(fmt.Sprintf("Schema must use draft/dialect '%s', but uses '%s'.", correctDraft, draft))
+		ruleResults.Add(fmt.Sprintf("Schema must use draft/dialect '%s', but uses '%s'.", correctDraft, draft), schema.GetResolvedLocation())
 	}
 
 	return *ruleResults

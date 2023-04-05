@@ -9,7 +9,8 @@ import (
 )
 
 type RuleSet struct {
-	rules []lint.Rule
+	rules            []lint.Rule
+	excludeLocations []string
 }
 type RuleSetName string
 
@@ -43,8 +44,12 @@ var ClusterApp = &RuleSet{
 		rules.AvoidLogicalConstruct{},
 		rules.AdheresToCommonSchemaStructureRecommendations{},
 		rules.AdheresToCommonSchemaStructureRequirements{},
+		rules.ArrayItemsMustHaveSingleType{},
 		rules.AvoidRecursion{},
 		rules.AvoidRecursionKeywords{},
+	},
+	excludeLocations: []string{
+		"/properties/internal",
 	},
 }
 
@@ -94,20 +99,23 @@ func VerifyRuleSet(name string, schema *schemautils.ExtendedSchema) (errors []st
 	nameEnum := RuleSetName(name)
 	ruleSet := GetRuleSet(nameEnum)
 
-	return LintWithRules(schema, ruleSet.rules)
+	return LintWithRuleSet(schema, ruleSet)
 }
 
-func LintWithRules(schema *schemautils.ExtendedSchema, rules []lint.Rule) (errors []string, recommendations []string) {
+func LintWithRuleSet(schema *schemautils.ExtendedSchema, ruleSet *RuleSet) (errors []string, recommendations []string) {
 	errors = []string{}
 	recommendations = []string{}
-	for _, rule := range rules {
+	for _, rule := range ruleSet.rules {
 		ruleResults := rule.Verify(schema)
 		severity := rule.GetSeverity()
+
+		filteredResults := ruleResults.Filter(ruleSet.excludeLocations)
+
 		if severity == lint.SeverityError {
-			errors = append(errors, ruleResults.Violations...)
+			errors = append(errors, filteredResults.GetMessages()...)
 		}
 		if severity == lint.SeverityRecommendation {
-			recommendations = append(recommendations, ruleResults.Violations...)
+			recommendations = append(recommendations, filteredResults.GetMessages()...)
 		}
 	}
 

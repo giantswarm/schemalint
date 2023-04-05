@@ -99,11 +99,18 @@ func openGoldenFile(path string) (*os.File, error) {
 }
 
 // use this function as a template when creating golden files for new tests
-func DumpPropertyAnnotationsMap(propertyAnnotationsMap PropertyAnnotationsMap) {
+func DumpPropertyAnnotationsMap(propertyAnnotationsMap PropertyAnnotationsMap, path string) {
+	goldenFile, err := os.Create(path)
+	if err != nil {
+		panic(err)
+	}
 	json, err := json.MarshalIndent(propertyAnnotationsMap, "", "  ")
 	if err != nil {
 		panic(err)
 	}
 
-	os.Stdout.Write(json)
+	_, err = goldenFile.Write(json)
+	if err != nil {
+		panic(err)
+	}
 }

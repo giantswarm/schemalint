@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "foo": {
+            "contains": {
+                "const": "bar"
+            },
+            "items": {
+                "type": "string"
+            },
+            "prefixItems": [
+                {
+                    "format": "date",
+                    "type": "string"
+                }
+            ],
+            "type": "array"
+        }
+    },
+    "type": "object"
+}

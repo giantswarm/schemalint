@@ -15,7 +15,7 @@ func (r AvoidLogicalConstruct) Verify(schema *schemautils.ExtendedSchema) lint.R
 
 	callback := func(schema *schemautils.ExtendedSchema) {
 		if schema.If != nil || schema.Then != nil || schema.Else != nil {
-			ruleResults.Add(fmt.Sprintf("Schema must not use logical constructs (if, then, else). Found at '%s'.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Schema must not use logical constructs (if, then, else). Found at '%s'.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
 		}
 	}
 

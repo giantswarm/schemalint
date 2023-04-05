@@ -1,0 +1,64 @@
+# This action runs when a release PR is opened and updates the version of 
+# schemalint in `actions/verify-helm-schema/action.yml` to the one of the PR.
+
+name: Update action yml
+on:
+  workflow_run:
+    workflows: ["Create Release PR"]
+    types:
+      - completed
+jobs:
+  get_version:
+    name: Get version from PR title
+    runs-on: ubuntu-latest
+    outputs: 
+      version: ${{ steps.get_version.outputs.version }}
+      branch: ${{ steps.get_version.outputs.branch }}
+    steps:
+      - name: Check gh cli
+        run: gh --version
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: .github/find_release_pr/package-lock.json
+      - name: Install npm packages
+        working-directory: .github/find_release_pr
+        run: "npm ci"
+      - name: "Run local js action"
+        id: get_version
+        run: node .github/find_release_pr/index.js
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  update_version:
+    name: Update version in action.yml
+    runs-on: ubuntu-latest
+    needs: get_version
+    if: needs.get_version.outputs.version 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.get_version.outputs.branch }}
+      - name: Update version in action.yml
+        uses: mikefarah/yq@v4.31.2
+        with:
+          cmd: yq -i '.runs.steps[0].with.version = "${{ needs.get_version.outputs.version }}"' actions/verify-helm-schema/action.yml
+      - name: Set up git identity
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - name: Create release commit
+        run: |
+          git add -A
+          git commit -m "Update version in action.yml"
+      - name: Push changes
+        env:
+          remote_repo: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          branch_name: ${{ needs.get_version.outputs.branch }} 
+        run: |
+          git push "${remote_repo}" "HEAD:${branch_name}"

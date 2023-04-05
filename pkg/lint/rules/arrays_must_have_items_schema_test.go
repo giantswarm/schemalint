@@ -17,13 +17,11 @@ func TestArraysMustHaveItems(t *testing.T) {
 			name:        "array without items",
 			schemaPath:  "testdata/arrays_must_have_items/without_items.json",
 			nViolations: 1,
-			rules:       []lint.Rule{ArraysMustHaveItems{}},
 		},
 		{
 			name:        "array with items",
 			schemaPath:  "testdata/arrays_must_have_items/with_items.json",
 			nViolations: 0,
-			rules:       []lint.Rule{ArraysMustHaveItems{}},
 		},
 	}
 
@@ -34,13 +32,11 @@ func TestArraysMustHaveItems(t *testing.T) {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 
-			ruleResults := []string{}
-			for _, rule := range tc.rules {
-				ruleResults = append(ruleResults, rule.Verify(schema).Violations...)
-			}
+			rule := ArraysMustHaveItems{}
+			ruleResults := rule.Verify(schema)
 
-			if len(ruleResults) != tc.nViolations {
-				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults))
+			if len(ruleResults.Violations) != tc.nViolations {
+				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults.Violations))
 			}
 		})
 	}

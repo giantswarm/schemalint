@@ -19,6 +19,7 @@ func (r AvoidRecursionKeywords) Verify(schema *schemautils.ExtendedSchema) lint.
 				fmt.Sprintf(
 					"Schema at '%s' must not use recursion keywords (dynamicAnchor, dynamicRef, recursiveRef).",
 					schema.GetHumanReadableLocation()),
+				schema.GetResolvedLocation(),
 			)
 		}
 	})

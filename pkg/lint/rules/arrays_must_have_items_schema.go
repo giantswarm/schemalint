@@ -15,7 +15,7 @@ func (r ArraysMustHaveItems) Verify(schema *schemautils.ExtendedSchema) lint.Rul
 
 	callback := func(schema *schemautils.ExtendedSchema) {
 		if !hasItems(schema) {
-			ruleResults.Add(fmt.Sprintf("Array '%s' must specify the schema of its items.", schema.GetHumanReadableLocation()))
+			ruleResults.Add(fmt.Sprintf("Array '%s' must specify the schema of its items.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
 		}
 	}
 

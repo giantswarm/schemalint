@@ -15,9 +15,12 @@ func (r DescriptionExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleR
 
 	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
 
-	for path, annotations := range propertyAnnotationsMap {
+	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if annotations.GetDescription() == "" {
-			ruleResults.Add(fmt.Sprintf("Property '%s' should have a description.", path))
+			ruleResults.Add(
+				fmt.Sprintf("Property '%s' should have a description.", schemautils.ConvertToConciseLocation(resolvedLocation)),
+				resolvedLocation,
+			)
 		}
 	}
 

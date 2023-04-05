@@ -27,7 +27,7 @@ func TestTitleCorrect(t *testing.T) {
 			rules:       []lint.Rule{TitleMustBeSentenceCase{}},
 		},
 		{
-			name:        "title is should not contain the parents title",
+			name:        "title should not contain the parents title",
 			schemaPath:  "testdata/title_correct/title_contains_parents_title.json",
 			nViolations: 1,
 			rules:       []lint.Rule{TitleShouldNotContainParentsTitle{}},
@@ -61,7 +61,7 @@ func TestTitleCorrect(t *testing.T) {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 
-			ruleResults := []string{}
+			ruleResults := []lint.RuleViolation{}
 			for _, rule := range tc.rules {
 				ruleResults = append(ruleResults, rule.Verify(schema).Violations...)
 			}

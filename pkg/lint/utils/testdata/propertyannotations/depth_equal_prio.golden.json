@@ -1,10 +1,20 @@
 {
-  "/rootProp": {},
-  "/rootProp/childProp": {},
-  "/rootProp/childProp/grandchildProp": {
+  "/properties/rootProp": {
+    "Title": null,
+    "Description": null,
+    "Examples": null
+  },
+  "/properties/rootProp/properties/childProp": {
+    "Title": null,
+    "Description": null,
+    "Examples": null
+  },
+  "/properties/rootProp/properties/childProp/properties/grandchildProp": {
     "Title": {
       "Value": "Grandchild Ref Ref Prop",
       "ReferenceLevel": 1
-    }
+    },
+    "Description": null,
+    "Examples": null
   }
 }

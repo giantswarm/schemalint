@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"fmt"
+
 	"github.com/giantswarm/schemalint/pkg/schemautils"
 )
 
@@ -64,11 +66,11 @@ func NewPropertyAnnotationsMap() PropertyAnnotationsMap {
 }
 
 func (pam PropertyAnnotationsMap) UpdateAnnotationsIfNecessary(schema *schemautils.ExtendedSchema, level int) {
-	path := schema.GetConciseLocation()
-	annotations, ok := pam[path]
+	location := schema.GetResolvedLocation()
+	annotations, ok := pam[location]
 	if !ok {
 		annotations = &AnnotationsWithLevel{Title: nil, Description: nil, Examples: nil}
-		pam[path] = annotations
+		pam[location] = annotations
 	}
 	annotations.UpdateAnnotationsIfNecessary(schema, level)
 }
@@ -93,15 +95,19 @@ func (pam PropertyAnnotationsMap) WhereTitlesExist() PropertyAnnotationsMap {
 	return newMap
 }
 
-func (pam PropertyAnnotationsMap) GetParentAnnotations(path string) *AnnotationsWithLevel {
-	parentPath := schemautils.GetParentPropertyPath(path)
+func (pam PropertyAnnotationsMap) GetParentAnnotations(resolvedLocation string) (*AnnotationsWithLevel, error) {
+	parentResolvedLocation, err := schemautils.GetParentPropertyPath(resolvedLocation)
 
-	annotations, ok := pam[parentPath]
-	if !ok {
-		return nil
+	if err != nil {
+		return nil, err
 	}
 
-	return annotations
+	annotations, ok := pam[parentResolvedLocation]
+	if !ok {
+		return nil, fmt.Errorf("Could not find parent annotations for %s", resolvedLocation)
+	}
+
+	return annotations, nil
 }
 
 // Builds a map with all properties in the given schema, where the key is the
