@@ -132,10 +132,11 @@ func verifyRuleSet(ruleSet string, schema *schemautils.ExtendedSchema) TestResul
 		message = fmt.Sprintf("Input is not valid according to rule set '%s'.", ruleSet)
 	}
 	moreInfo := ""
-	if len(recommendations)+len(errors) > 0 {
+	referenceURL := rulesets.GetRuleSetReferenceURL(ruleSet)
+	if len(recommendations)+len(errors) > 0 && referenceURL != "" {
 		moreInfo = fmt.Sprintf(
-			"For more information regarding the errors and recommendations, please refer: \"%s\".",
-			rulesets.GetRuleSetReferenceURL(ruleSet),
+			"For more information regarding the errors and recommendations, please refer to: \"%s\".",
+			referenceURL,
 		)
 	}
 
