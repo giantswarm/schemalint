@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add the possibility to include a URL for further reference to rule sets, which is displayed in the output.
+
 ## [1.0.1] - 2023-03-22
 
 - Fix module path.
