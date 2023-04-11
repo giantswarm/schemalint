@@ -240,7 +240,11 @@ func GetParentPropertyPath(resolvedLocation string) (string, error) {
 }
 
 // Returns a list of all schemas, whose location matches the given location.
-// Due to the usage of '$ref', multiple schemas can have the same path.
+// Due to the usage of '$ref', there can be multiple schema definitions for
+// the same location.
+//
+// For more information on this is look at the '"Overriding" Properties and
+// Understanding `PropertyAnnotationsMap`' section in the README.
 func (schema *ExtendedSchema) GetSchemasAt(resolvedLocation string) []*ExtendedSchema {
 	schemas := []*ExtendedSchema{}
 	currentResolvedLocation := schema.GetResolvedLocation()

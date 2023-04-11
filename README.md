@@ -98,3 +98,90 @@ When doing a major release the following steps have to be completed:
 1. Create a new major floating tag under "Actions -> Ensure major version tags -> Run Workflow"
 2. Update all references to schemalint.
     1. devctl: `pkg/gen/input/workflows/internal/file/cluster_app_schema_validation.yaml.template`
+
+
+## "Overriding" Properties and Understanding `PropertyAnnotationsMap`
+
+In JSON schema it is possible to have multiple definitions for a properties
+with the same location. This is possible through the use of
+[refs](https://json-schema.org/understanding-json-schema/structuring.html).
+Consider the following example.
+
+```json
+{
+    "$defs": {
+        "foo": {
+            "properties": {
+                "childProp": {
+                    "type": "string",
+                    "minLength": 2,
+                    "title": "This title will be overridden"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "rootProp": {
+            "$ref": "#/$defs/foo",
+            "properties": {
+                "childProp": {
+                    "type": "string",
+                    "maxLength": 4,
+                    "title": "This title will be used"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
+```
+
+Here, the property at the location `.rootProp.childProp` has two different
+definitions.
+
+One is in the original schema:
+```json
+{
+  "type": "string",
+  "maxLength": 4,
+  "title": "This title will be used"
+}
+```
+And the other one is in the referenced schema:
+```json
+{
+  "type": "string",
+  "minLength": 2,
+  "title": "This title will be overridden"
+}
+```
+
+In JSON schema specification is no such thing as overriding or merging. The
+keywords that have actual meaning during validation will be applied
+sequentially (e.g. `minLength`, `maxLength` and `type`).
+In our example a payload that conforms to the given schema would need to have 
+a string of length 2,3 or 4 at the location `.rootProp.childProp`.
+
+The JSON schema specification does not specify how to handle multiple
+definitions for annotations like `title`
+([ref](https://json-schema.org/draft/2020-12/json-schema-core.html#name-distinguishing-among-multip)).
+As we use annotations for our UI, we need a clear convention when handling
+multiple annotations.
+
+To specify which annotation to use, we use _reference levels_.
+A reference level describes how often a `$ref` keyword was resolved to get to
+the current schema.
+The root schema always has reference level 0. The resolved schema of a `$ref`
+keyword increments the reference level.
+The annotation, which belongs to the schema definition with the lowest
+reference level is used for our UI.
+
+In the above example what we called "original schema" has reference level 0 and
+what we called "referenced schema" has reference level 1.
+Therefore, the displayed title of the `childProp` would be `This title will be used`.
+
+This logic does not only apply to our UI but also when validating annotations.
+Therefore, an implementation of what annotations to use can be found in
+`propertyannotations.go@BuildPropertyAnnotationsMap`.

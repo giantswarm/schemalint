@@ -47,7 +47,10 @@ func (a *AnnotationsWithLevel) GetExamples() []interface{} {
 	return a.Examples.Value
 }
 
-func (a *AnnotationsWithLevel) UpdateAnnotationsIfNecessary(schema *schemautils.ExtendedSchema, level int) {
+func (a *AnnotationsWithLevel) UpdateAnnotationsIfNecessary(
+	schema *schemautils.ExtendedSchema,
+	level int,
+) {
 	if schema.Title != "" && (a.Title == nil || level <= a.Title.ReferenceLevel) {
 		a.Title = &StringWithLevel{Value: schema.Title, ReferenceLevel: level}
 	}
@@ -65,7 +68,10 @@ func NewPropertyAnnotationsMap() PropertyAnnotationsMap {
 	return make(PropertyAnnotationsMap)
 }
 
-func (pam PropertyAnnotationsMap) UpdateAnnotationsIfNecessary(schema *schemautils.ExtendedSchema, level int) {
+func (pam PropertyAnnotationsMap) UpdateAnnotationsIfNecessary(
+	schema *schemautils.ExtendedSchema,
+	level int,
+) {
 	location := schema.GetResolvedLocation()
 	annotations, ok := pam[location]
 	if !ok {
@@ -95,7 +101,9 @@ func (pam PropertyAnnotationsMap) WhereTitlesExist() PropertyAnnotationsMap {
 	return newMap
 }
 
-func (pam PropertyAnnotationsMap) GetParentAnnotations(resolvedLocation string) (*AnnotationsWithLevel, error) {
+func (pam PropertyAnnotationsMap) GetParentAnnotations(
+	resolvedLocation string,
+) (*AnnotationsWithLevel, error) {
 	parentResolvedLocation, err := schemautils.GetParentPropertyPath(resolvedLocation)
 
 	if err != nil {
@@ -113,6 +121,9 @@ func (pam PropertyAnnotationsMap) GetParentAnnotations(resolvedLocation string) 
 // Builds a map with all properties in the given schema, where the key is the
 // path to the property and the value are the annotations for that property.
 // <path> -> <annotations>
+//
+// For more information on why this is necessary look at the '"Overriding"
+// Properties and Understanding `PropertyAnnotationsMap`' section in the README.
 func BuildPropertyAnnotationsMap(schema *schemautils.ExtendedSchema) PropertyAnnotationsMap {
 	propertyAnnotationsMap := make(PropertyAnnotationsMap)
 	RecurseProperties(schema, func(schema *schemautils.ExtendedSchema) {

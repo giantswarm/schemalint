@@ -6,6 +6,14 @@
             "examples": [
                 "bar"
             ],
+            "pattern": "bar",
+            "type": "string"
+        },
+        "foo2": {
+            "examples": [
+                "2018-11-13"
+            ],
+            "format": "date",
             "type": "string"
         }
     },

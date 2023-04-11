@@ -3,11 +3,6 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "properties": {
         "foo": {
-            "pattern": "bar",
-            "type": "string"
-        },
-        "foo2": {
-            "format": "date",
             "type": "string"
         }
     },
