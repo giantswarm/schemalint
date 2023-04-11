@@ -11,6 +11,7 @@ import (
 type RuleSet struct {
 	rules            []lint.Rule
 	excludeLocations []string
+	referenceURL     string
 }
 type RuleSetName string
 
@@ -53,6 +54,7 @@ var ClusterApp = &RuleSet{
 		"/properties/internal",
 		"/properties/cluster-shared",
 	},
+	referenceURL: "https://github.com/giantswarm/rfc/pull/55", // should be updated when PR is merged
 }
 
 var RuleSets = map[RuleSetName]*RuleSet{
@@ -105,6 +107,13 @@ func VerifyRuleSet(
 	ruleSet := GetRuleSet(nameEnum)
 
 	return LintWithRuleSet(schema, ruleSet)
+}
+
+func GetRuleSetReferenceURL(name string) string {
+	nameEnum := RuleSetName(name)
+	ruleSet := GetRuleSet(nameEnum)
+
+	return ruleSet.referenceURL
 }
 
 func LintWithRuleSet(

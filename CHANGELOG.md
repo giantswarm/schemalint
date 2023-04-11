@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add the possibility to include a URL for further reference to rule sets, which is displayed in the output.
+
 ## [1.1.0] - 2023-04-05
 
 - Add rule to check whether root-level specifies properties of the common schema structure.

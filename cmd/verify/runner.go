@@ -23,6 +23,7 @@ type TestResult struct {
 	Success         bool
 	Errors          []string
 	Recommendations []string
+	MoreInfo        string
 }
 
 func (r *runner) run(cmd *cobra.Command, args []string) {
@@ -130,11 +131,21 @@ func verifyRuleSet(ruleSet string, schema *schemautils.ExtendedSchema) TestResul
 	if !success {
 		message = fmt.Sprintf("Input is not valid according to rule set '%s'.", ruleSet)
 	}
+	moreInfo := ""
+	referenceURL := rulesets.GetRuleSetReferenceURL(ruleSet)
+	if len(recommendations)+len(errors) > 0 && referenceURL != "" {
+		moreInfo = fmt.Sprintf(
+			"For more information regarding the errors and recommendations, please refer to: \"%s\".",
+			referenceURL,
+		)
+	}
+
 	result := TestResult{
 		Message:         message,
-		Success:         len(errors) == 0,
+		Success:         success,
 		Errors:          errors,
 		Recommendations: recommendations,
+		MoreInfo:        moreInfo,
 	}
 
 	return result
