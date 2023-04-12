@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Adapt common schema structure to cluster-aws. 
 - Only recommend examples on restricted strings.
 - Add the possibility to include a URL for further reference to rule sets, which is displayed in the output.
 
