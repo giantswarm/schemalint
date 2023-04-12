@@ -12,35 +12,35 @@
         },
         "tests": [
             {
+                "description": "match",
                 "data": {
                     "foo": false
                 },
-                "description": "match",
                 "valid": true
             },
             {
+                "description": "recursive match",
                 "data": {
                     "foo": {
                         "foo": false
                     }
                 },
-                "description": "recursive match",
                 "valid": true
             },
             {
+                "description": "mismatch",
                 "data": {
                     "bar": false
                 },
-                "description": "mismatch",
                 "valid": false
             },
             {
+                "description": "recursive mismatch",
                 "data": {
                     "foo": {
                         "bar": false
                     }
                 },
-                "description": "recursive mismatch",
                 "valid": false
             }
         ]
@@ -60,17 +60,17 @@
         },
         "tests": [
             {
+                "description": "match",
                 "data": {
                     "bar": 3
                 },
-                "description": "match",
                 "valid": true
             },
             {
+                "description": "mismatch",
                 "data": {
                     "bar": true
                 },
-                "description": "mismatch",
                 "valid": false
             }
         ]
@@ -90,19 +90,19 @@
         },
         "tests": [
             {
+                "description": "match array",
                 "data": [
                     1,
                     2
                 ],
-                "description": "match array",
                 "valid": true
             },
             {
+                "description": "mismatch array",
                 "data": [
                     1,
                     "foo"
                 ],
-                "description": "mismatch array",
                 "valid": false
             }
         ]
@@ -136,45 +136,45 @@
         },
         "tests": [
             {
+                "description": "slash invalid",
                 "data": {
                     "slash": "aoeu"
                 },
-                "description": "slash invalid",
                 "valid": false
             },
             {
+                "description": "tilde invalid",
                 "data": {
                     "tilde": "aoeu"
                 },
-                "description": "tilde invalid",
                 "valid": false
             },
             {
+                "description": "percent invalid",
                 "data": {
                     "percent": "aoeu"
                 },
-                "description": "percent invalid",
                 "valid": false
             },
             {
+                "description": "slash valid",
                 "data": {
                     "slash": 123
                 },
-                "description": "slash valid",
                 "valid": true
             },
             {
+                "description": "tilde valid",
                 "data": {
                     "tilde": 123
                 },
-                "description": "tilde valid",
                 "valid": true
             },
             {
+                "description": "percent valid",
                 "data": {
                     "percent": 123
                 },
-                "description": "percent valid",
                 "valid": true
             }
         ]
@@ -198,13 +198,13 @@
         },
         "tests": [
             {
-                "data": 5,
                 "description": "nested ref valid",
+                "data": 5,
                 "valid": true
             },
             {
-                "data": "a",
                 "description": "nested ref invalid",
+                "data": "a",
                 "valid": false
             }
         ]
@@ -227,13 +227,14 @@
         },
         "tests": [
             {
+                "description": "ref valid, maxItems valid",
                 "data": {
                     "foo": []
                 },
-                "description": "ref valid, maxItems valid",
                 "valid": true
             },
             {
+                "description": "ref valid, maxItems invalid",
                 "data": {
                     "foo": [
                         1,
@@ -241,14 +242,13 @@
                         3
                     ]
                 },
-                "description": "ref valid, maxItems invalid",
                 "valid": false
             },
             {
+                "description": "ref invalid",
                 "data": {
                     "foo": "string"
                 },
-                "description": "ref invalid",
                 "valid": false
             }
         ]
@@ -261,17 +261,17 @@
         },
         "tests": [
             {
+                "description": "remote ref valid",
                 "data": {
                     "minLength": 1
                 },
-                "description": "remote ref valid",
                 "valid": true
             },
             {
+                "description": "remote ref invalid",
                 "data": {
                     "minLength": -1
                 },
-                "description": "remote ref invalid",
                 "valid": false
             }
         ]
@@ -288,17 +288,17 @@
         },
         "tests": [
             {
+                "description": "property named $ref valid",
                 "data": {
                     "$ref": "a"
                 },
-                "description": "property named $ref valid",
                 "valid": true
             },
             {
+                "description": "property named $ref invalid",
                 "data": {
                     "$ref": 2
                 },
-                "description": "property named $ref invalid",
                 "valid": false
             }
         ]
@@ -320,17 +320,17 @@
         },
         "tests": [
             {
+                "description": "property named $ref valid",
                 "data": {
                     "$ref": "a"
                 },
-                "description": "property named $ref valid",
                 "valid": true
             },
             {
+                "description": "property named $ref invalid",
                 "data": {
                     "$ref": 2
                 },
-                "description": "property named $ref invalid",
                 "valid": false
             }
         ]
@@ -346,8 +346,8 @@
         },
         "tests": [
             {
-                "data": "foo",
                 "description": "any value is valid",
+                "data": "foo",
                 "valid": true
             }
         ]
@@ -363,8 +363,8 @@
         },
         "tests": [
             {
-                "data": "foo",
                 "description": "any value is invalid",
+                "data": "foo",
                 "valid": false
             }
         ]
@@ -412,6 +412,7 @@
         },
         "tests": [
             {
+                "description": "valid tree",
                 "data": {
                     "meta": "root",
                     "nodes": [
@@ -445,10 +446,10 @@
                         }
                     ]
                 },
-                "description": "valid tree",
                 "valid": true
             },
             {
+                "description": "invalid tree",
                 "data": {
                     "meta": "root",
                     "nodes": [
@@ -482,7 +483,6 @@
                         }
                     ]
                 },
-                "description": "invalid tree",
                 "valid": false
             }
         ]
@@ -504,17 +504,17 @@
         },
         "tests": [
             {
+                "description": "object with numbers is valid",
                 "data": {
                     "foo\"bar": 1
                 },
-                "description": "object with numbers is valid",
                 "valid": true
             },
             {
+                "description": "object with strings is invalid",
                 "data": {
                     "foo\"bar": "1"
                 },
-                "description": "object with strings is invalid",
                 "valid": false
             }
         ]
@@ -537,10 +537,10 @@
         },
         "tests": [
             {
+                "description": "referenced subschema doesn't see annotations from properties",
                 "data": {
                     "prop1": "match"
                 },
-                "description": "referenced subschema doesn't see annotations from properties",
                 "valid": false
             }
         ]
@@ -562,22 +562,22 @@
         },
         "tests": [
             {
-                "data": "this is a string",
                 "description": "do not evaluate the $ref inside the enum, matching any string",
+                "data": "this is a string",
                 "valid": false
             },
             {
+                "description": "do not evaluate the $ref inside the enum, definition exact match",
                 "data": {
                     "type": "string"
                 },
-                "description": "do not evaluate the $ref inside the enum, definition exact match",
                 "valid": false
             },
             {
+                "description": "match the enum exactly",
                 "data": {
                     "$ref": "#/$defs/a_string"
                 },
-                "description": "match the enum exactly",
                 "valid": true
             }
         ]
@@ -606,33 +606,33 @@
         },
         "tests": [
             {
+                "description": "invalid on inner field",
                 "data": {
                     "bar": "a",
                     "foo": {
                         "bar": 1
                     }
                 },
-                "description": "invalid on inner field",
                 "valid": false
             },
             {
+                "description": "invalid on outer field",
                 "data": {
                     "bar": 1,
                     "foo": {
                         "bar": "a"
                     }
                 },
-                "description": "invalid on outer field",
                 "valid": false
             },
             {
+                "description": "valid on both fields",
                 "data": {
                     "bar": "a",
                     "foo": {
                         "bar": "a"
                     }
                 },
-                "description": "valid on both fields",
                 "valid": true
             }
         ]
@@ -661,33 +661,33 @@
         },
         "tests": [
             {
+                "description": "invalid on inner field",
                 "data": {
                     "bar": "a",
                     "foo": {
                         "bar": 1
                     }
                 },
-                "description": "invalid on inner field",
                 "valid": false
             },
             {
+                "description": "invalid on outer field",
                 "data": {
                     "bar": 1,
                     "foo": {
                         "bar": "a"
                     }
                 },
-                "description": "invalid on outer field",
                 "valid": false
             },
             {
+                "description": "valid on both fields",
                 "data": {
                     "bar": "a",
                     "foo": {
                         "bar": "a"
                     }
                 },
-                "description": "valid on both fields",
                 "valid": true
             }
         ]
@@ -718,13 +718,13 @@
         },
         "tests": [
             {
-                "data": 1,
                 "description": "number is valid",
+                "data": 1,
                 "valid": true
             },
             {
-                "data": "a",
                 "description": "non-number is invalid",
+                "data": "a",
                 "valid": false
             }
         ]
@@ -751,13 +751,13 @@
         },
         "tests": [
             {
-                "data": 5,
                 "description": "data is valid against first definition",
+                "data": 5,
                 "valid": true
             },
             {
-                "data": 50,
                 "description": "data is invalid against first definition",
+                "data": 50,
                 "valid": false
             }
         ]
@@ -785,13 +785,13 @@
         },
         "tests": [
             {
-                "data": 5,
                 "description": "data is valid against first definition",
+                "data": 5,
                 "valid": true
             },
             {
-                "data": 50,
                 "description": "data is invalid against first definition",
+                "data": 50,
                 "valid": false
             }
         ]
@@ -811,17 +811,17 @@
         },
         "tests": [
             {
+                "description": "valid under the URN IDed schema",
                 "data": {
                     "foo": 37
                 },
-                "description": "valid under the URN IDed schema",
                 "valid": true
             },
             {
+                "description": "invalid under the URN IDed schema",
                 "data": {
                     "foo": 12
                 },
-                "description": "invalid under the URN IDed schema",
                 "valid": false
             }
         ]
@@ -845,17 +845,17 @@
         },
         "tests": [
             {
+                "description": "a string is valid",
                 "data": {
                     "foo": "bar"
                 },
-                "description": "a string is valid",
                 "valid": true
             },
             {
+                "description": "a non-string is invalid",
                 "data": {
                     "foo": 12
                 },
-                "description": "a non-string is invalid",
                 "valid": false
             }
         ]
@@ -879,17 +879,17 @@
         },
         "tests": [
             {
+                "description": "a string is valid",
                 "data": {
                     "foo": "bar"
                 },
-                "description": "a string is valid",
                 "valid": true
             },
             {
+                "description": "a non-string is invalid",
                 "data": {
                     "foo": 12
                 },
-                "description": "a non-string is invalid",
                 "valid": false
             }
         ]
@@ -913,17 +913,17 @@
         },
         "tests": [
             {
+                "description": "a string is valid",
                 "data": {
                     "foo": "bar"
                 },
-                "description": "a string is valid",
                 "valid": true
             },
             {
+                "description": "a non-string is invalid",
                 "data": {
                     "foo": 12
                 },
-                "description": "a non-string is invalid",
                 "valid": false
             }
         ]
@@ -947,17 +947,17 @@
         },
         "tests": [
             {
+                "description": "a string is valid",
                 "data": {
                     "foo": "bar"
                 },
-                "description": "a string is valid",
                 "valid": true
             },
             {
+                "description": "a non-string is invalid",
                 "data": {
                     "foo": 12
                 },
-                "description": "a non-string is invalid",
                 "valid": false
             }
         ]
@@ -971,10 +971,10 @@
         },
         "tests": [
             {
+                "description": "is invalid",
                 "data": {
                     "$id": "urn:example:foo-bar-baz-qux#somepart"
                 },
-                "description": "is invalid",
                 "valid": false
             }
         ]
@@ -997,17 +997,17 @@
         },
         "tests": [
             {
+                "description": "a string is valid",
                 "data": {
                     "foo": "bar"
                 },
-                "description": "a string is valid",
                 "valid": true
             },
             {
+                "description": "a non-string is invalid",
                 "data": {
                     "foo": 12
                 },
-                "description": "a non-string is invalid",
                 "valid": false
             }
         ]
@@ -1031,17 +1031,17 @@
         },
         "tests": [
             {
+                "description": "a string is valid",
                 "data": {
                     "foo": "bar"
                 },
-                "description": "a string is valid",
                 "valid": true
             },
             {
+                "description": "a non-string is invalid",
                 "data": {
                     "foo": 12
                 },
-                "description": "a non-string is invalid",
                 "valid": false
             }
         ]
@@ -1064,13 +1064,13 @@
         },
         "tests": [
             {
-                "data": "bar",
                 "description": "a string is valid",
+                "data": "bar",
                 "valid": true
             },
             {
-                "data": 12,
                 "description": "a non-string is invalid",
+                "data": 12,
                 "valid": false
             }
         ]

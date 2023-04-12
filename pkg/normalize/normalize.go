@@ -11,7 +11,7 @@ import (
 	"github.com/iancoleman/orderedmap"
 )
 
-const arrayWrapperKey = "arrayWrapperKey"
+const dummyArrayWrapperKey = "x"
 
 // Normalize takes JSON and returns normalized JSON.
 //
@@ -19,7 +19,7 @@ const arrayWrapperKey = "arrayWrapperKey"
 //   - Sorting keys according to the configured importance.
 //   - Consistent indentation.
 func Normalize(jsonBytes []byte) ([]byte, error) {
-	data, err := loadToOrderedMap(jsonBytes)
+	data, err := loadWithOrderedMaps(jsonBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -28,10 +28,14 @@ func Normalize(jsonBytes []byte) ([]byte, error) {
 		aImportance := getKeyImportance(a.Key(), a.Value())
 		bImportance := getKeyImportance(b.Key(), b.Value())
 
+		if aImportance == bImportance {
+			return a.Key() < b.Key()
+		}
+
 		return aImportance > bImportance
 	}
 
-	deepSortOrderedMap(data, lessFunc)
+	deepSort(data, lessFunc)
 
 	output, err := marshalIndentWithoutEscape(data, prefix, indentation)
 	if err != nil {
@@ -41,19 +45,22 @@ func Normalize(jsonBytes []byte) ([]byte, error) {
 	return output, nil
 }
 
-func loadToOrderedMap(jsonBytes []byte) (interface{}, error) {
+func loadWithOrderedMaps(jsonBytes []byte) (interface{}, error) {
 	data := initOrderedMap()
 
 	err := json.Unmarshal(jsonBytes, &data)
-	if err != nil {
-		iData, err := loadArrayToOrderedMap(jsonBytes)
-		if err != nil {
-			return nil, err
-		}
-		return iData, nil
+
+	// Unmarshalling fails if the top level element is an array
+	if err == nil {
+		return data, nil
 	}
 
-	return data, nil
+	arrayData, err := loadArrayToOrderedMap(jsonBytes)
+	if err != nil {
+		return nil, err
+	}
+	return arrayData, nil
+
 }
 
 // loadArrayToOrderedMap is a workaround for the fact that the orderedmap library
@@ -63,14 +70,14 @@ func loadToOrderedMap(jsonBytes []byte) (interface{}, error) {
 func loadArrayToOrderedMap(jsonBytes []byte) (interface{}, error) {
 	wrappedData := initOrderedMap()
 
-	arrayBytes := []byte(fmt.Sprintf(`{"%s":%s}`, arrayWrapperKey, jsonBytes))
+	arrayBytes := []byte(fmt.Sprintf(`{"%s":%s}`, dummyArrayWrapperKey, jsonBytes))
 
 	err := json.Unmarshal(arrayBytes, &wrappedData)
 	if err != nil {
 		return nil, err
 	}
 
-	data, ok := wrappedData.Get(arrayWrapperKey)
+	data, ok := wrappedData.Get(dummyArrayWrapperKey)
 
 	if !ok {
 		return nil, fmt.Errorf("arrayWrapperKey not found")
@@ -79,10 +86,10 @@ func loadArrayToOrderedMap(jsonBytes []byte) (interface{}, error) {
 	return data, nil
 }
 
-func initOrderedMap() *orderedmap.OrderedMap {
+func initOrderedMap() orderedmap.OrderedMap {
 	data := orderedmap.New()
 	data.SetEscapeHTML(false)
-	return data
+	return *data
 }
 
 func getKeyImportance(key string, value interface{}) int {
@@ -111,42 +118,24 @@ func mergeMaps(maps ...map[string]int) map[string]int {
 	return result
 }
 
-func deepSortOrderedMap(
+func deepSort(
 	data interface{},
 	lessFunc func(a *orderedmap.Pair, b *orderedmap.Pair) bool,
 ) {
 
-	switch data.(type) {
-	case *orderedmap.OrderedMap:
-		o, _ := data.(*orderedmap.OrderedMap)
+	if o, ok := data.(orderedmap.OrderedMap); ok {
 		o.Sort(lessFunc)
 		for _, k := range o.Keys() {
 			v, _ := o.Get(k)
 
-			if vMap, ok := v.(orderedmap.OrderedMap); ok {
-				deepSortOrderedMap(&vMap, lessFunc)
-			}
+			deepSort(v, lessFunc)
 		}
-	case orderedmap.OrderedMap:
-		o, _ := data.(orderedmap.OrderedMap)
-		o.Sort(lessFunc)
-		for _, k := range o.Keys() {
-			v, _ := o.Get(k)
-
-			if vMap, ok := v.(orderedmap.OrderedMap); ok {
-				deepSortOrderedMap(&vMap, lessFunc)
-			}
-		}
-	case []interface{}:
-		for _, v := range data.([]interface{}) {
-			if vMap, ok := v.(orderedmap.OrderedMap); ok {
-				deepSortOrderedMap(&vMap, lessFunc)
-			}
-		}
-	default:
-		panic(fmt.Sprintf("unexpected type: %T", data))
 	}
-
+	if data, ok := data.([]interface{}); ok {
+		for _, v := range data {
+			deepSort(v, lessFunc)
+		}
+	}
 }
 
 func marshalIndentWithoutEscape(t interface{}, prefix, indent string) ([]byte, error) {
