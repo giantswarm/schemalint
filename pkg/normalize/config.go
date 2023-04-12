@@ -17,13 +17,14 @@ type KeyImportanceOverride struct {
 // importance, the higher/earlier the key will be in the normalized output.
 func getKeyImportanceMap() map[string]int {
 	return map[string]int{
-		"$id":                  10,
-		"$schema":              9,
-		"$ref":                 8,
-		"$defs":                8,
-		"title":                7,
-		"description":          6,
-		"type":                 5,
+		"$id":                  11,
+		"$schema":              10,
+		"$ref":                 9,
+		"$defs":                9,
+		"title":                8,
+		"description":          7,
+		"type":                 6,
+		"deprecated":           5,
 		"$comment":             4,
 		"enum":                 3,
 		"examples":             3,
@@ -33,6 +34,9 @@ func getKeyImportanceMap() map[string]int {
 		"properties":           1,
 		"patternProperties":    1,
 		"items":                1,
+		"if":                   -2,
+		"then":                 -3,
+		"else":                 -4,
 	}
 }
 

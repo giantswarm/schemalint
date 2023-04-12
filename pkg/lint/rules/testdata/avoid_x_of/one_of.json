@@ -1,18 +1,18 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "age": {
             "oneOf": [
                 {
-                    "multipleOf": 5,
-                    "type": "number"
+                    "type": "number",
+                    "multipleOf": 5
                 },
                 {
-                    "multipleOf": 3,
-                    "type": "number"
+                    "type": "number",
+                    "multipleOf": 3
                 }
             ]
         }
-    },
-    "type": "object"
+    }
 }

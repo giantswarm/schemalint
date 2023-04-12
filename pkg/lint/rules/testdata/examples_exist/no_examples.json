@@ -1,15 +1,15 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "foo": {
-            "pattern": "bar",
-            "type": "string"
+            "type": "string",
+            "pattern": "bar"
         },
         "foo2": {
-            "format": "date",
-            "type": "string"
+            "type": "string",
+            "format": "date"
         }
-    },
-    "type": "object"
+    }
 }

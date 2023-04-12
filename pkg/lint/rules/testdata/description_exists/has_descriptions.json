@@ -1,54 +1,54 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "addresses": {
+            "title": "Addresses",
             "description": "The person's addresses.",
+            "type": "array",
             "items": {
                 "description": "The person's address.",
+                "type": "object",
                 "properties": {
                     "city": {
-                        "description": "The city.",
                         "title": "City",
+                        "description": "The city.",
                         "type": "string"
                     },
                     "state": {
-                        "description": "The state.",
                         "title": "State",
+                        "description": "The state.",
                         "type": "string"
                     },
                     "street": {
-                        "description": "The street address.",
                         "title": "Street",
+                        "description": "The street address.",
                         "type": "string"
                     },
                     "zip": {
-                        "description": "The zip code.",
                         "title": "Zip",
+                        "description": "The zip code.",
                         "type": "string"
                     }
-                },
-                "type": "object"
-            },
-            "title": "Addresses",
-            "type": "array"
+                }
+            }
         },
         "age": {
-            "description": "Age in years which must be equal to or greater than zero.",
-            "minimum": 0,
             "title": "Age",
-            "type": "integer"
+            "description": "Age in years which must be equal to or greater than zero.",
+            "type": "integer",
+            "minimum": 0
         },
         "firstName": {
-            "description": "The person's first name.",
             "title": "First Name",
+            "description": "The person's first name.",
             "type": "string"
         },
         "lastName": {
-            "description": "The person's last name.",
             "title": "Last Name",
+            "description": "The person's last name.",
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }

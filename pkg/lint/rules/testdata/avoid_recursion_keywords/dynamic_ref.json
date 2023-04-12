@@ -1,10 +1,10 @@
 {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$defs": {
         "string-items": {
-            "$dynamicAnchor": "T",
-            "type": "string"
+            "type": "string",
+            "$dynamicAnchor": "T"
         }
     },
-    "$ref": "list_of_t.json",
-    "$schema": "https://json-schema.org/draft/2020-12/schema"
+    "$ref": "list_of_t.json"
 }

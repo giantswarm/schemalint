@@ -1,11 +1,25 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
     "properties": {
+        "baseDomain": {
+            "type": "object"
+        },
+        "cluster-shared": {
+            "type": "object"
+        },
         "connectivity": {
             "type": "object"
         },
         "controlPlane": {
+            "type": "object"
+        },
+        "internal": {
+            "type": "object"
+        },
+        "managementCluster": {
             "type": "object"
         },
         "metadata": {
@@ -14,28 +28,14 @@
         "nodePools": {
             "type": "array"
         },
-        "internal": {
+        "provider": {
             "type": "object"
         },
         "providerSpecific": {
             "type": "object"
         },
-        "managementCluster": {
-            "type": "object"
-        },
-        "baseDomain": {
-            "type": "object"
-        },
-        "provider": {
-            "type": "object"
-        },
-        "cluster-shared": {
-            "type": "object"
-        },
         "too-many": {
             "type": "object"
         }
-    },
-    "additionalProperties": false,
-    "type": "object"
+    }
 }

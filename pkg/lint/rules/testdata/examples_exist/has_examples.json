@@ -1,21 +1,21 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "foo": {
+            "type": "string",
             "examples": [
                 "bar"
             ],
-            "pattern": "bar",
-            "type": "string"
+            "pattern": "bar"
         },
         "foo2": {
+            "type": "string",
             "examples": [
                 "2018-11-13"
             ],
-            "format": "date",
-            "type": "string"
+            "format": "date"
         }
-    },
-    "type": "object"
+    }
 }

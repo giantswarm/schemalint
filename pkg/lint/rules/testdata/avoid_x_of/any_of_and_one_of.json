@@ -1,13 +1,15 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "age": {
             "oneOf": [
                 {
-                    "multipleOf": 5,
-                    "type": "number"
+                    "type": "number",
+                    "multipleOf": 5
                 },
                 {
+                    "type": "object",
                     "properties": {
                         "max": {
                             "type": "number"
@@ -15,23 +17,21 @@
                         "min": {
                             "type": "number"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
             ]
         },
         "foo": {
             "anyOf": [
                 {
-                    "maxLength": 5,
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 5
                 },
                 {
-                    "minimum": 0,
-                    "type": "number"
+                    "type": "number",
+                    "minimum": 0
                 }
             ]
         }
-    },
-    "type": "object"
+    }
 }
