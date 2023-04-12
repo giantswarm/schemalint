@@ -64,6 +64,8 @@ func getAddtionalAllowedRootPropertiesNames() []string {
 		"baseDomain",
 		"provider",
 		"cluster-shared",
+		"defaultMachinePools",
+		"kubectlImage",
 	}
 }
 
