@@ -18,21 +18,9 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 
 	schemaProperties := schema.GetProperties()
 	for _, requiredProperty := range requiredProperties {
-		property, ok := schemaProperties[requiredProperty.Name]
-		if ok && !property.IsType(requiredProperty.Type) {
+		if _, ok := schemaProperties[requiredProperty]; !ok {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Root-level property '%s' must be of type '%s'.",
-					requiredProperty.Name,
-					requiredProperty.Type,
-				),
-				property.GetResolvedLocation(),
-			)
-		}
-
-		if !ok {
-			ruleResults.Add(
-				fmt.Sprintf("Root-level property '%s' must be present.", requiredProperty.Name),
+				fmt.Sprintf("Root-level property '%s' must be present.", requiredProperty),
 				schema.GetResolvedLocation(),
 			)
 		}
@@ -59,29 +47,12 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 	return *ruleResults
 }
 
-type propertyNameWithType struct {
-	Name string
-	Type string
-}
-
-func getRequiredRootProperties() []propertyNameWithType {
-	requiredProperties := []propertyNameWithType{
-		{
-			Name: "metadata",
-			Type: "object",
-		},
-		{
-			Name: "connectivity",
-			Type: "object",
-		},
-		{
-			Name: "controlPlane",
-			Type: "object",
-		},
-		{
-			Name: "nodePools",
-			Type: "array",
-		},
+func getRequiredRootProperties() []string {
+	requiredProperties := []string{
+		"metadata",
+		"connectivity",
+		"controlPlane",
+		"nodePools",
 	}
 
 	return requiredProperties
@@ -102,12 +73,15 @@ func getAllAllowedRootPropertiesNamesSet() map[string]bool {
 
 	allAllowedRootProperties := getAddtionalAllowedRootPropertiesNames()
 
-	for _, requiredProperty := range requireRootProperties {
-		allAllowedRootProperties = append(allAllowedRootProperties, requiredProperty.Name)
-	}
-	for _, recommendedProperty := range recommendedRootProperties {
-		allAllowedRootProperties = append(allAllowedRootProperties, recommendedProperty.Name)
-	}
+	allAllowedRootProperties = append(
+		allAllowedRootProperties,
+		requireRootProperties...,
+	)
+	allAllowedRootProperties = append(
+		allAllowedRootProperties,
+		recommendedRootProperties...,
+	)
+
 	allAllowedRootPropertiesMap := make(map[string]bool)
 	for _, property := range allAllowedRootProperties {
 		allAllowedRootPropertiesMap[property] = true
