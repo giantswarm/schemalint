@@ -5,10 +5,13 @@ package normalize
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"reflect"
 
 	"github.com/iancoleman/orderedmap"
 )
+
+const arrayWrapperKey = "arrayWrapperKey"
 
 // Normalize takes JSON and returns normalized JSON.
 //
@@ -38,16 +41,48 @@ func Normalize(jsonBytes []byte) ([]byte, error) {
 	return output, nil
 }
 
-func loadToOrderedMap(jsonBytes []byte) (*orderedmap.OrderedMap, error) {
-	data := orderedmap.New()
-	data.SetEscapeHTML(false)
+func loadToOrderedMap(jsonBytes []byte) (interface{}, error) {
+	data := initOrderedMap()
 
 	err := json.Unmarshal(jsonBytes, &data)
+	if err != nil {
+		iData, err := loadArrayToOrderedMap(jsonBytes)
+		if err != nil {
+			return nil, err
+		}
+		return iData, nil
+	}
+
+	return data, nil
+}
+
+// loadArrayToOrderedMap is a workaround for the fact that the orderedmap library
+// does not support unmarshalling into an array.
+//
+// This functions adds a dummy key around the array and then removes it again.
+func loadArrayToOrderedMap(jsonBytes []byte) (interface{}, error) {
+	wrappedData := initOrderedMap()
+
+	arrayBytes := []byte(fmt.Sprintf(`{"%s":%s}`, arrayWrapperKey, jsonBytes))
+
+	err := json.Unmarshal(arrayBytes, &wrappedData)
 	if err != nil {
 		return nil, err
 	}
 
+	data, ok := wrappedData.Get(arrayWrapperKey)
+
+	if !ok {
+		return nil, fmt.Errorf("arrayWrapperKey not found")
+	}
+
 	return data, nil
+}
+
+func initOrderedMap() *orderedmap.OrderedMap {
+	data := orderedmap.New()
+	data.SetEscapeHTML(false)
+	return data
 }
 
 func getKeyImportance(key string, value interface{}) int {
@@ -77,17 +112,41 @@ func mergeMaps(maps ...map[string]int) map[string]int {
 }
 
 func deepSortOrderedMap(
-	o *orderedmap.OrderedMap,
+	data interface{},
 	lessFunc func(a *orderedmap.Pair, b *orderedmap.Pair) bool,
 ) {
-	o.Sort(lessFunc)
-	for _, k := range o.Keys() {
-		v, _ := o.Get(k)
 
-		if vMap, ok := v.(orderedmap.OrderedMap); ok {
-			deepSortOrderedMap(&vMap, lessFunc)
+	switch data.(type) {
+	case *orderedmap.OrderedMap:
+		o, _ := data.(*orderedmap.OrderedMap)
+		o.Sort(lessFunc)
+		for _, k := range o.Keys() {
+			v, _ := o.Get(k)
+
+			if vMap, ok := v.(orderedmap.OrderedMap); ok {
+				deepSortOrderedMap(&vMap, lessFunc)
+			}
 		}
+	case orderedmap.OrderedMap:
+		o, _ := data.(orderedmap.OrderedMap)
+		o.Sort(lessFunc)
+		for _, k := range o.Keys() {
+			v, _ := o.Get(k)
+
+			if vMap, ok := v.(orderedmap.OrderedMap); ok {
+				deepSortOrderedMap(&vMap, lessFunc)
+			}
+		}
+	case []interface{}:
+		for _, v := range data.([]interface{}) {
+			if vMap, ok := v.(orderedmap.OrderedMap); ok {
+				deepSortOrderedMap(&vMap, lessFunc)
+			}
+		}
+	default:
+		panic(fmt.Sprintf("unexpected type: %T", data))
 	}
+
 }
 
 func marshalIndentWithoutEscape(t interface{}, prefix, indent string) ([]byte, error) {
