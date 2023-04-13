@@ -1,7 +1,6 @@
 package verify
 
 import (
-	"errors"
 	"fmt"
 	"os"
 
@@ -100,9 +99,8 @@ func verifyNormalization(path string) TestResult {
 		var isNormalized bool
 		isNormalized, err = normalize.CheckIsNormalized(content)
 		if err == nil && !isNormalized {
-			err = errors.New("Schema is not normalized.")
+			err = fmt.Errorf("Schema is not normalized (run `schemalint normalize %[1]s -o %[1]s --force`)", path)
 		}
-
 	}
 	errors := []string{}
 	if err != nil {
