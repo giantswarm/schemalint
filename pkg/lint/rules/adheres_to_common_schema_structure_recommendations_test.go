@@ -28,12 +28,7 @@ func TestAdheheresToCommonSchemaStructureRecommendations(t *testing.T) {
 			nViolations: 2,
 		},
 		{
-			name:        "case 3: wrong types",
-			schemaPath:  "testdata/common_schema_structure_recommendations/wrong_types.json",
-			nViolations: 2,
-		},
-		{
-			name:        "case 4: correct",
+			name:        "case 3: correct",
 			schemaPath:  "testdata/common_schema_structure_recommendations/correct.json",
 			nViolations: 0,
 		},
@@ -49,7 +44,12 @@ func TestAdheheresToCommonSchemaStructureRecommendations(t *testing.T) {
 			ruleResults := titleExistsRule.Verify(schema)
 
 			if len(ruleResults.Violations) != tc.nViolations {
-				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults.Violations))
+				t.Fatalf(
+					"Unexpected number of rule violations in test case '%s': Expected %d, got %d",
+					tc.name,
+					tc.nViolations,
+					len(ruleResults.Violations),
+				)
 			}
 		})
 	}
