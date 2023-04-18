@@ -5,13 +5,16 @@
     "additionalProperties": false,
     "properties": {
         "connectivity": {
-            "type": "object"
+            "type": "array"
+        },
+        "controlPlane": {
+            "type": "array"
         },
         "metadata": {
-            "type": "object"
+            "type": "array"
         },
         "nodePools": {
-            "type": "array"
+            "type": "object"
         }
     }
 }

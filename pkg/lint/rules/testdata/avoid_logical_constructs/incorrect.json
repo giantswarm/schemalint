@@ -1,10 +1,17 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "else": {
-        "properties": {
-            "postal_code": {
-                "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
-            }
+    "type": "object",
+    "properties": {
+        "country": {
+            "type": "string",
+            "enum": [
+                "United States of America",
+                "Canada"
+            ],
+            "default": "United States of America"
+        },
+        "street_address": {
+            "type": "string"
         }
     },
     "if": {
@@ -14,19 +21,6 @@
             }
         }
     },
-    "properties": {
-        "country": {
-            "default": "United States of America",
-            "enum": [
-                "United States of America",
-                "Canada"
-            ],
-            "type": "string"
-        },
-        "street_address": {
-            "type": "string"
-        }
-    },
     "then": {
         "properties": {
             "postal_code": {
@@ -34,5 +28,11 @@
             }
         }
     },
-    "type": "object"
+    "else": {
+        "properties": {
+            "postal_code": {
+                "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
+            }
+        }
+    }
 }

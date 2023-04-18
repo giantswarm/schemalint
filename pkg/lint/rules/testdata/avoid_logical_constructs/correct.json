@@ -1,17 +1,17 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "country": {
-            "default": "United States of America",
+            "type": "string",
             "enum": [
                 "United States of America",
                 "Canada"
             ],
-            "type": "string"
+            "default": "United States of America"
         },
         "street_address": {
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }

@@ -1,11 +1,17 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "person": {
             "$ref": "8_missing_titles.json",
+            "title": "Person",
+            "type": "object",
             "properties": {
                 "addresses": {
+                    "title": "Addresses",
+                    "type": "array",
                     "items": {
+                        "type": "object",
                         "properties": {
                             "city": {
                                 "title": "City",
@@ -23,11 +29,8 @@
                                 "title": "Zip",
                                 "type": "string"
                             }
-                        },
-                        "type": "object"
-                    },
-                    "title": "Addresses",
-                    "type": "array"
+                        }
+                    }
                 },
                 "age": {
                     "title": "Age",
@@ -41,10 +44,7 @@
                     "title": "Last Name",
                     "type": "string"
                 }
-            },
-            "title": "Person",
-            "type": "object"
+            }
         }
-    },
-    "type": "object"
+    }
 }

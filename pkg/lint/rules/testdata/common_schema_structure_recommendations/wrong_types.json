@@ -3,13 +3,11 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "properties": {
-        "foo": {
-            "type": "string",
-            "pattern": "bar"
+        "internal": {
+            "type": "array"
         },
-        "foo2": {
-            "type": "string",
-            "format": "date"
+        "providerSpecific": {
+            "type": "array"
         }
     }
 }

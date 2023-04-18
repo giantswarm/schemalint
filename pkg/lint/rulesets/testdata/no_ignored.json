@@ -1,21 +1,21 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "additionalProperties": false,
+    "title": "Cluster configuration",
     "description": "Configuration of an Azure cluster using Cluster API",
+    "type": "object",
+    "additionalProperties": false,
     "properties": {
+        "no-cluster-shared": {
+            "type": "object"
+        },
         "noInternal": {
+            "title": "Internal settings",
+            "type": "object",
             "properties": {
                 "kubernetesVersion": {
                     "type": "string"
                 }
-            },
-            "title": "Internal settings",
-            "type": "object"
-        },
-        "no-cluster-shared": {
-            "type": "object"
+            }
         }
-    },
-    "title": "Cluster configuration",
-    "type": "object"
+    }
 }

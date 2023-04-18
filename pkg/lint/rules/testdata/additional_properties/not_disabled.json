@@ -1,5 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "age": {
             "type": "integer"
@@ -7,6 +8,5 @@
         "name": {
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }

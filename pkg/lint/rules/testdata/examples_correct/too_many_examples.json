@@ -1,7 +1,9 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "name": {
+            "type": "string",
             "examples": [
                 "John Doe",
                 "Jane Doe",
@@ -9,9 +11,7 @@
                 "Jane Smith",
                 "John Doe-Smith",
                 "Jane Doe-Smith"
-            ],
-            "type": "string"
+            ]
         }
-    },
-    "type": "object"
+    }
 }

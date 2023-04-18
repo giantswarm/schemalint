@@ -1,11 +1,14 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "addresses": {
             "description": "The person's addresses.",
+            "type": "array",
             "items": {
                 "description": "The person's address.",
+                "type": "object",
                 "properties": {
                     "city": {
                         "description": "The city.",
@@ -23,15 +26,13 @@
                         "description": "The zip code.",
                         "type": "string"
                     }
-                },
-                "type": "object"
-            },
-            "type": "array"
+                }
+            }
         },
         "age": {
             "description": "Age in years which must be equal to or greater than zero.",
-            "minimum": 0,
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
         },
         "firstName": {
             "description": "The person's first name.",
@@ -41,6 +42,5 @@
             "description": "The person's last name.",
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }

@@ -1,12 +1,12 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "lastName": {
-            "description": "identifies the cluster uniquely within the installation.",
             "title": "Cluster name",
+            "description": "identifies the cluster uniquely within the installation.",
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }

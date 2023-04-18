@@ -1,5 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "foo1": {
             "type": "number"
@@ -7,6 +8,5 @@
         "foo2": {
             "type": "integer"
         }
-    },
-    "type": "object"
+    }
 }

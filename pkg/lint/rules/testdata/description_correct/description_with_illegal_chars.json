@@ -1,37 +1,37 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "fifthName": {
-            "description": "Identifies the cluster uniquely within the installation. ",
             "title": "First name",
+            "description": "Identifies the cluster uniquely within the installation. ",
             "type": "string"
         },
         "firstName": {
-            "description": "Identifies the cluster uniquely within the installation.\r",
             "title": "First name",
+            "description": "Identifies the cluster uniquely within the installation.\r",
             "type": "string"
         },
         "fourthName": {
-            "description": "Identifies the cluster uniquely   within the installation.",
             "title": "First name",
+            "description": "Identifies the cluster uniquely   within the installation.",
             "type": "string"
         },
         "lastName": {
-            "description": "Identifies the cluster uniquely within the installation.\n",
             "title": "Cluster name",
+            "description": "Identifies the cluster uniquely within the installation.\n",
             "type": "string"
         },
         "sixthName": {
-            "description": " Identifies the cluster uniquely within the installation. ",
             "title": "First name",
+            "description": " Identifies the cluster uniquely within the installation. ",
             "type": "string"
         },
         "thirdName": {
-            "description": "Identifies the cluster uniquely\t within the installation.",
             "title": "First name",
+            "description": "Identifies the cluster uniquely\t within the installation.",
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }
