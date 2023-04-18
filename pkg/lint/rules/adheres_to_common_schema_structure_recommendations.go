@@ -18,23 +18,11 @@ func (r AdheresToCommonSchemaStructureRecommendations) Verify(
 
 	schemaProperties := schema.GetProperties()
 	for _, recommendedProperty := range recommendedProperties {
-		property, ok := schemaProperties[recommendedProperty.Name]
-		if ok && !property.IsType(recommendedProperty.Type) {
-			ruleResults.Add(
-				fmt.Sprintf(
-					"Root-level property '%s' should be of type '%s'.",
-					recommendedProperty.Name,
-					recommendedProperty.Type,
-				),
-				property.GetResolvedLocation(),
-			)
-		}
-
-		if !ok {
+		if _, ok := schemaProperties[recommendedProperty]; !ok {
 			ruleResults.Add(
 				fmt.Sprintf(
 					"Root-level property '%s' should be present.",
-					recommendedProperty.Name,
+					recommendedProperty,
 				),
 				schema.GetResolvedLocation(),
 			)
@@ -45,16 +33,10 @@ func (r AdheresToCommonSchemaStructureRecommendations) Verify(
 	return *ruleResults
 }
 
-func getRecommendedRootProperties() []propertyNameWithType {
-	recommendedProperties := []propertyNameWithType{
-		{
-			Name: "internal",
-			Type: "object",
-		},
-		{
-			Name: "providerSpecific",
-			Type: "object",
-		},
+func getRecommendedRootProperties() []string {
+	recommendedProperties := []string{
+		"internal",
+		"providerSpecific",
 	}
 
 	return recommendedProperties

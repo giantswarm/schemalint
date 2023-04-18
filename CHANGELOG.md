@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - Introduce a meaningful order of keywords in JSON output of normalize command.
+
+## [1.2.0] - 2023-04-18
+
+- Adapt common schema structure to cluster-aws. 
 - Only recommend examples on restricted strings.
 - Add the possibility to include a URL for further reference to rule sets, which is displayed in the output.
+- Hint to developer how to normalize the JSON schema file.
 
 ## [1.1.0] - 2023-04-05
 
@@ -23,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2023-03-22
 
 - Fix update action workflow trigger.
-- Add a reusable composite GitHub action that calls `schemalint verify`. 
+- Add a reusable composite GitHub action that calls `schemalint verify`.
 
 ## [0.10.0] - 2023-03-07
 
@@ -98,7 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/giantswarm/schemalint/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/giantswarm/schemalint/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/giantswarm/schemalint/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/giantswarm/schemalint/compare/v0.10.0...v1.0.0
