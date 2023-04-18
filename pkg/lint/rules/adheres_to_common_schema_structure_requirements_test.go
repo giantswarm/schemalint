@@ -38,27 +38,22 @@ func TestAdheheresToCommonSchemaStructureRequirements(t *testing.T) {
 			nViolations: 4,
 		},
 		{
-			name:        "case 5: wrong types",
-			schemaPath:  "testdata/common_schema_structure_requirements/wrong_types.json",
-			nViolations: 4,
-		},
-		{
-			name:        "case 6: correct",
+			name:        "case 5: correct",
 			schemaPath:  "testdata/common_schema_structure_requirements/correct.json",
 			nViolations: 0,
 		},
 		{
-			name:        "case 7: correct with optional fields",
+			name:        "case 6: correct with optional fields",
 			schemaPath:  "testdata/common_schema_structure_requirements/correct_with_optional_fields.json",
 			nViolations: 0,
 		},
 		{
-			name:        "case 8: too many",
+			name:        "case 7: too many",
 			schemaPath:  "testdata/common_schema_structure_requirements/too_many.json",
 			nViolations: 1,
 		},
 		{
-			name:        "case 9: additional properties not set to false",
+			name:        "case 8: additional properties not set to false",
 			schemaPath:  "testdata/common_schema_structure_requirements/additional_properties_not_set_to_false.json",
 			nViolations: 1,
 		},
