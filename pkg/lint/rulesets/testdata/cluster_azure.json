@@ -1,281 +1,285 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "additionalProperties": false,
+    "title": "Cluster configuration",
     "description": "Configuration of an Azure cluster using Cluster API",
+    "type": "object",
+    "additionalProperties": false,
     "properties": {
         "baseDomain": {
-            "default": "azuretest.gigantic.io",
             "title": "Base DNS domain",
-            "type": "string"
+            "type": "string",
+            "default": "azuretest.gigantic.io"
         },
         "cluster-shared": {
             "title": "Library chart",
             "type": "object"
         },
         "connectivity": {
+            "title": "Connectivity",
+            "type": "object",
             "properties": {
                 "bastion": {
+                    "title": "Bastion host",
+                    "type": "object",
                     "properties": {
                         "enabled": {
-                            "default": true,
                             "title": "Enable bastion host for this cluster",
-                            "type": "boolean"
+                            "type": "boolean",
+                            "default": true
                         },
                         "instanceType": {
-                            "default": "Standard_D2s_v5",
-                            "description": "Type of virtual machine to use for the bastion host.",
                             "title": "VM size",
-                            "type": "string"
+                            "description": "Type of virtual machine to use for the bastion host.",
+                            "type": "string",
+                            "default": "Standard_D2s_v5"
                         }
-                    },
-                    "title": "Bastion host",
-                    "type": "object"
+                    }
                 },
                 "network": {
+                    "title": "Network",
+                    "type": "object",
                     "properties": {
                         "controlPlane": {
+                            "title": "Control plane",
+                            "type": "object",
                             "properties": {
                                 "cidr": {
-                                    "default": "10.0.0.0/20",
                                     "title": "Subnet",
-                                    "type": "string"
+                                    "type": "string",
+                                    "default": "10.0.0.0/20"
                                 }
-                            },
-                            "title": "Control plane",
-                            "type": "object"
+                            }
                         },
                         "hostCidr": {
-                            "default": "10.0.0.0/16",
-                            "description": "IPv4 address range for nodes, in CIDR notation.",
                             "title": "Node subnet",
-                            "type": "string"
+                            "description": "IPv4 address range for nodes, in CIDR notation.",
+                            "type": "string",
+                            "default": "10.0.0.0/16"
                         },
                         "mode": {
-                            "default": "public",
+                            "title": "Network mode",
                             "description": "Specifying if the cluster resources are publicly accessible or not.",
+                            "type": "string",
                             "enum": [
                                 "public",
                                 "private"
                             ],
-                            "title": "Network mode",
-                            "type": "string"
+                            "default": "public"
                         },
                         "podCidr": {
-                            "default": "192.168.0.0/16",
-                            "description": "IPv4 address range for pods, in CIDR notation.",
                             "title": "Pod subnet",
-                            "type": "string"
+                            "description": "IPv4 address range for pods, in CIDR notation.",
+                            "type": "string",
+                            "default": "192.168.0.0/16"
                         },
                         "serviceCidr": {
-                            "default": "172.31.0.0/16",
-                            "description": "IPv4 address range for services, in CIDR notation.",
                             "title": "Service subnet",
-                            "type": "string"
+                            "description": "IPv4 address range for services, in CIDR notation.",
+                            "type": "string",
+                            "default": "172.31.0.0/16"
                         },
                         "workers": {
+                            "title": "Workers",
+                            "type": "object",
                             "properties": {
                                 "cidr": {
-                                    "default": "10.0.16.0/20",
                                     "title": "Subnet",
-                                    "type": "string"
+                                    "type": "string",
+                                    "default": "10.0.16.0/20"
                                 }
-                            },
-                            "title": "Workers",
-                            "type": "object"
+                            }
                         }
-                    },
-                    "title": "Network",
-                    "type": "object"
+                    }
                 },
                 "sshSSOPublicKey": {
-                    "default": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io",
                     "title": "SSH Public key for single sign-on",
-                    "type": "string"
+                    "type": "string",
+                    "default": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io"
                 }
-            },
-            "title": "Connectivity",
-            "type": "object"
+            }
         },
         "controlPlane": {
+            "title": "Control plane",
+            "type": "object",
             "properties": {
                 "etcdVolumeSizeGB": {
-                    "default": 10,
                     "title": "Etcd volume size (GB)",
-                    "type": "integer"
+                    "type": "integer",
+                    "default": 10
                 },
                 "instanceType": {
-                    "default": "Standard_D4s_v3",
                     "title": "Node VM size",
-                    "type": "string"
+                    "type": "string",
+                    "default": "Standard_D4s_v3"
                 },
                 "oidc": {
+                    "title": "OIDC authentication",
+                    "type": "object",
                     "properties": {
                         "caPem": {
-                            "default": "",
-                            "description": "Identity provider's CA certificate in PEM format.",
                             "title": "Certificate authority",
-                            "type": "string"
+                            "description": "Identity provider's CA certificate in PEM format.",
+                            "type": "string",
+                            "default": ""
                         },
                         "clientId": {
-                            "default": "",
                             "title": "Client ID",
-                            "type": "string"
+                            "type": "string",
+                            "default": ""
                         },
                         "groupsClaim": {
-                            "default": "",
                             "title": "Groups claim",
-                            "type": "string"
+                            "type": "string",
+                            "default": ""
                         },
                         "issuerUrl": {
-                            "default": "",
                             "title": "Issuer URL",
-                            "type": "string"
+                            "type": "string",
+                            "default": ""
                         },
                         "usernameClaim": {
-                            "default": "",
                             "title": "Username claim",
-                            "type": "string"
+                            "type": "string",
+                            "default": ""
                         }
-                    },
-                    "title": "OIDC authentication",
-                    "type": "object"
+                    }
                 },
                 "replicas": {
-                    "default": 3,
                     "title": "Number of nodes",
-                    "type": "integer"
+                    "type": "integer",
+                    "default": 3
                 },
                 "rootVolumeSizeGB": {
-                    "default": 50,
                     "title": "Root volume size (GB)",
-                    "type": "integer"
+                    "type": "integer",
+                    "default": 50
                 }
-            },
-            "title": "Control plane",
-            "type": "object"
+            }
         },
         "internal": {
+            "title": "Internal settings",
+            "type": "object",
             "properties": {
                 "defaults": {
+                    "title": "Default settings",
+                    "type": "object",
                     "properties": {
                         "evictionMinimumReclaim": {
-                            "default": "imagefs.available=5%,memory.available=100Mi,nodefs.available=5%",
                             "title": "Default settings for eviction minimum reclaim",
-                            "type": "string"
+                            "type": "string",
+                            "default": "imagefs.available=5%,memory.available=100Mi,nodefs.available=5%"
                         },
                         "hardEvictionThresholds": {
-                            "default": "memory.available<200Mi,nodefs.available<10%,nodefs.inodesFree<3%,imagefs.available<10%,pid.available<20%",
                             "title": "Default settings for hard eviction thresholds",
-                            "type": "string"
+                            "type": "string",
+                            "default": "memory.available<200Mi,nodefs.available<10%,nodefs.inodesFree<3%,imagefs.available<10%,pid.available<20%"
                         },
                         "softEvictionGracePeriod": {
-                            "default": "memory.available=30s,nodefs.available=2m,nodefs.inodesFree=1m,imagefs.available=2m,pid.available=1m",
                             "title": "Default settings for soft eviction grace period",
-                            "type": "string"
+                            "type": "string",
+                            "default": "memory.available=30s,nodefs.available=2m,nodefs.inodesFree=1m,imagefs.available=2m,pid.available=1m"
                         },
                         "softEvictionThresholds": {
-                            "default": "memory.available<500Mi,nodefs.available<15%,nodefs.inodesFree<5%,imagefs.available<15%,pid.available<30%",
                             "title": "Default settings for soft eviction thresholds",
-                            "type": "string"
+                            "type": "string",
+                            "default": "memory.available<500Mi,nodefs.available<15%,nodefs.inodesFree<5%,imagefs.available<15%,pid.available<30%"
                         }
-                    },
-                    "title": "Default settings",
-                    "type": "object"
+                    }
                 },
                 "identity": {
+                    "title": "Identity",
+                    "type": "object",
                     "properties": {
-                        "attachCapzControllerUserAssignedIdentity": {
-                            "default": false,
-                            "title": "Attach CAPZ controller UserAssigned identity",
-                            "type": "boolean"
-                        },
                         "type": {
-                            "default": "SystemAssigned",
+                            "title": "Type of Identity",
+                            "type": "string",
                             "enum": [
                                 "SystemAssigned",
                                 "UserAssigned"
                             ],
-                            "title": "Type of Identity",
-                            "type": "string"
+                            "default": "SystemAssigned"
+                        },
+                        "attachCapzControllerUserAssignedIdentity": {
+                            "title": "Attach CAPZ controller UserAssigned identity",
+                            "type": "boolean",
+                            "default": false
                         },
                         "userAssignedCustomIdentities": {
-                            "default": [],
                             "title": "List of custom UserAssigned Identities to attach to all nodes",
-                            "type": "array"
+                            "type": "array",
+                            "default": []
                         }
-                    },
-                    "title": "Identity",
-                    "type": "object"
+                    }
                 },
                 "image": {
+                    "title": "Node Image",
+                    "type": "object",
                     "properties": {
                         "gallery": {
-                            "default": "gsCapzFlatcar-41c2d140-ac44-4d8b-b7e1-7b2f1ddbe4d0",
-                            "description": "Name of the community gallery hosting the image",
                             "title": "Gallery",
-                            "type": "string"
+                            "description": "Name of the community gallery hosting the image",
+                            "type": "string",
+                            "default": "gsCapzFlatcar-41c2d140-ac44-4d8b-b7e1-7b2f1ddbe4d0"
                         },
                         "name": {
-                            "default": "",
-                            "description": "Name of the image definition in the Gallery",
                             "title": "Image Definition",
-                            "type": "string"
+                            "description": "Name of the image definition in the Gallery",
+                            "type": "string",
+                            "default": ""
                         },
                         "version": {
-                            "default": "3374.2.4",
                             "title": "Image version",
-                            "type": "string"
+                            "type": "string",
+                            "default": "3374.2.4"
                         }
-                    },
-                    "title": "Node Image",
-                    "type": "object"
+                    }
                 },
                 "kubernetesVersion": {
-                    "default": "1.24.11",
                     "title": "Kubernetes version",
-                    "type": "string"
+                    "type": "string",
+                    "default": "1.24.11"
                 },
                 "network": {
+                    "title": "Network configuration",
                     "description": "Internal network configuration that is susceptible to more frequent change",
+                    "type": "object",
                     "properties": {
                         "vpn": {
+                            "title": "VPN configuration",
                             "description": "Internal VPN configuration that is susceptible to more frequent change",
+                            "type": "object",
                             "properties": {
                                 "gatewayMode": {
-                                    "default": "remote",
+                                    "title": "VPN gateway mode",
+                                    "type": "string",
                                     "enum": [
                                         "local",
                                         "remote"
                                     ],
-                                    "title": "VPN gateway mode",
-                                    "type": "string"
+                                    "default": "remote"
                                 }
-                            },
-                            "title": "VPN configuration",
-                            "type": "object"
+                            }
                         }
-                    },
-                    "title": "Network configuration",
-                    "type": "object"
+                    }
                 }
-            },
-            "title": "Internal settings",
-            "type": "object"
+            }
         },
         "managementCluster": {
             "title": "The capi MC managing this cluster",
             "type": "string"
         },
         "metadata": {
+            "title": "Metadata",
+            "type": "object",
             "properties": {
                 "description": {
-                    "description": "User-friendly description of the cluster's purpose.",
                     "title": "Cluster description",
+                    "description": "User-friendly description of the cluster's purpose.",
                     "type": "string"
                 },
                 "name": {
-                    "description": "Unique identifier, cannot be changed after creation.",
                     "title": "Cluster name",
+                    "description": "Unique identifier, cannot be changed after creation.",
                     "type": "string"
                 },
                 "organization": {
@@ -283,55 +287,54 @@
                     "type": "string"
                 },
                 "servicePriority": {
-                    "$comment": "Defined in https://github.com/giantswarm/rfc/tree/main/classify-cluster-priority",
-                    "default": "highest",
+                    "title": "Service priority",
                     "description": "The relative importance of this cluster.",
+                    "type": "string",
+                    "$comment": "Defined in https://github.com/giantswarm/rfc/tree/main/classify-cluster-priority",
                     "enum": [
                         "highest",
                         "medium",
                         "lowest"
                     ],
-                    "title": "Service priority",
-                    "type": "string"
+                    "default": "highest"
                 }
-            },
-            "title": "Metadata",
-            "type": "object"
+            }
         },
         "nodePools": {
-            "default": [
-                {
-                    "customNodeLabels": [],
-                    "customNodeTaints": [],
-                    "disableHealthCheck": false,
-                    "instanceType": "Standard_D2s_v3",
-                    "name": "md00",
-                    "replicas": 3,
-                    "rootVolumeSizeGB": 50
-                }
-            ],
+            "title": "Node pools",
+            "type": "array",
             "items": {
+                "title": "Node pool",
+                "type": "object",
                 "properties": {
                     "customNodeLabels": {
+                        "title": "Custom node labels",
+                        "type": "array",
                         "items": {
                             "title": "Label",
                             "type": "string"
-                        },
-                        "title": "Custom node labels",
-                        "type": "array"
+                        }
                     },
                     "customNodeTaints": {
-                        "descriptions": "Taints that will be set on all nodes in the node pool, to avoid the scheduling of certain workloads.",
+                        "title": "Custom node taints",
+                        "type": "array",
                         "items": {
+                            "title": "Node taint",
+                            "type": "object",
+                            "required": [
+                                "effect",
+                                "key",
+                                "value"
+                            ],
                             "properties": {
                                 "effect": {
+                                    "title": "Effect",
+                                    "type": "string",
                                     "enum": [
                                         "NoSchedule",
                                         "PreferNoSchedule",
                                         "NoExecute"
-                                    ],
-                                    "title": "Effect",
-                                    "type": "string"
+                                    ]
                                 },
                                 "key": {
                                     "title": "Key",
@@ -341,38 +344,30 @@
                                     "title": "Value",
                                     "type": "string"
                                 }
-                            },
-                            "required": [
-                                "effect",
-                                "key",
-                                "value"
-                            ],
-                            "title": "Node taint",
-                            "type": "object"
+                            }
                         },
-                        "title": "Custom node taints",
-                        "type": "array"
+                        "descriptions": "Taints that will be set on all nodes in the node pool, to avoid the scheduling of certain workloads."
                     },
                     "disableHealthCheck": {
                         "title": "Disable HealthChecks for the MachineDeployment",
                         "type": "boolean"
                     },
                     "failureDomain": {
+                        "title": "Select zone where to deploy the nodePool",
+                        "type": "string",
                         "enum": [
                             "1",
                             "2",
                             "3"
-                        ],
-                        "title": "Select zone where to deploy the nodePool",
-                        "type": "string"
+                        ]
                     },
                     "instanceType": {
                         "title": "VM size",
                         "type": "string"
                     },
                     "name": {
-                        "description": "Unique identifier, cannot be changed after creation.",
                         "title": "Name",
+                        "description": "Unique identifier, cannot be changed after creation.",
                         "type": "string"
                     },
                     "replicas": {
@@ -383,89 +378,94 @@
                         "title": "Root volume size (GB)",
                         "type": "integer"
                     }
-                },
-                "title": "Node pool",
-                "type": "object"
+                }
             },
-            "title": "Node pools",
-            "type": "array"
+            "default": [
+                {
+                    "customNodeLabels": [],
+                    "customNodeTaints": [],
+                    "disableHealthCheck": false,
+                    "instanceType": "Standard_D2s_v3",
+                    "name": "md00",
+                    "replicas": 3,
+                    "rootVolumeSizeGB": 50
+                }
+            ]
         },
         "provider": {
             "title": "Cluster API provider name",
             "type": "string"
         },
         "providerSpecific": {
+            "title": "Azure settings",
+            "type": "object",
             "properties": {
                 "azureClusterIdentity": {
+                    "title": "Identity",
                     "description": "AzureClusterIdentity resource to use for this cluster.",
+                    "type": "object",
                     "properties": {
                         "name": {
-                            "default": "cluster-identity",
                             "title": "Name",
-                            "type": "string"
+                            "type": "string",
+                            "default": "cluster-identity"
                         },
                         "namespace": {
-                            "default": "org-giantswarm",
                             "title": "Namespace",
-                            "type": "string"
+                            "type": "string",
+                            "default": "org-giantswarm"
                         }
-                    },
-                    "title": "Identity",
-                    "type": "object"
+                    }
                 },
                 "location": {
-                    "default": "westeurope",
                     "title": "Location",
-                    "type": "string"
+                    "type": "string",
+                    "default": "westeurope"
                 },
                 "network": {
-                    "additionalProperties": false,
+                    "title": "Azure network settings",
                     "description": "Azure VNet peering and other Azure-specific network settings.",
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "peerings": {
-                            "default": [],
+                            "title": "VNet peerings",
                             "description": "Specifying VNets (their resource groups and names) to which the peering is established.",
+                            "type": "array",
                             "items": {
+                                "title": "VNet peering",
+                                "type": "object",
                                 "additionalProperties": false,
                                 "properties": {
                                     "remoteVnetName": {
+                                        "title": "VNet name",
                                         "description": "Name of the remote VNet to which the peering is established.",
+                                        "type": "string",
                                         "maxLength": 64,
                                         "minLength": 2,
-                                        "pattern": "^[-\\w\\._]+$",
-                                        "title": "VNet name",
-                                        "type": "string"
+                                        "pattern": "^[-\\w\\._]+$"
                                     },
                                     "resourceGroup": {
+                                        "title": "Resource group name",
                                         "description": "Resource group for the remote VNet to which the peering is established.",
+                                        "type": "string",
                                         "maxLength": 90,
                                         "minLength": 1,
-                                        "pattern": "^[-\\w\\._\\(\\)]+$",
-                                        "title": "Resource group name",
-                                        "type": "string"
+                                        "pattern": "^[-\\w\\._\\(\\)]+$"
                                     }
                                 },
-                                "title": "VNet peering",
-                                "type": "object",
                                 "uniqueItems": true
                             },
-                            "title": "VNet peerings",
-                            "type": "array"
+                            "default": []
                         }
-                    },
-                    "title": "Azure network settings",
-                    "type": "object"
+                    }
                 },
                 "subscriptionId": {
-                    "default": "PLACEHOLDER",
                     "title": "Subscription ID",
-                    "type": "string"
+                    "type": "string",
+                    "default": "PLACEHOLDER"
                 }
-            },
-            "title": "Azure settings",
-            "type": "object"
+            }
         }
-    },
-    "title": "Cluster configuration",
-    "type": "object"
+    }
 }

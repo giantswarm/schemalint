@@ -1,9 +1,13 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "addresses": {
+            "title": "Addresses",
+            "type": "array",
             "items": {
+                "type": "object",
                 "properties": {
                     "city": {
                         "title": "City",
@@ -21,16 +25,13 @@
                         "title": "Zip",
                         "type": "string"
                     }
-                },
-                "type": "object"
-            },
-            "title": "Addresses",
-            "type": "array"
+                }
+            }
         },
         "age": {
-            "minimum": 0,
             "title": "Age",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
         },
         "firstName": {
             "title": "First Name",
@@ -40,6 +41,5 @@
             "title": "Last Name",
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }

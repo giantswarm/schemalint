@@ -1,15 +1,15 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "children": {
+            "type": "array",
             "items": {
                 "$ref": "#"
-            },
-            "type": "array"
+            }
         },
         "name": {
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }

@@ -1,11 +1,11 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "lastName": {
             "title": "cluster name",
             "type": "string"
         }
-    },
-    "type": "object"
+    }
 }

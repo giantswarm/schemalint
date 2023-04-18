@@ -3,7 +3,7 @@ package rules
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/v2/pkg/lint"
 )
 
 func TestAvoidRecursion(t *testing.T) {
