@@ -377,8 +377,8 @@
             "$defs": {
                 "node": {
                     "$id": "http://localhost:1234/draft2020-12/node",
-                    "description": "node",
                     "type": "object",
+                    "description": "node",
                     "required": [
                         "value"
                     ],
@@ -392,8 +392,8 @@
                     }
                 }
             },
-            "description": "tree of nodes",
             "type": "object",
+            "description": "tree of nodes",
             "required": [
                 "meta",
                 "nodes"
