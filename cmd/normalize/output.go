@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/giantswarm/schemalint/pkg/cli"
+	"github.com/giantswarm/schemalint/v2/pkg/cli"
 )
 
 func handleOutput(output []byte, outputPath string) {

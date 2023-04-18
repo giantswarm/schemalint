@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
 )
 
 func RecurseAll(schema *schemautils.ExtendedSchema, callback func(schema *schemautils.ExtendedSchema)) {

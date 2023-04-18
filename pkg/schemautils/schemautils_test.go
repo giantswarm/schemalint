@@ -5,8 +5,8 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint"
+	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
 )
 
 func TestGetSchemasAt(t *testing.T) {

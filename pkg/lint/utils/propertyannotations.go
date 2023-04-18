@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
 )
 
 type StringWithLevel struct {
