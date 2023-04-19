@@ -1,24 +1,21 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type DescriptionExists struct{}
 
-func (r DescriptionExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r DescriptionExists) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s)
 
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if annotations.GetDescription() == "" {
 			ruleResults.Add(
-				fmt.Sprintf("Property '%s' should have a description.", schemautils.ConvertToConciseLocation(resolvedLocation)),
+				"Property should have a description",
 				resolvedLocation,
 			)
 		}
@@ -27,6 +24,6 @@ func (r DescriptionExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleR
 	return *ruleResults
 }
 
-func (r DescriptionExists) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r DescriptionExists) GetSeverity() Severity {
+	return SeverityRecommendation
 }

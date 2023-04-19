@@ -3,7 +3,7 @@ package rules
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 func TestStringsShouldBeConstrained(t *testing.T) {
@@ -26,7 +26,7 @@ func TestStringsShouldBeConstrained(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			schema, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
@@ -34,7 +34,12 @@ func TestStringsShouldBeConstrained(t *testing.T) {
 			ruleResults := titleExistsRule.Verify(schema)
 
 			if len(ruleResults.Violations) != tc.nViolations {
-				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults.Violations))
+				t.Fatalf(
+					"Unexpected number of rule violations in test case '%s': Expected %d, got %d",
+					tc.name,
+					tc.nViolations,
+					len(ruleResults.Violations),
+				)
 			}
 		})
 	}

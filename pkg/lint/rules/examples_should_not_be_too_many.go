@@ -3,26 +3,24 @@ package rules
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type ExamplesShouldNotBeTooMany struct{}
 
 const maxExamples = 5
 
-func (r ExamplesShouldNotBeTooMany) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r ExamplesShouldNotBeTooMany) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s)
 	for resolvedLocation, propertyAnnotations := range propertyAnnotationsMap {
 		examples := propertyAnnotations.GetExamples()
 		if len(examples) > maxExamples {
 			ruleResults.Add(
 				fmt.Sprintf(
-					"Property '%s' should not have more than %d examples.",
-					schemautils.ConvertToConciseLocation(resolvedLocation),
+					"Property should not have more than %d examples.",
 					maxExamples,
 				),
 				resolvedLocation,
@@ -33,6 +31,6 @@ func (r ExamplesShouldNotBeTooMany) Verify(schema *schemautils.ExtendedSchema) l
 	return *ruleResults
 }
 
-func (r ExamplesShouldNotBeTooMany) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r ExamplesShouldNotBeTooMany) GetSeverity() Severity {
+	return SeverityRecommendation
 }

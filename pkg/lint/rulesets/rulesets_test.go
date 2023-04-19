@@ -3,7 +3,7 @@ package rulesets
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 func TestLintWithRules(t *testing.T) {
@@ -35,30 +35,37 @@ func TestLintWithRules(t *testing.T) {
 			nErrors:          9,
 			nRecommendations: 8,
 		},
+		{
+			name:             "case 3: all rules violated",
+			schemaPath:       "testdata/all_rules_violated.json",
+			ruleSetName:      "cluster-app",
+			nErrors:          42,
+			nRecommendations: 30,
+		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			s, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 
-			errors, recommendations := VerifyRuleSet(tc.ruleSetName, schema)
-			if len(errors) != tc.nErrors {
+			errors, recommendations := Verify(tc.ruleSetName, s)
+			if len(errors.Violations) != tc.nErrors {
 				t.Fatalf(
 					"Unexpected number of errors in test case '%s': Expected %d, got %d",
 					tc.name,
 					tc.nErrors,
-					len(errors),
+					len(errors.Violations),
 				)
 			}
-			if len(recommendations) != tc.nRecommendations {
+			if len(recommendations.Violations) != tc.nRecommendations {
 				t.Fatalf(
 					"Unexpected number of recommendations in test case '%s': Expected %d, got %d",
 					tc.name,
 					tc.nRecommendations,
-					len(recommendations),
+					len(recommendations.Violations),
 				)
 			}
 		})

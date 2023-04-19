@@ -13,12 +13,12 @@ type KeyImportanceOverride struct {
 }
 
 // getKeyImportanceMap returns a map where the key is a possible key in a JSON
-// schema file and the value is the importance of the key. The higher the
+// s file and the value is the importance of the key. The higher the
 // importance, the higher/earlier the key will be in the normalized output.
 func getKeyImportanceMap() map[string]int {
 	return map[string]int{
 		"$id":                  11,
-		"$schema":              10,
+		"$s":                   10,
 		"$ref":                 9,
 		"$defs":                9,
 		"type":                 8,

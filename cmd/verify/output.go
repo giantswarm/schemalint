@@ -2,16 +2,16 @@ package verify
 
 import (
 	"fmt"
-	"sort"
 
 	"github.com/fatih/color"
 
 	"github.com/giantswarm/schemalint/pkg/cli"
+	"github.com/giantswarm/schemalint/pkg/verify"
 )
 
-func printOutput(results []TestResult) {
-	recommendations := []string{}
-	errors := []string{}
+func printOutput(results []verify.TestResult) {
+	recommendations := []verify.Feedback{}
+	errors := []verify.Feedback{}
 	moreInfo := []string{}
 
 	for _, r := range results {
@@ -20,32 +20,50 @@ func printOutput(results []TestResult) {
 		moreInfo = append(moreInfo, r.MoreInfo)
 	}
 
-	sort.Strings(recommendations)
-	sort.Strings(errors)
-
 	printRecommendations(recommendations)
 	printErrors(errors)
 	printMoreInfo(moreInfo)
 	printSummary(results)
 }
 
-func printRecommendations(recommendations []string) {
-	printGenericList("Recommendations", recommendations, cli.WarningColor)
+func printFeedbackGroup(feedback []verify.Feedback) {
+	if len(feedback) == 0 {
+		panic("feedback group must not be empty") // should never happen
+	}
+	sample := feedback[0]
+	fmt.Println(sample.Message)
+	if sample.Location != "" {
+		for _, f := range feedback {
+			fmt.Printf("  - %s\n", f.Location)
+		}
+	}
+	fmt.Println()
 }
 
-func printErrors(errors []string) {
-	printGenericList("Errors", errors, cli.ErrorColor)
+func printRecommendations(recommendations []verify.Feedback) {
+	printFeedback("Recommendations", recommendations, cli.WarningColor)
 }
 
-func printGenericList(title string, items []string, color *color.Color) {
-	if len(items) == 0 {
+func printErrors(errors []verify.Feedback) {
+	printFeedback("Errors", errors, cli.ErrorColor)
+}
+
+func printFeedback(title string, feedback []verify.Feedback, color *color.Color) {
+	feedbackGroups := verify.GroupByMessage(feedback)
+	if len(feedbackGroups) == 0 {
 		return
 	}
+
+	totalFeedback := 0
+	for _, g := range feedbackGroups {
+		totalFeedback += len(g)
+	}
+
 	printSeparator()
-	color.Printf("%s (%d)\n", title, len(items))
+	color.Printf("%s (%d)\n", title, totalFeedback)
 	fmt.Println()
-	for _, i := range items {
-		fmt.Printf("- %s\n", i)
+	for _, feedbackGroup := range feedbackGroups {
+		printFeedbackGroup(feedbackGroup)
 	}
 }
 
@@ -65,7 +83,7 @@ func printMoreInfo(moreInfo []string) {
 	}
 }
 
-func printSummary(results []TestResult) {
+func printSummary(results []verify.TestResult) {
 	var summary string
 	printSeparator()
 	for _, r := range results {

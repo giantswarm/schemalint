@@ -1,6 +1,6 @@
 {
     "$id": "http://example.com/myschema",
-    "$schema": "http://json-schema.org/schema#",
+    "$s": "http://json-s.org/s#",
     "properties": {},
     "type": "object"
 }

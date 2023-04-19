@@ -3,7 +3,7 @@ package rules
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 func TestAdheheresToCommonSchemaStructureRecommendations(t *testing.T) {
@@ -36,12 +36,12 @@ func TestAdheheresToCommonSchemaStructureRecommendations(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			s, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 			titleExistsRule := AdheresToCommonSchemaStructureRecommendations{}
-			ruleResults := titleExistsRule.Verify(schema)
+			ruleResults := titleExistsRule.Verify(s)
 
 			if len(ruleResults.Violations) != tc.nViolations {
 				t.Fatalf(

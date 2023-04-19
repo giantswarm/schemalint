@@ -1,31 +1,26 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type AvoidRecursionKeywords struct{}
 
-func (r AvoidRecursionKeywords) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r AvoidRecursionKeywords) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	utils.RecurseAll(schema, func(schema *schemautils.ExtendedSchema) {
-		if schema.DynamicAnchor != "" || schema.DynamicRef != nil || schema.RecursiveRef != nil {
+	recurse.RecurseAll(s, func(s *schema.ExtendedSchema) {
+		if s.DynamicAnchor != "" || s.DynamicRef != nil || s.RecursiveRef != nil {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Schema at '%s' must not use recursion keywords (dynamicAnchor, dynamicRef, recursiveRef).",
-					schema.GetHumanReadableLocation()),
-				schema.GetResolvedLocation(),
+				"Schema must not use recursion keywords (dynamicAnchor, dynamicRef, recursiveRef)",
+				s.GetResolvedLocation(),
 			)
 		}
 	})
 	return *ruleResults
 }
 
-func (r AvoidRecursionKeywords) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r AvoidRecursionKeywords) GetSeverity() Severity {
+	return SeverityError
 }

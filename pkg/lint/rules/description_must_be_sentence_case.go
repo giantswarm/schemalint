@@ -1,24 +1,21 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type DescriptionMustBeSentenceCase struct{}
 
-func (r DescriptionMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r DescriptionMustBeSentenceCase) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s).WhereDescriptionsExist()
 
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if !stringStartsCapitalized(annotations.GetDescription()) {
 			ruleResults.Add(
-				fmt.Sprintf("Property '%s' description must start with a capital letter.", schemautils.ConvertToConciseLocation(resolvedLocation)),
+				"Property description must start with a capital letter",
 				resolvedLocation,
 			)
 		}
@@ -27,6 +24,6 @@ func (r DescriptionMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema
 	return *ruleResults
 }
 
-func (r DescriptionMustBeSentenceCase) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r DescriptionMustBeSentenceCase) GetSeverity() Severity {
+	return SeverityError
 }

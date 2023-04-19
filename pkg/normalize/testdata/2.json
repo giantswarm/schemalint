@@ -1,1 +1,15 @@
-{"c":{},"1":"number one","b":123,"2":["two",2,"number",1,null],"a":null,"$schema":"","$id":null}
+{
+    "c": {},
+    "1": "number one",
+    "b": 123,
+    "2": [
+        "two",
+        2,
+        "number",
+        1,
+        null
+    ],
+    "a": null,
+    "$s": "",
+    "$id": null
+}

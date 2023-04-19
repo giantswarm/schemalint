@@ -1,36 +1,31 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type NumbersShouldBeConstrained struct{}
 
-func (r NumbersShouldBeConstrained) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r NumbersShouldBeConstrained) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	callback := func(schema *schemautils.ExtendedSchema) {
-		if schema.Minimum == nil &&
-			schema.Maximum == nil &&
-			schema.ExclusiveMinimum == nil &&
-			schema.ExclusiveMaximum == nil {
+	callback := func(s *schema.ExtendedSchema) {
+		if s.Minimum == nil &&
+			s.Maximum == nil &&
+			s.ExclusiveMinimum == nil &&
+			s.ExclusiveMaximum == nil {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Numeric property '%s' should be constrained through 'minimum', 'maximum', 'exclusiveMinimum' or 'exclusiveMaximum'",
-					schema.GetHumanReadableLocation(),
-				), schema.GetResolvedLocation(),
+				"Numeric property should be constrained through 'minimum', 'maximum', 'exclusiveMinimum' or 'exclusiveMaximum'",
+				s.GetResolvedLocation(),
 			)
 		}
 	}
 
-	utils.RecurseNumerics(schema, callback)
+	recurse.RecurseNumerics(s, callback)
 	return *ruleResults
 }
 
-func (r NumbersShouldBeConstrained) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r NumbersShouldBeConstrained) GetSeverity() Severity {
+	return SeverityRecommendation
 }

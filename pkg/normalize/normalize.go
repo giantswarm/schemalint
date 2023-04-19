@@ -160,7 +160,7 @@ func marshalWithoutEscape(t interface{}) ([]byte, error) {
 	return buffer.Bytes(), err
 }
 
-func CheckIsNormalized(jsonBytes []byte) (bool, error) {
+func Verify(jsonBytes []byte) (bool, error) {
 	normalized, err := Normalize(jsonBytes)
 	if err != nil {
 		return false, err

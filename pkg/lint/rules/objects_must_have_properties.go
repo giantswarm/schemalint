@@ -1,40 +1,34 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type ObjectsMustHaveProperties struct{}
 
-func (r ObjectsMustHaveProperties) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r ObjectsMustHaveProperties) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	callback := func(schema *schemautils.ExtendedSchema) {
-		nProperties := len(schema.Properties) + len(schema.PatternProperties)
-		_, ok := schema.GetAdditionalProperties().(*schemautils.ExtendedSchema)
+	callback := func(s *schema.ExtendedSchema) {
+		nProperties := len(s.Properties) + len(s.PatternProperties)
+		_, ok := s.GetAdditionalProperties().(*schema.ExtendedSchema)
 		if ok {
 			nProperties++
 		}
 
 		if nProperties == 0 {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Object at '%s' must have at least one property.",
-					schema.GetHumanReadableLocation(),
-				),
-				schema.GetResolvedLocation(),
+				"Object must have at least one property",
+				s.GetResolvedLocation(),
 			)
 		}
 	}
 
-	utils.RecurseObjects(schema, callback)
+	recurse.RecurseObjects(s, callback)
 	return *ruleResults
 }
 
-func (r ObjectsMustHaveProperties) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r ObjectsMustHaveProperties) GetSeverity() Severity {
+	return SeverityError
 }

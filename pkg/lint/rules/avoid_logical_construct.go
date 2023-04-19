@@ -1,29 +1,29 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type AvoidLogicalConstruct struct{}
 
-func (r AvoidLogicalConstruct) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := lint.RuleResults{}
+func (r AvoidLogicalConstruct) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := RuleResults{}
 
-	callback := func(schema *schemautils.ExtendedSchema) {
-		if schema.If != nil || schema.Then != nil || schema.Else != nil {
-			ruleResults.Add(fmt.Sprintf("Schema must not use logical constructs (if, then, else). Found at '%s'.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
+	callback := func(s *schema.ExtendedSchema) {
+		if s.If != nil || s.Then != nil || s.Else != nil {
+			ruleResults.Add(
+				"Schema must not use logical constructs (if, then, else)",
+				s.GetResolvedLocation(),
+			)
 		}
 	}
 
-	utils.RecurseAll(schema, callback)
+	recurse.RecurseAll(s, callback)
 
 	return ruleResults
 }
 
-func (r AvoidLogicalConstruct) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r AvoidLogicalConstruct) GetSeverity() Severity {
+	return SeverityError
 }

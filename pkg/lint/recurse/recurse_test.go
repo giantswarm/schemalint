@@ -1,10 +1,9 @@
-package utils
+package recurse
 
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type RecurseType int
@@ -35,7 +34,7 @@ func TestRecurse(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			s, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
@@ -47,14 +46,14 @@ func TestRecurse(t *testing.T) {
 				found: false,
 				path:  "",
 			}
-			checkForGold := func(schema *schemautils.ExtendedSchema) {
-				if schema.Title == "Gold" {
+			checkForGold := func(s *schema.ExtendedSchema) {
+				if s.Title == "Gold" {
 					goldFoundStruct.found = true
-					goldFoundStruct.path = schema.GetResolvedLocation()
+					goldFoundStruct.path = s.GetResolvedLocation()
 				}
 			}
 
-			RecurseAll(schema, checkForGold)
+			RecurseAll(s, checkForGold)
 			if !goldFoundStruct.found {
 				t.Fatalf("Expected to find property with title 'Gold'")
 			}
@@ -66,12 +65,12 @@ func TestRecurse(t *testing.T) {
 }
 
 func TestSelfReferencingRecurse(t *testing.T) {
-	schema, err := lint.Compile("testdata/recurse/self_referencing_ref.json")
+	s, err := schema.Compile("testdata/recurse/self_referencing_ref.json")
 	if err != nil {
 		t.Fatalf("Unexpected parsing error: %s", err)
 	}
 
-	dummyFunc := func(schema *schemautils.ExtendedSchema) {}
+	dummyFunc := func(s *schema.ExtendedSchema) {}
 	// if this does not loop forever, the test passes
-	RecurseAll(schema, dummyFunc)
+	RecurseAll(s, dummyFunc)
 }

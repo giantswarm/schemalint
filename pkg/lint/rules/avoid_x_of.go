@@ -4,47 +4,48 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type AvoidXOf struct{}
 
-func (r AvoidXOf) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
-	callback := func(schema *schemautils.ExtendedSchema) {
-		if schema.AnyOf != nil {
-			permitted, error := isPermittedUsage(schema.GetAnyOf())
+func (r AvoidXOf) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
+	callback := func(s *schema.ExtendedSchema) {
+		if s.AnyOf != nil {
+			permitted, error := isPermittedUsage(s.GetAnyOf())
 			if !permitted {
 				ruleResults.Add(fmt.Sprintf(
 					"Schema at path '%s' must only use anyOf for one of the following purposes:\n%s",
-					schema.GetHumanReadableLocation(),
+					s.GetHumanReadableLocation(),
 					error,
-				), schema.GetResolvedLocation())
+				), s.GetResolvedLocation())
 			}
 		}
-		if schema.OneOf != nil {
-			permitted, error := isPermittedUsage(schema.GetOneOf())
+		if s.OneOf != nil {
+			permitted, error := isPermittedUsage(s.GetOneOf())
 			if !permitted {
 				ruleResults.Add(fmt.Sprintf(
 					"Schema at path '%s' must only use oneOf for one of the following purposes:\n%s",
-					schema.GetHumanReadableLocation(),
+					s.GetHumanReadableLocation(),
 					error,
-				), schema.GetResolvedLocation())
+				), s.GetResolvedLocation())
 			}
 		}
 	}
-	utils.RecurseAll(schema, callback)
+	recurse.RecurseAll(s, callback)
 	return *ruleResults
 }
 
-func (r AvoidXOf) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r AvoidXOf) GetSeverity() Severity {
+	return SeverityError
 }
 
-func isPermittedUsage(schemas []*schemautils.ExtendedSchema) (bool, string) {
-	permittedAsValidationConstraints, containedIllegalKeywords := isForValidationConstraints(schemas)
+func isPermittedUsage(schemas []*schema.ExtendedSchema) (bool, string) {
+	permittedAsValidationConstraints, containedIllegalKeywords := isForValidationConstraints(
+		schemas,
+	)
 	permittedAsDeprecation := isForDeprecation(schemas)
 
 	permitted := permittedAsValidationConstraints || permittedAsDeprecation
@@ -52,14 +53,21 @@ func isPermittedUsage(schemas []*schemautils.ExtendedSchema) (bool, string) {
 		return true, ""
 	}
 
-	validationConstraintsMessage := fmt.Sprintf("Validation constraints: The subschemas cannot be used as validation constraints because they contain the following illegal keywords: %s.", strings.Join(containedIllegalKeywords, ", "))
+	validationConstraintsMessage := fmt.Sprintf(
+		"Validation constraints: The subschemas cannot be used as validation constraints because they contain the following illegal keywords: %s.",
+		strings.Join(containedIllegalKeywords, ", "),
+	)
 	permitedAsDeprecationMessage := "Deprecation: The subschemas can only be used for deprecation if exactly one subschema is not deprecated and all others are deprecated."
 
-	return false, fmt.Sprintf("\t- %s\n\t- %s", validationConstraintsMessage, permitedAsDeprecationMessage)
+	return false, fmt.Sprintf(
+		"\t- %s\n\t- %s",
+		validationConstraintsMessage,
+		permitedAsDeprecationMessage,
+	)
 }
 
 // each subschema only defines constraints for the validation of the payload
-func isForValidationConstraints(schemas []*schemautils.ExtendedSchema) (bool, []string) {
+func isForValidationConstraints(schemas []*schema.ExtendedSchema) (bool, []string) {
 	containedIllegalKeywords := map[string]bool{}
 
 	for _, schema := range schemas {
@@ -105,7 +113,7 @@ func isForValidationConstraints(schemas []*schemautils.ExtendedSchema) (bool, []
 
 // subschemas can be used for deprecation, if exactly one subschema is not
 // deprecated and all others are deprecated
-func isForDeprecation(schemas []*schemautils.ExtendedSchema) bool {
+func isForDeprecation(schemas []*schema.ExtendedSchema) bool {
 	nDeprecated := 0
 	nNotDeprecated := 0
 

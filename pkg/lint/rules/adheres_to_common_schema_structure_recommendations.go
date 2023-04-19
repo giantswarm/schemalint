@@ -3,28 +3,27 @@ package rules
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type AdheresToCommonSchemaStructureRecommendations struct{}
 
 func (r AdheresToCommonSchemaStructureRecommendations) Verify(
-	schema *schemautils.ExtendedSchema,
-) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+	s *schema.ExtendedSchema,
+) RuleResults {
+	ruleResults := &RuleResults{}
 
 	recommendedProperties := getRecommendedRootProperties()
 
-	schemaProperties := schema.GetProperties()
+	schemaProperties := s.GetProperties()
 	for _, recommendedProperty := range recommendedProperties {
 		if _, ok := schemaProperties[recommendedProperty]; !ok {
 			ruleResults.Add(
 				fmt.Sprintf(
-					"Root-level property '%s' should be present.",
+					"Root-level property %s should be present",
 					recommendedProperty,
 				),
-				schema.GetResolvedLocation(),
+				s.GetResolvedLocation(),
 			)
 		}
 
@@ -42,6 +41,6 @@ func getRecommendedRootProperties() []string {
 	return recommendedProperties
 }
 
-func (r AdheresToCommonSchemaStructureRecommendations) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r AdheresToCommonSchemaStructureRecommendations) GetSeverity() Severity {
+	return SeverityRecommendation
 }

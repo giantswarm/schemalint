@@ -1,20 +1,20 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type TitleShouldNotContainParentsTitle struct{}
 
-func (r TitleShouldNotContainParentsTitle) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r TitleShouldNotContainParentsTitle) Verify(
+	s *schema.ExtendedSchema,
+) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereTitlesExist()
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s).WhereTitlesExist()
 
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		title := annotations.GetTitle()
@@ -30,11 +30,7 @@ func (r TitleShouldNotContainParentsTitle) Verify(schema *schemautils.ExtendedSc
 
 		if strings.Contains(strings.ToLower(title), strings.ToLower(parentTitle)) {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Property '%s' title should not contain the parent's title '%s'.",
-					schemautils.ConvertToConciseLocation(resolvedLocation),
-					parentTitle,
-				),
+				"Property title should not contain the parent's title",
 				resolvedLocation,
 			)
 		}
@@ -42,6 +38,6 @@ func (r TitleShouldNotContainParentsTitle) Verify(schema *schemautils.ExtendedSc
 	return *ruleResults
 }
 
-func (r TitleShouldNotContainParentsTitle) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r TitleShouldNotContainParentsTitle) GetSeverity() Severity {
+	return SeverityRecommendation
 }

@@ -1,28 +1,30 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/pkg/lint"
-	"github.com/giantswarm/schemalint/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type DeprecatedPropertiesShouldHaveComment struct{}
 
-func (r DeprecatedPropertiesShouldHaveComment) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
-	callback := func(schema *schemautils.ExtendedSchema) {
-		if schema.Deprecated && schema.Comment == "" {
-			ruleResults.Add(fmt.Sprintf("Deprecated property '%s' should have a $comment.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
+func (r DeprecatedPropertiesShouldHaveComment) Verify(
+	s *schema.ExtendedSchema,
+) RuleResults {
+	ruleResults := &RuleResults{}
+	callback := func(s *schema.ExtendedSchema) {
+		if s.Deprecated && s.Comment == "" {
+			ruleResults.Add(
+				"Deprecated property should have a $comment",
+				s.GetResolvedLocation(),
+			)
 		}
 	}
 
-	utils.RecurseProperties(schema, callback)
+	recurse.RecurseProperties(s, callback)
 
 	return *ruleResults
 }
 
-func (r DeprecatedPropertiesShouldHaveComment) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r DeprecatedPropertiesShouldHaveComment) GetSeverity() Severity {
+	return SeverityRecommendation
 }

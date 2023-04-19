@@ -3,13 +3,12 @@ package rulesets
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
 	"github.com/giantswarm/schemalint/pkg/lint/rules"
-	"github.com/giantswarm/schemalint/pkg/schemautils"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 type RuleSet struct {
-	rules            []lint.Rule
+	rules            []rules.Rule
 	excludeLocations []string
 	referenceURL     string
 }
@@ -20,7 +19,7 @@ const (
 )
 
 var ClusterApp = &RuleSet{
-	rules: []lint.Rule{
+	rules: []rules.Rule{
 		rules.TitleExists{},
 		rules.TitleMustBeSentenceCase{},
 		rules.TitleMustNotContainIllegalCharacters{},
@@ -99,14 +98,14 @@ func GetRuleSet(name RuleSetName) *RuleSet {
 	return ruleSet
 }
 
-func VerifyRuleSet(
+func Verify(
 	name string,
-	schema *schemautils.ExtendedSchema,
-) (errors []string, recommendations []string) {
+	s *schema.ExtendedSchema,
+) (errors rules.RuleResults, recommendations rules.RuleResults) {
 	nameEnum := RuleSetName(name)
 	ruleSet := GetRuleSet(nameEnum)
 
-	return LintWithRuleSet(schema, ruleSet)
+	return LintWithRuleSet(s, ruleSet)
 }
 
 func GetRuleSetReferenceURL(name string) string {
@@ -117,22 +116,22 @@ func GetRuleSetReferenceURL(name string) string {
 }
 
 func LintWithRuleSet(
-	schema *schemautils.ExtendedSchema,
+	s *schema.ExtendedSchema,
 	ruleSet *RuleSet,
-) (errors []string, recommendations []string) {
-	errors = []string{}
-	recommendations = []string{}
+) (errors rules.RuleResults, recommendations rules.RuleResults) {
+	errors = rules.RuleResults{}
+	recommendations = rules.RuleResults{}
 	for _, rule := range ruleSet.rules {
-		ruleResults := rule.Verify(schema)
+		ruleResults := rule.Verify(s)
 		severity := rule.GetSeverity()
 
 		filteredResults := ruleResults.Filter(ruleSet.excludeLocations)
 
-		if severity == lint.SeverityError {
-			errors = append(errors, filteredResults.GetMessages()...)
-		}
-		if severity == lint.SeverityRecommendation {
-			recommendations = append(recommendations, filteredResults.GetMessages()...)
+		switch severity {
+		case rules.SeverityError:
+			errors.Concat(filteredResults)
+		case rules.SeverityRecommendation:
+			recommendations.Concat(filteredResults)
 		}
 	}
 

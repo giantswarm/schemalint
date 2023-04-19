@@ -1,4 +1,4 @@
-package utils
+package pam
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/giantswarm/schemalint/pkg/lint"
+	"github.com/giantswarm/schemalint/pkg/schema"
 )
 
 func TestBuildPropertyAnnotationsMap(t *testing.T) {
@@ -55,7 +55,7 @@ func TestBuildPropertyAnnotationsMap(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			schema, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
@@ -68,7 +68,10 @@ func TestBuildPropertyAnnotationsMap(t *testing.T) {
 			}
 
 			if !cmp.Equal(propertyAnnotationsMap, expectedPropertyAnnotationsMap) {
-				t.Fatalf("Unexpected property annotations map: %s", cmp.Diff(propertyAnnotationsMap, expectedPropertyAnnotationsMap))
+				t.Fatalf(
+					"Unexpected property annotations map: %s",
+					cmp.Diff(propertyAnnotationsMap, expectedPropertyAnnotationsMap),
+				)
 			}
 		})
 	}
