@@ -23,7 +23,7 @@ type Feedback struct {
 	Location string // set to "" if feedback is not location-specific
 }
 
-func GroupByMessage(feedback []Feedback) map[string][]Feedback {
+func GroupFeedbackByMessage(feedback []Feedback) map[string][]Feedback {
 	grouped := make(map[string][]Feedback, len(feedback))
 
 	for _, f := range feedback {

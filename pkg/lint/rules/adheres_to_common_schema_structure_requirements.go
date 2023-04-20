@@ -1,8 +1,6 @@
 package rules
 
 import (
-	"fmt"
-
 	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
@@ -19,8 +17,8 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 	for _, requiredProperty := range requiredProperties {
 		if _, ok := schemaProperties[requiredProperty]; !ok {
 			ruleResults.Add(
-				fmt.Sprintf("Root-level property %s must be present", requiredProperty),
-				s.GetResolvedLocation(),
+				"Root-level property must be present",
+				"/properties/"+requiredProperty,
 			)
 		}
 
@@ -30,7 +28,7 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 	for key, s := range schemaProperties {
 		if _, ok := allAllowedRootProperties[key]; !ok {
 			ruleResults.Add(
-				fmt.Sprintf("Root-level property %s is not allowed", key),
+				"Root-level property is not allowed",
 				s.GetResolvedLocation(),
 			)
 		}
@@ -39,7 +37,7 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 	if s.AdditionalProperties != false {
 		ruleResults.Add(
 			"Additional properties must not be allowed at the root level",
-			s.GetResolvedLocation(),
+			"",
 		)
 	}
 

@@ -31,7 +31,7 @@ func (r MustUseCorrectDialect) Verify(s *schema.ExtendedSchema) RuleResults {
 				"Schema does not specify a draft/dialect, but must use '%s'.",
 				correctDraft,
 			),
-			s.GetResolvedLocation(),
+			"",
 		)
 		return *ruleResults
 	}

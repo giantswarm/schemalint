@@ -132,21 +132,18 @@ func (s *ExtendedSchema) GetConciseLocation() string {
 	return location
 }
 
-func (s *ExtendedSchema) GetHumanReadableLocation() string {
-	location := s.GetConciseLocation()
-	if location == "" {
-		location = "/"
-	}
-	return location
-}
-
-// Gets the location, excluding ids, including potential parent schemas
+// Gets the location, excluding ids, including potential parent schemas.
+// The root location is '/'.
 func (s *ExtendedSchema) GetResolvedLocation() string {
 	location := removeIdFromLocation(s.Location)
 	if s.TrimFromLocation != "" {
 		location = strings.Replace(location, s.TrimFromLocation, "", 1)
 	}
-	return s.ParentPath + location
+	location = s.ParentPath + location
+	if location == "" {
+		location = "/"
+	}
+	return location
 }
 
 func removeIdFromLocation(location string) string {

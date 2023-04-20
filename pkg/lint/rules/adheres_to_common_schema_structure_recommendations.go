@@ -23,7 +23,7 @@ func (r AdheresToCommonSchemaStructureRecommendations) Verify(
 					"Root-level property %s should be present",
 					recommendedProperty,
 				),
-				s.GetResolvedLocation(),
+				"",
 			)
 		}
 
