@@ -18,7 +18,7 @@ type KeyImportanceOverride struct {
 func getKeyImportanceMap() map[string]int {
 	return map[string]int{
 		"$id":                  11,
-		"$s":                   10,
+		"$schema":                   10,
 		"$ref":                 9,
 		"$defs":                9,
 		"type":                 8,
