@@ -5,8 +5,8 @@ import (
 
 	"github.com/fatih/color"
 
-	"github.com/giantswarm/schemalint/pkg/cli"
-	"github.com/giantswarm/schemalint/pkg/verify"
+	"github.com/giantswarm/schemalint/v2/pkg/cli"
+	"github.com/giantswarm/schemalint/v2/pkg/verify"
 )
 
 func printOutput(results []verify.TestResult) {

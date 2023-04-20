@@ -1,8 +1,8 @@
 package rules
 
 import (
-	"github.com/giantswarm/schemalint/pkg/lint/pam"
-	"github.com/giantswarm/schemalint/pkg/schema"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type DescriptionExists struct{}

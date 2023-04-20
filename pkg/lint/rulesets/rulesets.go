@@ -3,8 +3,8 @@ package rulesets
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/pkg/lint/rules"
-	"github.com/giantswarm/schemalint/pkg/schema"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/rules"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type RuleSet struct {

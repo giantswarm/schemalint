@@ -3,7 +3,7 @@ package rules
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/pkg/schema"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type AdheresToCommonSchemaStructureRecommendations struct{}

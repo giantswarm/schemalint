@@ -3,7 +3,7 @@ package rules
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/pkg/schema"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 func TestAvoidUnevaluated(t *testing.T) {

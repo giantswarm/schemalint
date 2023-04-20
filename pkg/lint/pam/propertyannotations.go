@@ -8,8 +8,8 @@ package pam
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/pkg/lint/recurse"
-	"github.com/giantswarm/schemalint/pkg/schema"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type StringWithLevel struct {

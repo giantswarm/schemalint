@@ -1,6 +1,6 @@
 package recurse
 
-import "github.com/giantswarm/schemalint/pkg/schema"
+import "github.com/giantswarm/schemalint/v2/pkg/schema"
 
 func RecurseAll(
 	s *schema.ExtendedSchema,
