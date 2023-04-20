@@ -93,7 +93,6 @@ func printSeparator() {
 	fmt.Println()
 }
 
-
 func printMoreInfo(moreInfo []string) {
 	for _, m := range moreInfo {
 		fmt.Println(m)
