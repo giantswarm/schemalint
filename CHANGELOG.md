@@ -7,18 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2023-04-18
+
 - Introduce a meaningful order of keywords in JSON output of normalize command.
 
 ## [1.2.0] - 2023-04-18
 
-- Adapt common s structure to cluster-aws. 
+- Adapt common schema structure to cluster-aws. 
 - Only recommend examples on restricted strings.
 - Add the possibility to include a URL for further reference to rule sets, which is displayed in the output.
-- Hint to developer how to normalize the JSON s file.
+- Hint to developer how to normalize the JSON schema file.
 
 ## [1.1.0] - 2023-04-05
 
-- Add rule to check whether root-level specifies properties of the common s structure.
+- Add rule to check whether root-level specifies properties of the common schema structure.
 - Add rule to check that objects are non-empty.
 
 ## [1.0.1] - 2023-03-22
@@ -58,7 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.7.0] - 2023-02-06
 
-- Add check that every array specifies the s of its items with the `items` keyword.
+- Add check that every array specifies the schema of its items with the `items` keyword.
 - Simplify output of `schemalint verify` to improve appearance in GitHub actions log.
 - Add check that `additionalProperties` is disabled on all objects.
 
@@ -103,7 +105,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/giantswarm/schemalint/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/giantswarm/schemalint/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/giantswarm/schemalint/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/giantswarm/schemalint/compare/v1.0.0...v1.0.1

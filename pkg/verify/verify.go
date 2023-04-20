@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/giantswarm/schemalint/pkg/lint/rules"
-	"github.com/giantswarm/schemalint/pkg/lint/rulesets"
-	"github.com/giantswarm/schemalint/pkg/normalize"
-	"github.com/giantswarm/schemalint/pkg/schema"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/rules"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/rulesets"
+	"github.com/giantswarm/schemalint/v2/pkg/normalize"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type TestResult struct {
