@@ -1,32 +1,26 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type AvoidRecursion struct{}
 
-func (r AvoidRecursion) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r AvoidRecursion) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	utils.RecurseAllPre(schema, func(schema *schemautils.ExtendedSchema) {
-		if schema.IsSelfReference() {
+	recurse.RecurseAllPre(s, func(s *schema.ExtendedSchema) {
+		if s.IsSelfReference() {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Schema at '%s' must not reference itself.",
-					schema.GetHumanReadableLocation(),
-				),
-				schema.GetResolvedLocation(),
+				"Schema must not reference itself",
+				s.GetResolvedLocation(),
 			)
 		}
 	})
 	return *ruleResults
 }
 
-func (r AvoidRecursion) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r AvoidRecursion) GetSeverity() Severity {
+	return SeverityError
 }

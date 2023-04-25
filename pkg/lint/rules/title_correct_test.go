@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 func TestTitleCorrect(t *testing.T) {
@@ -12,31 +12,31 @@ func TestTitleCorrect(t *testing.T) {
 		name        string
 		schemaPath  string
 		nViolations int
-		rules       []lint.Rule
+		rules       []Rule
 	}{
 		{
 			name:        "title contains line breaks",
 			schemaPath:  "testdata/title_correct/title_with_illegal_chars.json",
 			nViolations: 10,
-			rules:       []lint.Rule{TitleMustNotContainIllegalCharacters{}},
+			rules:       []Rule{TitleMustNotContainIllegalCharacters{}},
 		},
 		{
 			name:        "title is not sentence case",
 			schemaPath:  "testdata/title_correct/title_not_sentence_case.json",
 			nViolations: 1,
-			rules:       []lint.Rule{TitleMustBeSentenceCase{}},
+			rules:       []Rule{TitleMustBeSentenceCase{}},
 		},
 		{
 			name:        "title should not contain the parents title",
 			schemaPath:  "testdata/title_correct/title_contains_parents_title.json",
 			nViolations: 1,
-			rules:       []lint.Rule{TitleShouldNotContainParentsTitle{}},
+			rules:       []Rule{TitleShouldNotContainParentsTitle{}},
 		},
 		{
 			name:        "title is correct",
 			schemaPath:  "testdata/title_correct/title_correct.json",
 			nViolations: 0,
-			rules: []lint.Rule{
+			rules: []Rule{
 				TitleMustNotContainIllegalCharacters{},
 				TitleMustBeSentenceCase{},
 				TitleShouldNotContainParentsTitle{},
@@ -46,7 +46,7 @@ func TestTitleCorrect(t *testing.T) {
 			name:        "all rules fail",
 			schemaPath:  "testdata/title_correct/title_all_rules_fail.json",
 			nViolations: 4,
-			rules: []lint.Rule{
+			rules: []Rule{
 				TitleMustNotContainIllegalCharacters{},
 				TitleMustBeSentenceCase{},
 				TitleShouldNotContainParentsTitle{},
@@ -56,12 +56,12 @@ func TestTitleCorrect(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			schema, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 
-			ruleResults := []lint.RuleViolation{}
+			ruleResults := []Violation{}
 			for _, rule := range tc.rules {
 				ruleResults = append(ruleResults, rule.Verify(schema).Violations...)
 			}
@@ -70,7 +70,12 @@ func TestTitleCorrect(t *testing.T) {
 				for _, violation := range ruleResults {
 					fmt.Println(violation)
 				}
-				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults))
+				t.Fatalf(
+					"Unexpected number of rule violations in test case '%s': Expected %d, got %d",
+					tc.name,
+					tc.nViolations,
+					len(ruleResults),
+				)
 			}
 		})
 	}

@@ -1,27 +1,21 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type TitleMustBeSentenceCase struct{}
 
-func (r TitleMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r TitleMustBeSentenceCase) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereTitlesExist()
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s).WhereTitlesExist()
 
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if !stringStartsCapitalized(annotations.GetTitle()) {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Property '%s' title must start with a capital letter.",
-					resolvedLocation,
-				),
+				"Property title must start with a capital letter",
 				resolvedLocation,
 			)
 		}
@@ -30,6 +24,6 @@ func (r TitleMustBeSentenceCase) Verify(schema *schemautils.ExtendedSchema) lint
 	return *ruleResults
 }
 
-func (r TitleMustBeSentenceCase) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r TitleMustBeSentenceCase) GetSeverity() Severity {
+	return SeverityError
 }

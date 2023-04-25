@@ -13,7 +13,7 @@ Validates whether an input is valid JSON schema. Also helps normalizing, and che
 ## Installation
 
 ```nohighlight
-go install github.com/giantswarm/schemalint@latest
+go install github.com/giantswarm/schemalint/v2@latest
 ```
 
 ## Usage

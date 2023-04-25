@@ -3,7 +3,7 @@ package rules
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 func TestDeprecatedPropertiesShouldHaveComment(t *testing.T) {
@@ -31,15 +31,20 @@ func TestDeprecatedPropertiesShouldHaveComment(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			s, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 			rule := DeprecatedPropertiesShouldHaveComment{}
-			ruleResults := rule.Verify(schema)
+			ruleResults := rule.Verify(s)
 
 			if len(ruleResults.Violations) != tc.nViolations {
-				t.Fatalf("Unexpected number of rule violations in test case '%s': Expected %d, got %d", tc.name, tc.nViolations, len(ruleResults.Violations))
+				t.Fatalf(
+					"Unexpected number of rule violations in test case '%s': Expected %d, got %d",
+					tc.name,
+					tc.nViolations,
+					len(ruleResults.Violations),
+				)
 			}
 		})
 	}

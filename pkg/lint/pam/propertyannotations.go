@@ -1,9 +1,15 @@
-package utils
+// Package pam (PropertyAnnotationsMap) provides a data structure that stores
+// all the annotations for each property in a schema.
+//
+// For more information on why this is necessary look at the '"Overriding"
+// Properties and Understanding `PropertyAnnotationsMap`' section in the README.
+package pam
 
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type StringWithLevel struct {
@@ -48,17 +54,17 @@ func (a *AnnotationsWithLevel) GetExamples() []interface{} {
 }
 
 func (a *AnnotationsWithLevel) UpdateAnnotationsIfNecessary(
-	schema *schemautils.ExtendedSchema,
+	s *schema.ExtendedSchema,
 	level int,
 ) {
-	if schema.Title != "" && (a.Title == nil || level <= a.Title.ReferenceLevel) {
-		a.Title = &StringWithLevel{Value: schema.Title, ReferenceLevel: level}
+	if s.Title != "" && (a.Title == nil || level <= a.Title.ReferenceLevel) {
+		a.Title = &StringWithLevel{Value: s.Title, ReferenceLevel: level}
 	}
-	if schema.Description != "" && (a.Description == nil || level <= a.Description.ReferenceLevel) {
-		a.Description = &StringWithLevel{Value: schema.Description, ReferenceLevel: level}
+	if s.Description != "" && (a.Description == nil || level <= a.Description.ReferenceLevel) {
+		a.Description = &StringWithLevel{Value: s.Description, ReferenceLevel: level}
 	}
-	if schema.Examples != nil && (a.Examples == nil || level <= a.Examples.ReferenceLevel) {
-		a.Examples = &InterfaceWithLevel{Value: schema.Examples, ReferenceLevel: level}
+	if s.Examples != nil && (a.Examples == nil || level <= a.Examples.ReferenceLevel) {
+		a.Examples = &InterfaceWithLevel{Value: s.Examples, ReferenceLevel: level}
 	}
 }
 
@@ -69,16 +75,16 @@ func NewPropertyAnnotationsMap() PropertyAnnotationsMap {
 }
 
 func (pam PropertyAnnotationsMap) UpdateAnnotationsIfNecessary(
-	schema *schemautils.ExtendedSchema,
+	s *schema.ExtendedSchema,
 	level int,
 ) {
-	location := schema.GetResolvedLocation()
+	location := s.GetResolvedLocation()
 	annotations, ok := pam[location]
 	if !ok {
 		annotations = &AnnotationsWithLevel{Title: nil, Description: nil, Examples: nil}
 		pam[location] = annotations
 	}
-	annotations.UpdateAnnotationsIfNecessary(schema, level)
+	annotations.UpdateAnnotationsIfNecessary(s, level)
 }
 
 func (pam PropertyAnnotationsMap) WhereDescriptionsExist() PropertyAnnotationsMap {
@@ -104,7 +110,7 @@ func (pam PropertyAnnotationsMap) WhereTitlesExist() PropertyAnnotationsMap {
 func (pam PropertyAnnotationsMap) GetParentAnnotations(
 	resolvedLocation string,
 ) (*AnnotationsWithLevel, error) {
-	parentResolvedLocation, err := schemautils.GetParentPropertyPath(resolvedLocation)
+	parentResolvedLocation, err := schema.GetParentPropertyPath(resolvedLocation)
 
 	if err != nil {
 		return nil, err
@@ -121,15 +127,12 @@ func (pam PropertyAnnotationsMap) GetParentAnnotations(
 // Builds a map with all properties in the given schema, where the key is the
 // path to the property and the value are the annotations for that property.
 // <path> -> <annotations>
-//
-// For more information on why this is necessary look at the '"Overriding"
-// Properties and Understanding `PropertyAnnotationsMap`' section in the README.
-func BuildPropertyAnnotationsMap(schema *schemautils.ExtendedSchema) PropertyAnnotationsMap {
+func BuildPropertyAnnotationsMap(s *schema.ExtendedSchema) PropertyAnnotationsMap {
 	propertyAnnotationsMap := make(PropertyAnnotationsMap)
-	RecurseProperties(schema, func(schema *schemautils.ExtendedSchema) {
-		if schema.IsProperty() {
-			referenceLevel := schema.GetReferenceLevel()
-			propertyAnnotationsMap.UpdateAnnotationsIfNecessary(schema, referenceLevel)
+	recurse.RecurseProperties(s, func(s *schema.ExtendedSchema) {
+		if s.IsProperty() {
+			referenceLevel := s.GetReferenceLevel()
+			propertyAnnotationsMap.UpdateAnnotationsIfNecessary(s, referenceLevel)
 		}
 
 	})

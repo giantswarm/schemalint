@@ -1,38 +1,33 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type StringsShouldBeConstrained struct{}
 
-func (r StringsShouldBeConstrained) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
-	callback := func(schema *schemautils.ExtendedSchema) {
-		if schema.Pattern == nil &&
-			schema.MinLength == -1 &&
-			schema.MaxLength == -1 &&
-			schema.Enum == nil &&
-			schema.Constant == nil &&
-			schema.Format == "" {
+func (r StringsShouldBeConstrained) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
+	callback := func(s *schema.ExtendedSchema) {
+		if s.Pattern == nil &&
+			s.MinLength == -1 &&
+			s.MaxLength == -1 &&
+			s.Enum == nil &&
+			s.Constant == nil &&
+			s.Format == "" {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"String property '%s' should be constrained through 'pattern', 'minLength', 'maxLength', 'enum', 'constant' or 'format'.",
-					schema.GetHumanReadableLocation()),
-				schema.GetResolvedLocation(),
+				"String property should be constrained through 'pattern', 'minLength', 'maxLength', 'enum', 'constant' or 'format'",
+				s.GetResolvedLocation(),
 			)
 		}
 	}
 
-	utils.RecurseStrings(schema, callback)
+	recurse.RecurseStrings(s, callback)
 
 	return *ruleResults
 }
 
-func (r StringsShouldBeConstrained) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r StringsShouldBeConstrained) GetSeverity() Severity {
+	return SeverityRecommendation
 }

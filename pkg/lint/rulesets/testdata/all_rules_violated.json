@@ -1,0 +1,123 @@
+{
+    "type": "object",
+    "properties": {
+        "address": {
+            "type": "object",
+            "properties": {
+                "country": {
+                    "enum": [
+                        "United States of America",
+                        "Canada"
+                    ],
+                    "default": "United States of America"
+                },
+                "street_address": {
+                    "type": "string"
+                }
+            },
+            "if": {
+                "properties": {
+                    "country": {
+                        "const": "United States of America"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "postal_code": {
+                        "pattern": "[0-9]{5}(-[0-9]{4})?"
+                    }
+                }
+            },
+            "else": {
+                "properties": {
+                    "postal_code": {
+                        "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
+                    }
+                }
+            }
+        },
+        "anyoferror": {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "maxLength": 5
+                },
+                {
+                    "type": "number",
+                    "minimum": 0
+                }
+            ]
+        },
+        "children": {
+            "type": "array",
+            "items": {
+                "$ref": "#/properties/children",
+                "$dynamicAnchor": "children"
+            },
+            "unevaluatedItems": {
+                "type": "object"
+            }
+        },
+        "foo": {
+            "type": "object",
+            "title": "Foo",
+            "deprecated": true,
+            "properties": {
+                "array": {
+                    "type": "array"
+                },
+                "bar": {
+                    "type": "string",
+                    "title": "Foo Bar",
+                    "description": "foo Foo \n"
+                },
+                "baz": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "iNeedExamples": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "objectWithoutProperties": {
+                    "type": "object"
+                },
+                "titleWrong": {
+                    "type": "string",
+                    "title": "title\n"
+                },
+                "unconstrainedNumber": {
+                    "type": "number"
+                },
+                "unconstrainedString": {
+                    "type": "string"
+                }
+            },
+            "unevaluatedProperties": {
+                "type": "string"
+            }
+        },
+        "oneoferror": {
+            "oneOf": [
+                {
+                    "type": "number",
+                    "multipleOf": 5
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "max": {
+                            "type": "number"
+                        },
+                        "min": {
+                            "type": "number"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,28 +1,16 @@
 package verify
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/rulesets"
-	"github.com/giantswarm/schemalint/v2/pkg/normalize"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
+	"github.com/giantswarm/schemalint/v2/pkg/verify"
 )
 
 type runner struct {
 	flag *flag
-}
-
-// Structure to collect results from different checks
-type TestResult struct {
-	Message         string
-	Success         bool
-	Errors          []string
-	Recommendations []string
-	MoreInfo        string
 }
 
 func (r *runner) run(cmd *cobra.Command, args []string) {
@@ -38,15 +26,15 @@ func (r *runner) run(cmd *cobra.Command, args []string) {
 
 }
 
-func (r *runner) runVerificatonSteps(path string) ([]TestResult, bool) {
-	results := []TestResult{}
-	var schema *schemautils.ExtendedSchema
+func (r *runner) runVerificatonSteps(path string) ([]verify.TestResult, bool) {
+	results := []verify.TestResult{}
+	var s *schema.ExtendedSchema
 
 	flags := r.flag
 
 	if !flags.skipSchemaValidation {
-		var result TestResult
-		result, schema = verifySchemaValidity(path)
+		var result verify.TestResult
+		result, s = verify.CheckSchemaValidity(path)
 		results = append(results, result)
 	}
 	success := isSuccessful(results)
@@ -55,12 +43,12 @@ func (r *runner) runVerificatonSteps(path string) ([]TestResult, bool) {
 	}
 
 	if !flags.skipNormalization {
-		result := verifyNormalization(path)
+		result := verify.CheckNormalization(path)
 		results = append(results, result)
 	}
 
 	if !flags.skipSchemaValidation && flags.ruleSet != "" {
-		result := verifyRuleSet(flags.ruleSet, schema)
+		result := verify.CheckRuleSet(flags.ruleSet, s)
 		results = append(results, result)
 
 	}
@@ -68,88 +56,7 @@ func (r *runner) runVerificatonSteps(path string) ([]TestResult, bool) {
 	return results, success
 }
 
-func verifySchemaValidity(path string) (TestResult, *schemautils.ExtendedSchema) {
-	schema, err := lint.Compile(path)
-
-	compileErrors := []string{}
-	if err != nil {
-		compileErrors = append(compileErrors, err.Error())
-	}
-
-	success := err == nil
-	message := "Input is valid JSON Schema."
-	if !success {
-		message = "Input is not valid JSON Schema."
-	}
-	result := TestResult{
-		Message: message,
-		Success: success,
-		Errors:  compileErrors,
-	}
-
-	return result, schema
-}
-
-func verifyNormalization(path string) TestResult {
-	var err error
-	var content []byte
-
-	content, err = os.ReadFile(path)
-	if err == nil {
-		var isNormalized bool
-		isNormalized, err = normalize.CheckIsNormalized(content)
-		if err == nil && !isNormalized {
-			err = fmt.Errorf("Schema is not normalized. Run 'schemalint normalize %[1]s -o %[1]s --force'.", path)
-		}
-	}
-	errors := []string{}
-	if err != nil {
-		errors = append(errors, err.Error())
-	}
-
-	success := err == nil
-	message := "Input is normalized."
-	if !success {
-		message = "Input is not normalized."
-	}
-	result := TestResult{
-		Message: message,
-		Success: success,
-		Errors:  errors,
-	}
-	return result
-
-}
-
-func verifyRuleSet(ruleSet string, schema *schemautils.ExtendedSchema) TestResult {
-	errors, recommendations := rulesets.VerifyRuleSet(ruleSet, schema)
-
-	success := len(errors) == 0
-	message := fmt.Sprintf("Input is valid according to rule set '%s'.", ruleSet)
-	if !success {
-		message = fmt.Sprintf("Input is not valid according to rule set '%s'.", ruleSet)
-	}
-	moreInfo := ""
-	referenceURL := rulesets.GetRuleSetReferenceURL(ruleSet)
-	if len(recommendations)+len(errors) > 0 && referenceURL != "" {
-		moreInfo = fmt.Sprintf(
-			"For more information regarding the errors and recommendations, please refer to: \"%s\".",
-			referenceURL,
-		)
-	}
-
-	result := TestResult{
-		Message:         message,
-		Success:         success,
-		Errors:          errors,
-		Recommendations: recommendations,
-		MoreInfo:        moreInfo,
-	}
-
-	return result
-}
-
-func isSuccessful(results []TestResult) bool {
+func isSuccessful(results []verify.TestResult) bool {
 	for _, result := range results {
 		if !result.Success {
 			return false
