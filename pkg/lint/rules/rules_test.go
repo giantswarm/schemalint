@@ -1,4 +1,4 @@
-package lint
+package rules
 
 import "testing"
 
@@ -12,10 +12,10 @@ func TestFilter(t *testing.T) {
 		{
 			name: "no exlusions",
 			ruleResults: &RuleResults{
-				Violations: []RuleViolation{
+				Violations: []Violation{
 					{
-						location: "properties/noInternal",
-						message:  "Title missing",
+						Location: "properties/noInternal",
+						Message:  "Title missing",
 					},
 				},
 			},
@@ -25,10 +25,10 @@ func TestFilter(t *testing.T) {
 		{
 			name: "exclusions",
 			ruleResults: &RuleResults{
-				Violations: []RuleViolation{
+				Violations: []Violation{
 					{
-						location: "properties/internal",
-						message:  "Title missing",
+						Location: "properties/internal",
+						Message:  "Title missing",
 					},
 				},
 			},
@@ -38,10 +38,10 @@ func TestFilter(t *testing.T) {
 		{
 			name: "no exlusions, but property name is a substring of excluded location",
 			ruleResults: &RuleResults{
-				Violations: []RuleViolation{
+				Violations: []Violation{
 					{
-						location: "properties/internal2",
-						message:  "Title missing",
+						Location: "properties/internal2",
+						Message:  "Title missing",
 					},
 				},
 			},
@@ -53,7 +53,11 @@ func TestFilter(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			filtered := tc.ruleResults.Filter(tc.excludedLocations)
 			if len(filtered.Violations) != tc.nViolations {
-				t.Fatalf("Unexpected number of violations: %d, expected %d", len(filtered.Violations), tc.nViolations)
+				t.Fatalf(
+					"Unexpected number of violations: %d, expected %d",
+					len(filtered.Violations),
+					tc.nViolations,
+				)
 			}
 		})
 	}

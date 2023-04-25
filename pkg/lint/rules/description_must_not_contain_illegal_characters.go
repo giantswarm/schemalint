@@ -3,31 +3,37 @@ package rules
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type DescriptionMustNotContainIllegalCharacters struct{}
 
 var descriptionIllegalCharacters = []string{"\n", "\r", "\t", "  "}
 
-func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r DescriptionMustNotContainIllegalCharacters) Verify(
+	s *schema.ExtendedSchema,
+) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s).WhereDescriptionsExist()
 
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		description := annotations.GetDescription()
-		if containedIllegalChars := getIllegalCharacterIn(description, descriptionIllegalCharacters); len(containedIllegalChars) > 0 {
+		if containedIllegalChars := getIllegalCharacterIn(description, descriptionIllegalCharacters); len(
+			containedIllegalChars,
+		) > 0 {
 			ruleResults.Add(
-				fmt.Sprintf("Property '%s' description must not contain illegal characters: %q", schemautils.ConvertToConciseLocation(resolvedLocation), containedIllegalChars),
+				fmt.Sprintf(
+					"Property description must not contain illegal characters: %q",
+					descriptionIllegalCharacters,
+				),
 				resolvedLocation,
 			)
 		}
 		if containsLeadingOrTrailingSpace(description) {
 			ruleResults.Add(
-				fmt.Sprintf("Property '%s' description must not contain leading or trailing spaces", schemautils.ConvertToConciseLocation(resolvedLocation)),
+				"Property description must not contain leading or trailing spaces",
 				resolvedLocation,
 			)
 		}
@@ -35,6 +41,6 @@ func (r DescriptionMustNotContainIllegalCharacters) Verify(schema *schemautils.E
 	return *ruleResults
 }
 
-func (r DescriptionMustNotContainIllegalCharacters) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r DescriptionMustNotContainIllegalCharacters) GetSeverity() Severity {
+	return SeverityError
 }

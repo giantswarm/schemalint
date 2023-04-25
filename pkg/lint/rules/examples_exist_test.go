@@ -3,7 +3,7 @@ package rules
 import (
 	"testing"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 func TestExampleExists(t *testing.T) {
@@ -41,12 +41,12 @@ func TestExampleExists(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			s, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
 			exampleExistsRule := ExampleExists{}
-			ruleResults := exampleExistsRule.Verify(schema)
+			ruleResults := exampleExistsRule.Verify(s)
 
 			if len(ruleResults.Violations) != tc.nViolations {
 				t.Fatalf(

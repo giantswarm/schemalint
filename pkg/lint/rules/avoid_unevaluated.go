@@ -1,32 +1,35 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type AvoidUnevaluated struct{}
 
-func (r AvoidUnevaluated) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r AvoidUnevaluated) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	callback := func(schema *schemautils.ExtendedSchema) {
-		if schema.UnevaluatedItems != nil {
-			ruleResults.Add(fmt.Sprintf("Property '%s' must not use unevaluatedItems.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
+	callback := func(s *schema.ExtendedSchema) {
+		if s.UnevaluatedItems != nil {
+			ruleResults.Add(
+				"Property must not use unevaluatedItems",
+				s.GetResolvedLocation(),
+			)
 		}
-		if schema.UnevaluatedProperties != nil {
-			ruleResults.Add(fmt.Sprintf("Property '%s' must not use unevaluatedProperties.", schema.GetHumanReadableLocation()), schema.GetResolvedLocation())
+		if s.UnevaluatedProperties != nil {
+			ruleResults.Add(
+				"Property must not use unevaluatedProperties",
+				s.GetResolvedLocation(),
+			)
 		}
 	}
 
-	utils.RecurseAll(schema, callback)
+	recurse.RecurseAll(s, callback)
 
 	return *ruleResults
 }
 
-func (r AvoidUnevaluated) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r AvoidUnevaluated) GetSeverity() Severity {
+	return SeverityError
 }

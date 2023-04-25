@@ -1,46 +1,43 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type AdheresToCommonSchemaStructureRequirements struct{}
 
 func (r AdheresToCommonSchemaStructureRequirements) Verify(
-	schema *schemautils.ExtendedSchema,
-) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+	s *schema.ExtendedSchema,
+) RuleResults {
+	ruleResults := &RuleResults{}
 
 	requiredProperties := getRequiredRootProperties()
 
-	schemaProperties := schema.GetProperties()
+	schemaProperties := s.GetProperties()
 	for _, requiredProperty := range requiredProperties {
 		if _, ok := schemaProperties[requiredProperty]; !ok {
 			ruleResults.Add(
-				fmt.Sprintf("Root-level property '%s' must be present.", requiredProperty),
-				schema.GetResolvedLocation(),
+				"Root-level property must be present",
+				"/properties/"+requiredProperty,
 			)
 		}
 
 	}
 
 	allAllowedRootProperties := getAllAllowedRootPropertiesNamesSet()
-	for key, schema := range schemaProperties {
+	for key, s := range schemaProperties {
 		if _, ok := allAllowedRootProperties[key]; !ok {
 			ruleResults.Add(
-				fmt.Sprintf("Root-level property '%s' is not allowed.", key),
-				schema.GetResolvedLocation(),
+				"Root-level property is not allowed",
+				s.GetResolvedLocation(),
 			)
 		}
 	}
 
-	if schema.AdditionalProperties != false {
+	if s.AdditionalProperties != false {
 		ruleResults.Add(
-			"Additional properties must not be allowed at the root level.",
-			schema.GetResolvedLocation(),
+			"Additional properties must not be allowed at the root level",
+			"",
 		)
 	}
 
@@ -91,6 +88,6 @@ func getAllAllowedRootPropertiesNamesSet() map[string]bool {
 	return allAllowedRootPropertiesMap
 }
 
-func (r AdheresToCommonSchemaStructureRequirements) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r AdheresToCommonSchemaStructureRequirements) GetSeverity() Severity {
+	return SeverityError
 }

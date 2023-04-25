@@ -1,4 +1,4 @@
-package utils
+package pam
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 func TestBuildPropertyAnnotationsMap(t *testing.T) {
@@ -18,44 +18,44 @@ func TestBuildPropertyAnnotationsMap(t *testing.T) {
 	}{
 		{
 			name:       "one property - flat",
-			schemaPath: "testdata/propertyannotations/flat_simple.json",
-			goldenPath: "testdata/propertyannotations/flat_simple.golden.json",
+			schemaPath: "testdata/flat_simple.json",
+			goldenPath: "testdata/flat_simple.golden.json",
 		},
 		{
 			name:       "multiple nested properties",
-			schemaPath: "testdata/propertyannotations/nested.json",
-			goldenPath: "testdata/propertyannotations/nested.golden.json",
+			schemaPath: "testdata/nested.json",
+			goldenPath: "testdata/nested.golden.json",
 		},
 		{
 			name:       "multiple nested properties through reference",
-			schemaPath: "testdata/propertyannotations/reference_nested.json",
-			goldenPath: "testdata/propertyannotations/reference_nested.golden.json",
+			schemaPath: "testdata/reference_nested.json",
+			goldenPath: "testdata/reference_nested.golden.json",
 		},
 		{
 			name:       "multiple nested properties through reference with overriden title",
-			schemaPath: "testdata/propertyannotations/reference_nested_override.json",
-			goldenPath: "testdata/propertyannotations/reference_nested_override.golden.json",
+			schemaPath: "testdata/reference_nested_override.json",
+			goldenPath: "testdata/reference_nested_override.golden.json",
 		},
 		{
 			name:       "multiple nested properties through reference with overriden title",
-			schemaPath: "testdata/propertyannotations/depth_3_simple.json",
-			goldenPath: "testdata/propertyannotations/depth_3_simple.golden.json",
+			schemaPath: "testdata/depth_3_simple.json",
+			goldenPath: "testdata/depth_3_simple.golden.json",
 		},
 		{
 			name:       "multiple nested properties through reference with overriden title",
-			schemaPath: "testdata/propertyannotations/depth_equal_prio.json",
-			goldenPath: "testdata/propertyannotations/depth_equal_prio.golden.json",
+			schemaPath: "testdata/depth_equal_prio.json",
+			goldenPath: "testdata/depth_equal_prio.golden.json",
 		},
 		{
 			name:       "multiple nested properties through reference with overriden title",
-			schemaPath: "testdata/propertyannotations/depth_3_root_empty.json",
-			goldenPath: "testdata/propertyannotations/depth_3_root_empty.golden.json",
+			schemaPath: "testdata/depth_3_root_empty.json",
+			goldenPath: "testdata/depth_3_root_empty.golden.json",
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			schema, err := lint.Compile(tc.schemaPath)
+			schema, err := schema.Compile(tc.schemaPath)
 			if err != nil {
 				t.Fatalf("Unexpected parsing error in test case '%s': %s", tc.name, err)
 			}
@@ -68,7 +68,10 @@ func TestBuildPropertyAnnotationsMap(t *testing.T) {
 			}
 
 			if !cmp.Equal(propertyAnnotationsMap, expectedPropertyAnnotationsMap) {
-				t.Fatalf("Unexpected property annotations map: %s", cmp.Diff(propertyAnnotationsMap, expectedPropertyAnnotationsMap))
+				t.Fatalf(
+					"Unexpected property annotations map: %s",
+					cmp.Diff(propertyAnnotationsMap, expectedPropertyAnnotationsMap),
+				)
 			}
 		})
 	}

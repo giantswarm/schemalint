@@ -3,9 +3,8 @@ package rules
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 const maxDescriptionLength = 200
@@ -13,17 +12,18 @@ const minDescriptionLength = 50
 
 type DescriptionShouldHaveCorrectLength struct{}
 
-func (r DescriptionShouldHaveCorrectLength) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r DescriptionShouldHaveCorrectLength) Verify(
+	s *schema.ExtendedSchema,
+) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s).WhereDescriptionsExist()
 
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if descriptionIsTooShort(annotations.GetDescription()) {
 			ruleResults.Add(
 				fmt.Sprintf(
-					"Property '%s' description should be more than %d characters.",
-					schemautils.ConvertToConciseLocation(resolvedLocation),
+					"Property description should be more than %d characters",
 					minDescriptionLength,
 				),
 				resolvedLocation,
@@ -33,8 +33,7 @@ func (r DescriptionShouldHaveCorrectLength) Verify(schema *schemautils.ExtendedS
 		if descriptionIsTooLong(annotations.GetDescription()) {
 			ruleResults.Add(
 				fmt.Sprintf(
-					"Property '%s' description should be less than %d characters.",
-					schemautils.ConvertToConciseLocation(resolvedLocation),
+					"Property description should be less than %d characters",
 					maxDescriptionLength,
 				),
 				resolvedLocation,
@@ -54,6 +53,6 @@ func descriptionIsTooShort(description string) bool {
 	return len(description) < minDescriptionLength
 }
 
-func (r DescriptionShouldHaveCorrectLength) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r DescriptionShouldHaveCorrectLength) GetSeverity() Severity {
+	return SeverityRecommendation
 }
