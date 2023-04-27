@@ -98,6 +98,7 @@ When doing a major release the following steps have to be completed:
 1. Create a new major floating tag under "Actions -> Ensure major version tags -> Run Workflow"
 2. Update all references to schemalint.
     1. devctl: `pkg/gen/input/workflows/internal/file/cluster_app_schema_validation.yaml.template`
+    2. schema: `.github/workflows/lint.yaml`
 
 
 ## "Overriding" Properties and Understanding `PropertyAnnotationsMap`
