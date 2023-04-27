@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.0] - 2023-04-18
 
+- Add reference to `schema` in the major release instructions.
 - Introduce a meaningful order of keywords in JSON output of normalize command.
 
 ## [1.2.0] - 2023-04-18

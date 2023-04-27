@@ -94,11 +94,14 @@ This repository uses [floating tags](https://github.com/giantswarm/floating-tags
 Other repositories that use schemalint point to major floating tag versions,
 like `v1`. That means that all minor and patch releases will be automatically
 rolled out to these repositories.
+
 When doing a major release the references to schemalint have to be manually 
 updated.
 - devctl: 
   - `pkg/gen/input/workflows/internal/file/cluster_app_schema_validation.yaml.template`
   - `pkg/gen/input/makefile/internal/file/Makefile.gen.cluster_app.mk.template`
+- schema: 
+  - `.github/workflows/lint.yaml
 
 ## "Overriding" Properties and Understanding `PropertyAnnotationsMap`
 
