@@ -47,7 +47,7 @@ func TestNormalize(t *testing.T) {
 			wantErr:    false,
 		},
 		{
-			name:       "Fourth, with actual schema",
+			name:       "Fourth, with actual s",
 			inputPath:  "4.json",
 			goldenPath: "4.golden",
 			wantErr:    false,
@@ -97,7 +97,10 @@ func TestNormalize(t *testing.T) {
 				if tt.goldenPath != "" {
 					want = goldenValue(t, "testdata/"+tt.goldenPath, got, *update)
 					if !reflect.DeepEqual(got, want) {
-						t.Errorf("Unexpected output from Normalize(): %s", cmp.Diff(string(got), string(want)))
+						t.Errorf(
+							"Unexpected output from Normalize(): %s",
+							cmp.Diff(string(got), string(want)),
+						)
 					}
 				}
 			} else {
@@ -159,7 +162,7 @@ func TestCheckIsNormalized(t *testing.T) {
 				t.Fatalf("IsNormalized() error when reading file: %v", err)
 			}
 
-			isNormalized, error := CheckIsNormalized(input)
+			isNormalized, error := Verify(input)
 			if error != nil {
 				t.Errorf("IsNormalized() unexpected error = %v", error)
 				return

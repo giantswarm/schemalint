@@ -3,39 +3,44 @@ package rules
 import (
 	"fmt"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type TitleMustNotContainIllegalCharacters struct{}
 
 var titleIllegalCharacters = []string{"\n", "\r", "\t", "  ", ".", ",", "?", "!"}
 
-func (r TitleMustNotContainIllegalCharacters) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r TitleMustNotContainIllegalCharacters) Verify(
+	s *schema.ExtendedSchema,
+) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereTitlesExist()
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s).WhereTitlesExist()
 
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		title := annotations.GetTitle()
-		if containedIllegalChars := getIllegalCharacterIn(title, titleIllegalCharacters); len(containedIllegalChars) > 0 {
+		if containedIllegalChars := getIllegalCharacterIn(title, titleIllegalCharacters); len(
+			containedIllegalChars,
+		) > 0 {
 			ruleResults.Add(
 				fmt.Sprintf(
-					"Property '%s' title must not contain illegal characters: %q",
-					schemautils.ConvertToConciseLocation(resolvedLocation),
-					containedIllegalChars,
+					"Property title must not contain illegal characters: %q",
+					titleIllegalCharacters,
 				),
 				resolvedLocation,
 			)
 		}
 		if containsLeadingOrTrailingSpace(title) {
-			ruleResults.Add(fmt.Sprintf("Property '%s' title must not contain leading or trailing spaces.", resolvedLocation), schema.GetResolvedLocation())
+			ruleResults.Add(
+				"Property title must not contain leading or trailing spaces.",
+				s.GetResolvedLocation(),
+			)
 		}
 	}
 	return *ruleResults
 }
 
-func (r TitleMustNotContainIllegalCharacters) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r TitleMustNotContainIllegalCharacters) GetSeverity() Severity {
+	return SeverityError
 }

@@ -1,24 +1,19 @@
 package rules
 
 import (
-	"fmt"
-
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type TitleExists struct{}
 
-func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema)
+func (r TitleExists) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s)
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if annotations.GetTitle() == "" {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Property '%s' must have a title.",
-					schemautils.ConvertToConciseLocation(resolvedLocation)),
+				"Property must have a title",
 				resolvedLocation,
 			)
 		}
@@ -26,6 +21,6 @@ func (r TitleExists) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults
 	return *ruleResults
 }
 
-func (r TitleExists) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r TitleExists) GetSeverity() Severity {
+	return SeverityError
 }

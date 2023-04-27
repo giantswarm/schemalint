@@ -1,27 +1,25 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 const AllowedEndings = ".!?"
 
 type DescriptionMustUsePunctuation struct{}
 
-func (r DescriptionMustUsePunctuation) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r DescriptionMustUsePunctuation) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s).WhereDescriptionsExist()
 
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if !endsWithPunctuation(annotations.GetDescription()) {
 			ruleResults.Add(
-				fmt.Sprintf("Property '%s' description must end with punctuation.", schemautils.ConvertToConciseLocation(resolvedLocation)),
+				"Property description must end with punctuation",
 				resolvedLocation,
 			)
 		}
@@ -35,6 +33,6 @@ func endsWithPunctuation(s string) bool {
 	return strings.ContainsRune(AllowedEndings, lastChar)
 }
 
-func (r DescriptionMustUsePunctuation) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r DescriptionMustUsePunctuation) GetSeverity() Severity {
+	return SeverityError
 }

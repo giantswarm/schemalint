@@ -1,27 +1,24 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/pam"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type DescriptionShouldNotContainTitle struct{}
 
-func (r DescriptionShouldNotContainTitle) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r DescriptionShouldNotContainTitle) Verify(
+	s *schema.ExtendedSchema,
+) RuleResults {
+	ruleResults := &RuleResults{}
 
-	propertyAnnotationsMap := utils.BuildPropertyAnnotationsMap(schema).WhereDescriptionsExist()
+	propertyAnnotationsMap := pam.BuildPropertyAnnotationsMap(s).WhereDescriptionsExist()
 	for resolvedLocation, annotations := range propertyAnnotationsMap {
 		if descriptionContainsTitle(annotations.GetDescription(), annotations.GetTitle()) {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Property '%s' description should not repeat the title.",
-					schemautils.ConvertToConciseLocation(resolvedLocation),
-				),
+				"Property description should not repeat the title",
 				resolvedLocation,
 			)
 		}
@@ -37,6 +34,6 @@ func descriptionContainsTitle(description string, title string) bool {
 	return strings.Contains(strings.ToLower(description), strings.ToLower(title))
 }
 
-func (r DescriptionShouldNotContainTitle) GetSeverity() lint.Severity {
-	return lint.SeverityRecommendation
+func (r DescriptionShouldNotContainTitle) GetSeverity() Severity {
+	return SeverityRecommendation
 }

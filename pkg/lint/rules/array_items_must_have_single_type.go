@@ -1,51 +1,36 @@
 package rules
 
 import (
-	"fmt"
-	"strings"
-
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/lint/utils"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/lint/recurse"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type ArrayItemsMustHaveSingleType struct{}
 
-func (r ArrayItemsMustHaveSingleType) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r ArrayItemsMustHaveSingleType) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	callback := func(schema *schemautils.ExtendedSchema) {
-		if containedKeywords := getContainedIllegalArrayKeywords(schema); len(containedKeywords) != 0 {
+	callback := func(s *schema.ExtendedSchema) {
+		if containsIllegalArrayKeywords(s) {
 			ruleResults.Add(
-				fmt.Sprintf(
-					"Array at '%s' must not use keyword(s): %s.",
-					schema.GetHumanReadableLocation(),
-					strings.Join(containedKeywords, ", "),
-				),
-				schema.GetResolvedLocation(),
+				"Array must not use illegal keyword(s): 'additionalItems', 'contains', 'prefixItems'",
+				s.GetResolvedLocation(),
 			)
 		}
 	}
 
-	utils.RecurseArrays(schema, callback)
+	recurse.RecurseArrays(s, callback)
 
 	return *ruleResults
 }
 
-func getContainedIllegalArrayKeywords(schema *schemautils.ExtendedSchema) []string {
-	containedKeywords := []string{}
-	if schema.AdditionalItems != nil {
-		containedKeywords = append(containedKeywords, "additionalItems")
+func containsIllegalArrayKeywords(s *schema.ExtendedSchema) bool {
+	if s.AdditionalItems != nil || s.Contains != nil || s.PrefixItems != nil {
+		return true
 	}
-	if schema.Contains != nil {
-		containedKeywords = append(containedKeywords, "contains")
-	}
-	if schema.PrefixItems != nil {
-		containedKeywords = append(containedKeywords, "prefixItems")
-	}
-	return containedKeywords
+	return false
 }
 
-func (r ArrayItemsMustHaveSingleType) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r ArrayItemsMustHaveSingleType) GetSeverity() Severity {
+	return SeverityError
 }

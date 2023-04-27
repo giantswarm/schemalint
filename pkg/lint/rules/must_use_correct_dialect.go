@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/giantswarm/schemalint/v2/pkg/lint"
-	"github.com/giantswarm/schemalint/v2/pkg/schemautils"
+	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
 
 type MustUseCorrectDialect struct{}
@@ -14,32 +13,41 @@ type MustUseCorrectDialect struct{}
 const correctDraft = "https://json-schema.org/draft/2020-12/schema"
 const draftKey = "$schema"
 
-func (r MustUseCorrectDialect) Verify(schema *schemautils.ExtendedSchema) lint.RuleResults {
-	ruleResults := &lint.RuleResults{}
+func (r MustUseCorrectDialect) Verify(s *schema.ExtendedSchema) RuleResults {
+	ruleResults := &RuleResults{}
 
-	schemaJson, err := readJson(schema.RootFilePath)
+	schemaJson, err := readJson(s.RootFilePath)
 
 	if err != nil {
-		// schema is already compiled, so it is valid json
+		// s is already compiled, so it is valid json
 		panic(err)
 	}
 
 	draft, ok := schemaJson[draftKey].(string)
 
 	if !ok {
-		ruleResults.Add(fmt.Sprintf("Schema does not specify a draft/dialect, but must use '%s'.", correctDraft), schema.GetResolvedLocation())
+		ruleResults.Add(
+			fmt.Sprintf(
+				"Schema does not specify a draft/dialect, but must use '%s'.",
+				correctDraft,
+			),
+			"",
+		)
 		return *ruleResults
 	}
 
 	if draft != correctDraft {
-		ruleResults.Add(fmt.Sprintf("Schema must use draft/dialect '%s', but uses '%s'.", correctDraft, draft), schema.GetResolvedLocation())
+		ruleResults.Add(
+			fmt.Sprintf("Schema must use draft/dialect '%s', but uses '%s'.", correctDraft, draft),
+			s.GetResolvedLocation(),
+		)
 	}
 
 	return *ruleResults
 }
 
-func (r MustUseCorrectDialect) GetSeverity() lint.Severity {
-	return lint.SeverityError
+func (r MustUseCorrectDialect) GetSeverity() Severity {
+	return SeverityError
 }
 
 func readJson(filePath string) (map[string]interface{}, error) {
