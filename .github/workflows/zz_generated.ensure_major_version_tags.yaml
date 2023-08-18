@@ -1,6 +1,6 @@
 # DO NOT EDIT. Generated with:
 #
-#    devctl@6.6.0
+#    devctl@6.7.0
 #
 name: Ensure major version tags
 on:
@@ -9,7 +9,7 @@ on:
 jobs:
   debug_info:
     name: Debug info
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Print github context JSON
         run: |
@@ -18,7 +18,7 @@ jobs:
           EOF
   ensure_major_version_tags:
     name: Ensure major version tags
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: giantswarm/floating-tags-action@v1
