@@ -52,6 +52,7 @@ var ClusterApp = &RuleSet{
 	excludeLocations: []string{
 		"/properties/internal",
 		"/properties/cluster-shared",
+		"/properties/teleport"
 	},
 	referenceURL: "https://github.com/giantswarm/rfc/pull/55", // should be updated when PR is merged
 }
