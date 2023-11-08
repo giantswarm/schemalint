@@ -62,6 +62,7 @@ func getAddtionalAllowedRootPropertiesNames() []string {
 		"provider",
 		"cluster-shared",
 		"kubectlImage",
+		"global", // values shared with subcharts
 	}
 }
 
