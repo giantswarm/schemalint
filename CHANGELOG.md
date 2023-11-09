@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Allow root-level object `global` for sharing values with subcharts
+
 ## [2.1.1] - 2023-04-25
 
 ## [2.1.0] - 2023-04-25
@@ -21,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0] - 2023-04-18
 
-- Adapt common schema structure to cluster-aws. 
+- Adapt common schema structure to cluster-aws.
 - Only recommend examples on restricted strings.
 - Add the possibility to include a URL for further reference to rule sets, which is displayed in the output.
 - Hint to developer how to normalize the JSON schema file.
