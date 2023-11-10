@@ -12,6 +12,10 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
+const (
+	testdataPath = "testdata/"
+)
+
 var (
 	update = flag.Bool("update", false, "update the golden files of this test")
 )
@@ -80,7 +84,7 @@ func TestNormalize(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			input, err := os.ReadFile("testdata/" + tt.inputPath)
+			input, err := os.ReadFile(testdataPath + tt.inputPath)
 			if err != nil {
 				t.Fatalf("Normalize() error when reading file: %v", err)
 			}
@@ -95,7 +99,7 @@ func TestNormalize(t *testing.T) {
 				}
 
 				if tt.goldenPath != "" {
-					want = goldenValue(t, "testdata/"+tt.goldenPath, got, *update)
+					want = goldenValue(t, testdataPath+tt.goldenPath, got, *update)
 					if !reflect.DeepEqual(got, want) {
 						t.Errorf(
 							"Unexpected output from Normalize(): %s",
@@ -157,7 +161,7 @@ func TestCheckIsNormalized(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			input, err := os.ReadFile("testdata/" + tt.inputPath)
+			input, err := os.ReadFile(testdataPath + tt.inputPath)
 			if err != nil {
 				t.Fatalf("IsNormalized() error when reading file: %v", err)
 			}
