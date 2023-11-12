@@ -13,11 +13,19 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 
 	requiredProperties := getRequiredRootProperties()
 
-	schemaProperties := s.GetProperties()
+	rootSchemaProperties := s.GetProperties()
+	var globalSchemaProperties map[string]*schema.ExtendedSchema
+	if globalSchema, ok := rootSchemaProperties["global"]; ok {
+		globalSchemaProperties = globalSchema.GetProperties()
+	}
+
 	for _, requiredProperty := range requiredProperties {
-		if _, ok := schemaProperties[requiredProperty]; !ok {
+		_, requiredPropertyFound := rootSchemaProperties[requiredProperty]
+		_, globalRequiredPropertyFound := globalSchemaProperties[requiredProperty]
+
+		if !requiredPropertyFound && !globalRequiredPropertyFound || requiredPropertyFound && globalRequiredPropertyFound {
 			ruleResults.Add(
-				"Root-level property must be present",
+				"Either global or root-level property must be present (both are not allowed)",
 				"/properties/"+requiredProperty,
 			)
 		}
@@ -25,7 +33,7 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 	}
 
 	allAllowedRootProperties := getAllAllowedRootPropertiesNamesSet()
-	for key, s := range schemaProperties {
+	for key, s := range rootSchemaProperties {
 		if _, ok := allAllowedRootProperties[key]; !ok {
 			ruleResults.Add(
 				"Root-level property is not allowed",

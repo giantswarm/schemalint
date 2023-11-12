@@ -1,0 +1,28 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "controlPlane": {
+            "type": "object"
+        },
+        "global": {
+            "type": "object",
+            "properties": {
+                "connectivity": {
+                    "type": "object"
+                },
+                "metadata": {
+                    "type": "object"
+                }
+            }
+        },
+        "metadata": {
+            "type": "object"
+        },
+        "nodePools": {
+            "type": "array"
+        }
+    }
+}
