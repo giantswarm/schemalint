@@ -1,0 +1,25 @@
+{
+    "$id": "https://example.com/cluster.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "connectivity": {
+                    "type": "object"
+                },
+                "controlPlane": {
+                    "type": "object"
+                },
+                "metadata": {
+                    "type": "object"
+                },
+                "nodePools": {
+                    "type": "array"
+                }
+            }
+        }
+    }
+}

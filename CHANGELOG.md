@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Support for refactored schema where root-level properties are moved to be under global property.
+
 ## [2.2.1] - 2023-11-09
 
 ## [2.2.0] - 2023-11-09

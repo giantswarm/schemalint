@@ -57,6 +57,21 @@ func TestAdheheresToCommonSchemaStructureRequirements(t *testing.T) {
 			schemaPath:  "testdata/common_schema_structure_requirements/additional_properties_not_set_to_false.json",
 			nViolations: 1,
 		},
+		{
+			name:        "case 9: correct global properties",
+			schemaPath:  "testdata/common_schema_structure_requirements/correct_global.json",
+			nViolations: 0,
+		},
+		{
+			name:        "case 10: correct global and root-level properties mix (allowed during schema refactoring, will be removed in the future)",
+			schemaPath:  "testdata/common_schema_structure_requirements/correct_global_root_mix.json",
+			nViolations: 0,
+		},
+		{
+			name:        "case 11: incorrect global and root-level properties mix",
+			schemaPath:  "testdata/common_schema_structure_requirements/incorrect_global_root_mix.json",
+			nViolations: 1,
+		},
 	}
 
 	for _, tc := range testCases {

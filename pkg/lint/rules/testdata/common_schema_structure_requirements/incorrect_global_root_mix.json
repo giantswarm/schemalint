@@ -4,8 +4,19 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-        "connectivity": {
+        "controlPlane": {
             "type": "object"
+        },
+        "global": {
+            "type": "object",
+            "properties": {
+                "connectivity": {
+                    "type": "object"
+                },
+                "metadata": {
+                    "type": "object"
+                }
+            }
         },
         "metadata": {
             "type": "object"
