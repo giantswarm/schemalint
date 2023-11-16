@@ -1,7 +1,7 @@
 package project
 
 var (
-	version = "2.2.2-dev"
+	version = "2.3.0"
 )
 
 func Version() string {
