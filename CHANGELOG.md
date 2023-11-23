@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.1] - 2023-11-23
+
 - Allow to have the same field as a both global and root-level property. 
 
 ## [2.3.0] - 2023-11-16
@@ -125,7 +127,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.3.1...HEAD
+[2.3.1]: https://github.com/giantswarm/schemalint/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/giantswarm/schemalint/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/giantswarm/schemalint/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/giantswarm/schemalint/compare/v2.1.1...v2.2.0
