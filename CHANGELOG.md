@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Allow to have the same field as a both global and root-level property. 
+
 ## [2.3.0] - 2023-11-16
 
 - Support for refactored schema where root-level properties are moved to be under global property.
