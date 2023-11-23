@@ -23,9 +23,9 @@ func (r AdheresToCommonSchemaStructureRequirements) Verify(
 		_, requiredPropertyFound := rootSchemaProperties[requiredProperty]
 		_, globalRequiredPropertyFound := globalSchemaProperties[requiredProperty]
 
-		if !requiredPropertyFound && !globalRequiredPropertyFound || requiredPropertyFound && globalRequiredPropertyFound {
+		if !requiredPropertyFound && !globalRequiredPropertyFound {
 			ruleResults.Add(
-				"Either global or root-level property must be present (both are not allowed)",
+				"Global or root-level property must be present",
 				"/properties/"+requiredProperty,
 			)
 		}

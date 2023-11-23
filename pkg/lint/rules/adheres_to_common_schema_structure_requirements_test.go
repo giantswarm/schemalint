@@ -68,9 +68,9 @@ func TestAdheheresToCommonSchemaStructureRequirements(t *testing.T) {
 			nViolations: 0,
 		},
 		{
-			name:        "case 11: incorrect global and root-level properties mix",
-			schemaPath:  "testdata/common_schema_structure_requirements/incorrect_global_root_mix.json",
-			nViolations: 1,
+			name:        "case 11: correct mix of same global and root-level property",
+			schemaPath:  "testdata/common_schema_structure_requirements/correct_global_root_mix_same_field.json",
+			nViolations: 0,
 		},
 	}
 
