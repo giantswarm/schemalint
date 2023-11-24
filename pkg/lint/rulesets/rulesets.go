@@ -50,6 +50,7 @@ var ClusterApp = &RuleSet{
 		rules.ObjectsMustHaveProperties{},
 	},
 	excludeLocations: []string{
+		"/properties/global/properties/apps",
 		"/properties/internal",
 		"/properties/cluster-shared",
 	},

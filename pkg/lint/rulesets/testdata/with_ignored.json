@@ -8,6 +8,23 @@
         "cluster-shared": {
             "type": "object"
         },
+        "global": {
+            "type": "object",
+            "title": "Global",
+            "description": "Properties that are shared across all parent and subcharts.",
+            "properties": {
+                "apps": {
+                    "type": "object",
+                    "title": "Apps",
+                    "properties": {
+                        "cilium": {
+                            "type": "object",
+                            "title": "Cilium"
+                        }
+                    }
+                }
+            }
+        },
         "internal": {
             "title": "Internal settings",
             "type": "object",
