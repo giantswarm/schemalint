@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Don't check `cluster` in cluster-app ruleset, because that property should never be modified, and it is used for configuring cluster chart.
+- Don't check `providerIntegration` in cluster-app ruleset, because here we have static properties that are set only in the provider-specific charts.
+
 ## [2.4.0] - 2023-11-24
 
 - Don't check `global.apps` in cluster-app ruleset, so we can have empty objects without defined properties (until we auto-generate full schemas from actual app schemas). 
