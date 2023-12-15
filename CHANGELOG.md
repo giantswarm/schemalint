@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Update schemalint version in the GitHub action.
+
 ## [2.5.0] - 2023-12-15
 
 - Don't check `cluster` in cluster-app ruleset, because that property should never be modified, and it is used for configuring cluster chart.
