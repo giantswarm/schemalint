@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2023-12-15
+
 - Don't check `cluster` in cluster-app ruleset, because that property should never be modified, and it is used for configuring cluster chart.
 - Don't check `providerIntegration` in cluster-app ruleset, because here we have static properties that are set only in the provider-specific charts.
 
@@ -134,7 +136,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.5.0...HEAD
+[2.5.0]: https://github.com/giantswarm/schemalint/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/giantswarm/schemalint/compare/v2.3.1...v2.4.0
 [2.3.1]: https://github.com/giantswarm/schemalint/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/giantswarm/schemalint/compare/v2.2.1...v2.3.0
