@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.1] - 2023-12-19
+
 - Update schemalint version in the GitHub action.
 
 ## [2.5.0] - 2023-12-15
@@ -138,7 +140,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.5.0...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.5.1...HEAD
+[2.5.1]: https://github.com/giantswarm/schemalint/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/giantswarm/schemalint/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/giantswarm/schemalint/compare/v2.3.1...v2.4.0
 [2.3.1]: https://github.com/giantswarm/schemalint/compare/v2.3.0...v2.3.1
