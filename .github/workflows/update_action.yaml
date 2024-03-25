@@ -45,7 +45,7 @@ jobs:
         with:
           ref: ${{ needs.get_version.outputs.branch }}
       - name: Update version in action.yml
-        uses: mikefarah/yq@v4.43.1
+        uses: mikefarah/yq@c35ec752e38ea0c096d3c44e13cfc0797ac394d8 # v4.43.1
         with:
           cmd: yq -i '.runs.steps[0].with.version = "${{ needs.get_version.outputs.version }}"' actions/verify-helm-schema/action.yml
       - name: Set up git identity
