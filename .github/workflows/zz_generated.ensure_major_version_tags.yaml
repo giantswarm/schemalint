@@ -1,6 +1,6 @@
 # DO NOT EDIT. Generated with:
 #
-#    devctl@6.23.2
+#    devctl@6.23.3
 #
 name: Ensure major version tags
 on:
@@ -20,5 +20,5 @@ jobs:
     name: Ensure major version tags
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: giantswarm/floating-tags-action@v1
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: giantswarm/floating-tags-action@80ab97ac423893e85897266c75290b93b7946617  # v1.0.1
