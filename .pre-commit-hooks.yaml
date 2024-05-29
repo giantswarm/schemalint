@@ -5,3 +5,4 @@
   entry: schemalint normalize
   language: golang
   files: \.json$
+  require_serial: true
