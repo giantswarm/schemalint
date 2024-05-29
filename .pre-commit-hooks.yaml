@@ -1,6 +1,6 @@
 
 - id: schemalint-normalize
-  name: schemalint-normalize
+  name: normalize JSON Schema
   description: Normalize JSON schema files
   entry: schemalint normalize
   language: golang
