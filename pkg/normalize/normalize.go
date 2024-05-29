@@ -1,4 +1,4 @@
-// Package normalize providesa a function to process a JSON input and return it in
+// Package normalize provides a a function to process a JSON input and return it in
 // normalized form.
 package normalize
 
