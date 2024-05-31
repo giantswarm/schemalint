@@ -38,7 +38,7 @@ Verification result
 To validate a **cluster app** schema, apply the `--rule-set cluster-app` option.
 
 ```nohighlight
-$ schemalint verify myschema.json --rule-set cluster-app
+schemalint verify myschema.json --rule-set cluster-app
 ```
 
 **Note:** Cluster app schema validation is experimental and in development. The requirements are in discussion in [this RFC draft](https://github.com/giantswarm/rfc/pull/55).
@@ -50,11 +50,10 @@ Use `--help` to learn about more options.
 Create a normalized (white space, sorting) representation of a JSON Schema file. This helps to avoid purely cosmetical changes to a schema.
 
 ```nohighlight
-$ schemalint normalize myschema.json > normalized.json
+schemalint normalize myschema.json > normalized.json
 ```
 
 Use `--help` to learn about more options.
-
 
 ## GitHub Action
 
@@ -82,11 +81,17 @@ jobs:
 ```
 
 Note that it is possible to define the rule set to be used for the `verify` command with the `with` keyword.
+
 ```yaml
 with:
   rule-set: 'RULE_SET'
 ```
+
 If the rule set is not specified, no rule set will be used.
+
+## Pre-commit Hook
+
+This repository provides a [pre-commit hook](https://pre-commit.com/#new-hooks) that can be used to normalize JSON schema files before committing them. See `.pre-commit-hooks.yaml` for more information.
 
 ## Major Releases
 
@@ -95,12 +100,13 @@ Other repositories that use schemalint point to major floating tag versions,
 like `v1`. That means that all minor and patch releases will be automatically
 rolled out to these repositories.
 
-When doing a major release the references to schemalint have to be manually 
+When doing a major release the references to schemalint have to be manually
 updated.
-- devctl: 
+
+- devctl:
   - `pkg/gen/input/workflows/internal/file/cluster_app_schema_validation.yaml.template`
   - `pkg/gen/input/makefile/internal/file/Makefile.gen.cluster_app.mk.template`
-- schema: 
+- schema:
   - `.github/workflows/lint.yaml
 
 ## "Overriding" Properties and Understanding `PropertyAnnotationsMap`
@@ -145,6 +151,7 @@ Here, the property at the location `.rootProp.childProp` has two different
 definitions.
 
 One is in the original schema:
+
 ```json
 {
   "type": "string",
@@ -152,7 +159,9 @@ One is in the original schema:
   "title": "This title will be used"
 }
 ```
+
 And the other one is in the referenced schema:
+
 ```json
 {
   "type": "string",
@@ -164,7 +173,7 @@ And the other one is in the referenced schema:
 In JSON schema specification is no such thing as overriding or merging. The
 keywords that have actual meaning during validation will be applied
 sequentially (e.g. `minLength`, `maxLength` and `type`).
-In our example a payload that conforms to the given schema would need to have 
+In our example a payload that conforms to the given schema would need to have
 a string of length 2,3 or 4 at the location `.rootProp.childProp`.
 
 The JSON schema specification does not specify how to handle multiple
