@@ -1,4 +1,4 @@
-
+# normalize
 - id: schemalint-normalize
   name: normalize JSON Schema
   description: Normalize JSON schema files
@@ -6,3 +6,11 @@
   language: golang
   files: \.json$
   require_serial: true
+
+# verify
+- id: schemalint-verify
+  name: verify JSON Schema
+  description: Verify JSON schema files
+  entry: schemalint verify
+  language: golang
+  files: \.json$
