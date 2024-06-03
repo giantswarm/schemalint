@@ -4,7 +4,7 @@
   description: Normalize JSON schema files
   entry: schemalint normalize
   language: golang
-  files: \.json$
+  files: \.schema\.json$ # Adapt this in your .pre-commit-config.yaml to match your schema file names
   require_serial: true
 
 # verify
@@ -13,4 +13,4 @@
   description: Verify JSON schema files
   entry: schemalint verify
   language: golang
-  files: \.json$
+  files: \.schema\.json$ # Adapt this in your .pre-commit-config.yaml to match your schema file names
