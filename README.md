@@ -89,11 +89,11 @@ with:
 
 If the rule set is not specified, no rule set will be used.
 
-## Pre-commit Hook
+## Pre-commit hooks
 
-This repository provides a [pre-commit hook](https://pre-commit.com/#new-hooks) that can be used to normalize JSON schema files before committing them. See `.pre-commit-hooks.yaml` for more information.
+This repository provides a [pre-commit hook](https://pre-commit.com/#new-hooks) that can be used to validate and normalize JSON schema files before committing them. See `.pre-commit-hooks.yaml` for more information.
 
-## Major Releases
+## Major releases
 
 This repository uses [floating tags](https://github.com/giantswarm/floating-tags-action).
 Other repositories that use schemalint point to major floating tag versions,
