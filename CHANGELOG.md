@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add [pre-commit](https://pre-commit.com/) hooks
+
 ## [2.5.1] - 2023-12-19
 
 - Update schemalint version in the GitHub action.
@@ -18,11 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.4.0] - 2023-11-24
 
-- Don't check `global.apps` in cluster-app ruleset, so we can have empty objects without defined properties (until we auto-generate full schemas from actual app schemas). 
+- Don't check `global.apps` in cluster-app ruleset, so we can have empty objects without defined properties (until we auto-generate full schemas from actual app schemas).
 
 ## [2.3.1] - 2023-11-23
 
-- Allow to have the same field as a both global and root-level property. 
+- Allow to have the same field as a both global and root-level property.
 
 ## [2.3.0] - 2023-11-16
 
