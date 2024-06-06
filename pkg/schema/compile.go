@@ -20,7 +20,6 @@ func Compile(path string) (*ExtendedSchema, error) {
 	}
 
 	compiler := jsonschema.NewCompiler()
-	compiler.ExtractAnnotations = true
 
 	s, err := compiler.Compile(url)
 	if err != nil {
