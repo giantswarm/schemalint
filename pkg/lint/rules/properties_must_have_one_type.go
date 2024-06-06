@@ -11,7 +11,8 @@ func (r PropertiesMustHaveOneType) Verify(s *schema.ExtendedSchema) RuleResults 
 	ruleResults := &RuleResults{}
 
 	callback := func(s *schema.ExtendedSchema) {
-		if len(s.Types) > 1 || (len(s.Types) == 0 && s.Ref == nil) {
+		numTypes := len(s.Types.ToStrings())
+		if numTypes > 1 || (numTypes == 0 && s.Ref == nil) {
 			ruleResults.Add(
 				"Property must have exactly one type or be a reference to another schema and not have a type",
 				s.GetResolvedLocation(),
