@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
+	jsonschema "github.com/santhosh-tekuri/jsonschema/v6"
 )
 
 type ExtendedSchema struct {

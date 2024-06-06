@@ -5,8 +5,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
-	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
+	jsonschema "github.com/santhosh-tekuri/jsonschema/v6"
 )
 
 // This processes the given input without specifying the draft to use.
