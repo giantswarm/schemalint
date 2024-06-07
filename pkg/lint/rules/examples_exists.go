@@ -42,7 +42,7 @@ func allSchemasAreString(schemas []*schema.ExtendedSchema) bool {
 
 func oneStringSchemaIsRestricted(schemas []*schema.ExtendedSchema) bool {
 	for _, s := range schemas {
-		if s.Pattern != nil || s.Format != "" {
+		if s.Pattern != nil || (s.Format != nil && s.Format.Name != "") {
 			return true
 		}
 	}
