@@ -11,11 +11,11 @@ func (r StringsShouldBeConstrained) Verify(s *schema.ExtendedSchema) RuleResults
 	ruleResults := &RuleResults{}
 	callback := func(s *schema.ExtendedSchema) {
 		if s.Pattern == nil &&
-			s.MinLength == -1 &&
-			s.MaxLength == -1 &&
+			s.MinLength == nil &&
+			s.MaxLength == nil &&
 			s.Enum == nil &&
-			s.Constant == nil &&
-			s.Format == "" {
+			s.Const == nil &&
+			(s.Format == nil || s.Format.Name == "") {
 			ruleResults.Add(
 				"String property should be constrained through 'pattern', 'minLength', 'maxLength', 'enum', 'constant' or 'format'",
 				s.GetResolvedLocation(),

@@ -2,8 +2,6 @@ package schema
 
 import (
 	"testing"
-
-	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 )
 
 func TestCompileAuto(t *testing.T) {
@@ -21,6 +19,11 @@ func TestCompileAuto(t *testing.T) {
 			name:      "Minimal invalid",
 			inputPath: "testdata/schema-url-404.json",
 			wantErr:   true,
+		},
+		{
+			name:      "Referenced via URL valid",
+			inputPath: "testdata/referenced-url.json",
+			wantErr:   false,
 		},
 		{
 			// If this test happens to fail, it might be that our linter

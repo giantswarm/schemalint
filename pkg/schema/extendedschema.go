@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
+	jsonschema "github.com/santhosh-tekuri/jsonschema/v6"
 )
 
 type ExtendedSchema struct {
@@ -190,9 +190,11 @@ func (s *ExtendedSchema) IsBoolean() bool {
 
 func (s *ExtendedSchema) IsType(typeName string) bool {
 	isType := false
-	for _, t := range s.Types {
-		if t == typeName {
-			isType = true
+	if s.Types != nil {
+		for _, t := range s.Types.ToStrings() {
+			if t == typeName {
+				isType = true
+			}
 		}
 	}
 	return isType
