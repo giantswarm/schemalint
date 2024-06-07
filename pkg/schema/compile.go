@@ -6,6 +6,8 @@ import (
 	"runtime"
 
 	jsonschema "github.com/santhosh-tekuri/jsonschema/v6"
+
+	"github.com/giantswarm/schemalint/v2/pkg/loader"
 )
 
 // This processes the given input without specifying the draft to use.
@@ -20,6 +22,8 @@ func Compile(path string) (*ExtendedSchema, error) {
 	}
 
 	compiler := jsonschema.NewCompiler()
+	compiler.UseLoader(loader.New(false))
+	compiler.AssertFormat()
 
 	s, err := compiler.Compile(url)
 	if err != nil {
