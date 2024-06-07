@@ -15,7 +15,7 @@ func TestExampleExists(t *testing.T) {
 		{
 			name:        "restricted string and no examples",
 			schemaPath:  "testdata/examples_exist/no_examples.json",
-			nViolations: 2,
+			nViolations: 2, // "Property should provide one or more examples", "String property should be constrained..."
 		},
 		{
 			name:        "restricted string and examples",
@@ -49,11 +49,16 @@ func TestExampleExists(t *testing.T) {
 			ruleResults := exampleExistsRule.Verify(s)
 
 			if len(ruleResults.Violations) != tc.nViolations {
+				violationNames := []string{}
+				for _, violation := range ruleResults.Violations {
+					violationNames = append(violationNames, violation.Message)
+				}
 				t.Fatalf(
-					"Unexpected number of rule violations in test case '%s': Expected %d, got %d",
+					"Unexpected number of rule violations in test case '%s': Expected %d, got %d. Got these: %v",
 					tc.name,
 					tc.nViolations,
 					len(ruleResults.Violations),
+					violationNames,
 				)
 			}
 		})
