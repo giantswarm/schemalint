@@ -1,0 +1,9 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "propFromRef": {
+            "$ref": "https://json.schemastore.org/yamllint.json#/properties/locale"
+        }
+    }
+}

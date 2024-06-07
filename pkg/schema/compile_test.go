@@ -21,6 +21,11 @@ func TestCompileAuto(t *testing.T) {
 			wantErr:   true,
 		},
 		{
+			name:      "Referenced via URL valid",
+			inputPath: "testdata/referenced-url.json",
+			wantErr:   false,
+		},
+		{
 			// If this test happens to fail, it might be that our linter
 			// actually changed and does support negative lookbehind.
 			// See https://github.com/santhosh-tekuri/jsonschema/pull/60
