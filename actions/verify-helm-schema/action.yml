@@ -10,7 +10,7 @@ runs:
       uses: giantswarm/install-binary-action@c37eb401e5092993fc76d545030b1d1769e61237 # v3.0.0
       with:
         binary: "schemalint"
-        version: "2.5.1"
+        version: "2.6.1"
     - name: Run schemalint
       shell: bash
       run: ${{ github.action_path }}/verify-helm-schema.sh ${{ inputs.rule-set }}
