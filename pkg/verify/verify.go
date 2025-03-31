@@ -3,6 +3,7 @@ package verify
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/giantswarm/schemalint/v2/pkg/lint/rules"
 	"github.com/giantswarm/schemalint/v2/pkg/lint/rulesets"
@@ -70,13 +71,14 @@ func CheckNormalization(path string) TestResult {
 	var err error
 	var content []byte
 
+	path = filepath.Clean(path)
 	content, err = os.ReadFile(path)
 	if err == nil {
 		var isNormalized bool
 		isNormalized, err = normalize.Verify(content)
 		if err == nil && !isNormalized {
 			err = fmt.Errorf(
-				"Schema is not normalized. Run 'schemalint normalize %[1]s -o %[1]s --force'.",
+				"schema is not normalized; run 'schemalint normalize %[1]s -o %[1]s --force'",
 				path,
 			)
 		}

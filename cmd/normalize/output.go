@@ -3,6 +3,7 @@ package normalize
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/giantswarm/schemalint/v2/pkg/cli"
 )
@@ -30,6 +31,7 @@ func writeOutputOrExit(output []byte, outputPath string) {
 }
 
 func checkIsUnchanged(output []byte, outputPath string) bool {
+	outputPath = filepath.Clean(outputPath)
 	currentFileContent, _ := os.ReadFile(outputPath)
 	return string(output) == string(currentFileContent)
 }
