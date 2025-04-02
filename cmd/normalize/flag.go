@@ -28,10 +28,10 @@ func (f *flag) validate() error {
 func errorIfFileExists(path string) error {
 	_, err := os.Stat(path)
 	if err == nil {
-		return fmt.Errorf("File %s already exists. Use --force to overwrite.", path)
+		return fmt.Errorf("file %s already exists; use --force to overwrite", path)
 	}
 	if errors.Is(err, os.ErrNotExist) {
-		return errors.New("Error: output file already exists. Apply --force to overwrite.")
+		return errors.New("output file already exists; apply --force to overwrite")
 	}
 	return nil
 }

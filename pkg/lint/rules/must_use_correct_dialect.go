@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/giantswarm/schemalint/v2/pkg/schema"
 )
@@ -51,11 +52,12 @@ func (r MustUseCorrectDialect) GetSeverity() Severity {
 }
 
 func readJson(filePath string) (map[string]interface{}, error) {
+	filePath = filepath.Clean(filePath)
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	decoder := json.NewDecoder(file)
 	var data map[string]interface{}

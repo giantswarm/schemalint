@@ -3,6 +3,7 @@ package pam
 import (
 	"encoding/json"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -93,6 +94,7 @@ func parseGoldenFile(path string) (PropertyAnnotationsMap, error) {
 }
 
 func openGoldenFile(path string) (*os.File, error) {
+	path = filepath.Clean(path)
 	goldenFile, err := os.Open(path)
 	if err != nil {
 		return nil, err
@@ -103,6 +105,7 @@ func openGoldenFile(path string) (*os.File, error) {
 
 // use this function as a template when creating golden files for new tests
 func DumpPropertyAnnotationsMap(propertyAnnotationsMap PropertyAnnotationsMap, path string) {
+	path = filepath.Clean(path)
 	goldenFile, err := os.Create(path)
 	if err != nil {
 		panic(err)

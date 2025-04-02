@@ -118,7 +118,7 @@ func (pam PropertyAnnotationsMap) GetParentAnnotations(
 
 	annotations, ok := pam[parentResolvedLocation]
 	if !ok {
-		return nil, fmt.Errorf("Could not find parent annotations for %s", resolvedLocation)
+		return nil, fmt.Errorf("could not find parent annotations for %s", resolvedLocation)
 	}
 
 	return annotations, nil

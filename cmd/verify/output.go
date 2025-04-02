@@ -60,8 +60,8 @@ func printFeedback(title string, feedback []verify.Feedback, color *color.Color)
 		totalFeedback += len(g)
 	}
 
-	color.Printf("%s (%d)\n", title, totalFeedback)
-	fmt.Println()
+	_, _ = color.Printf("%s (%d)\n", title, totalFeedback)
+	_, _ = fmt.Println()
 	for _, feedbackGroup := range feedbackGroups {
 		printFeedbackGroup(feedbackGroup)
 	}

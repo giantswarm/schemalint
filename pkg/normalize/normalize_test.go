@@ -120,11 +120,11 @@ func TestNormalize(t *testing.T) {
 func goldenValue(t *testing.T, goldenPath string, actual []byte, update bool) []byte {
 	t.Helper()
 
-	f, err := os.OpenFile(goldenPath, os.O_RDWR, 0644)
+	f, err := os.OpenFile(goldenPath, os.O_RDWR, 0644) //nolint:gosec
 	if err != nil {
 		t.Fatalf("Error opening to file %s: %s", goldenPath, err)
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	if update {
 		_, err := f.Write(actual)

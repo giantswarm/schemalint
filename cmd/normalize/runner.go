@@ -3,6 +3,7 @@ package normalize
 import (
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 
@@ -28,6 +29,7 @@ func (r *runner) run(cmd *cobra.Command, args []string) {
 }
 
 func readInputOrExit(path string) []byte {
+	path = filepath.Clean(path)
 	input, err := os.ReadFile(path)
 	if err != nil {
 		cli.FatalfErrorMessage("Error reading file %s: %s", path, err)
