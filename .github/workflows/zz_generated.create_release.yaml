@@ -2,7 +2,7 @@
 #
 #    devctl
 #
-#    https://github.com/giantswarm/devctl/blob/e88bfdc523e849f242bd022e78522750d9ea53dd/pkg/gen/input/workflows/internal/file/create_release.yaml.template
+#    https://github.com/giantswarm/devctl/blob/7f65ea49e4e543a7b39a7b3cf70038a3e16641a5/pkg/gen/input/workflows/internal/file/create_release.yaml.template
 #
 name: Create Release
 on:
@@ -208,7 +208,7 @@ jobs:
       - create_release
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: giantswarm/floating-tags-action@029cc30401dfbbae91ad865841e163efe043f52f # v1.0.4
+      - uses: giantswarm/floating-tags-action@15794e1297b3f86f474d57721ea083bbd00cf990 # v1.1.0
 
   create-release-branch:
     name: Create release branch
