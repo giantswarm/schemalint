@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "@actions/core": "^2.0.0",
-    "@actions/exec": "^2.0.0"
+    "@actions/exec": "^3.0.0"
   }
 }
