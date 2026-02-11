@@ -2,7 +2,7 @@ module github.com/giantswarm/schemalint/v2
 
 go 1.21
 
-toolchain go1.25.7
+toolchain go1.26.0
 
 require (
 	github.com/fatih/color v1.18.0
