@@ -23,6 +23,8 @@ workflows:
           requires:
             - go-test
       - architect/upload-release-assets:
+          context: architect
+          binary: schemalint
           name: upload-release-assets
           filters:
             branches:
