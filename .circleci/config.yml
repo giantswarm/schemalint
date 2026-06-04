@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@6.15.0
+  architect: giantswarm/architect@9.1.0
 
 workflows:
   build:
@@ -13,3 +13,24 @@ workflows:
             # Trigger job also on git tag.
             tags:
               only: /^v.*/
+      - architect/go-build:
+          context: architect
+          name: go-build
+          binary: schemalint
+          architectures: "linux/amd64,linux/arm64,darwin/amd64,darwin/arm64,windows/amd64,windows/arm64"
+          filters:
+            tags:
+              only: /^v.*/
+          requires:
+            - go-test
+      - architect/upload-release-assets:
+          context: architect
+          binary: schemalint
+          name: upload-release-assets
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+          requires:
+            - go-build
