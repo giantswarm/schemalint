@@ -25,6 +25,14 @@ func TestShouldDisableAdditionalProperties(t *testing.T) {
 			nViolations: 0,
 			rules:       []Rule{ShouldDisableAdditionalProperties{}},
 		},
+		{
+			// A '$ref'ed object is closed with 'unevaluatedProperties: false'; asking
+			// for 'additionalProperties: false' there would be wrong.
+			name:        "$ref closed with unevaluated properties",
+			schemaPath:  "testdata/additional_properties/closed_ref.json",
+			nViolations: 0,
+			rules:       []Rule{ShouldDisableAdditionalProperties{}},
+		},
 	}
 
 	for _, tc := range testCases {

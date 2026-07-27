@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "affinity": {
+            "$ref": "#/$defs/affinity",
+            "type": "object",
+            "unevaluatedProperties": false
+        }
+    },
+    "$defs": {
+        "affinity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "nodeAffinity": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "key": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

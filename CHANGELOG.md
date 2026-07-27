@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `cluster-app` rule set: allow `unevaluatedProperties: false` on a schema that also has
+  `$ref`. This is the only way to reject unknown keys on a referenced object in draft
+  2020-12 — `additionalProperties` only considers *sibling* `properties`/`patternProperties`
+  (2020-12 core, §10.3.2), so `additionalProperties: false` next to a `$ref` rejects every
+  field the referenced schema defines and breaks `helm template`. Every other use of
+  `unevaluatedProperties`, and all use of `unevaluatedItems`, remains an error.
+- `cluster-app` rule set: "Object should disable additional properties" no longer fires on
+  a `$ref` closed with `unevaluatedProperties: false`. Such an object *is* closed, and
+  adding `additionalProperties: false` to it would be wrong.
+
 ## [2.6.1] - 2025-01-22
 
 - Dependency updates

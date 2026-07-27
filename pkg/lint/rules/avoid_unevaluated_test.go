@@ -27,6 +27,19 @@ func TestAvoidUnevaluated(t *testing.T) {
 			schemaPath:  "testdata/avoid_unevaluated/correct.json",
 			nViolations: 0,
 		},
+		{
+			// The one permitted use: closing a '$ref'ed object.
+			name:        "uses unevaluated properties to close a $ref",
+			schemaPath:  "testdata/avoid_unevaluated/closed_ref.json",
+			nViolations: 0,
+		},
+		{
+			// The exception is 'unevaluatedProperties: false', not "has a $ref" --
+			// a subschema value stays a violation even next to a '$ref'.
+			name:        "uses an unevaluated properties subschema next to a $ref",
+			schemaPath:  "testdata/avoid_unevaluated/ref_with_unevaluated_subschema.json",
+			nViolations: 1,
+		},
 	}
 
 	for _, tc := range testCases {
