@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `cluster-app` rule set: "Object should disable additional properties" no longer fires on
   a `$ref` closed with `unevaluatedProperties: false`. Such an object *is* closed, and
   adding `additionalProperties: false` to it would be wrong.
+- Release binaries now include darwin/amd64, darwin/arm64, windows/amd64, and windows/arm64 alongside the existing linux targets. Windows binaries are named `schemalint-windows-<arch>.exe`.
 
 ## [2.6.1] - 2025-01-22
 
