@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "labels": {
+            "$ref": "#/$defs/labels",
+            "type": "object",
+            "unevaluatedProperties": false
+        }
+    },
+    "$defs": {
+        "labels": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        }
+    }
+}

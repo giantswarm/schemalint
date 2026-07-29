@@ -44,6 +44,17 @@ func TestLintWithRules(t *testing.T) {
 			nErrors:          42,
 			nRecommendations: 30,
 		},
+		{
+			// A '$ref' closed with 'unevaluatedProperties: false' must pass the whole
+			// rule set, not just AvoidUnevaluated. The three recommendations are the
+			// 'nodePools' map plus two absent optional root properties; none of them
+			// concern the '$ref'.
+			name:             "case 4: cluster-app - $ref closed with unevaluated properties",
+			schemaPath:       "testdata/closed_ref.json",
+			ruleSetName:      "cluster-app",
+			nErrors:          0,
+			nRecommendations: 3,
+		},
 	}
 
 	for _, tc := range testCases {

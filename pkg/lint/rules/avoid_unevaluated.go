@@ -17,9 +17,12 @@ func (r AvoidUnevaluated) Verify(s *schema.ExtendedSchema) RuleResults {
 				s.GetResolvedLocation(),
 			)
 		}
-		if s.UnevaluatedProperties != nil {
+		// 'unevaluatedProperties: false' next to a '$ref' is the one permitted use:
+		// it is the only way to reject unknown keys on a referenced object in draft
+		// 2020-12. See isClosedRef.
+		if s.UnevaluatedProperties != nil && !isClosedRef(s) {
 			ruleResults.Add(
-				"Property must not use unevaluatedProperties",
+				"Property must not use unevaluatedProperties, except as 'unevaluatedProperties: false' next to '$ref'",
 				s.GetResolvedLocation(),
 			)
 		}

@@ -25,6 +25,39 @@ func TestShouldDisableAdditionalProperties(t *testing.T) {
 			nViolations: 0,
 			rules:       []Rule{ShouldDisableAdditionalProperties{}},
 		},
+		{
+			// A '$ref'ed object is closed with 'unevaluatedProperties: false'; asking
+			// for 'additionalProperties: false' there would be wrong -- neither on the
+			// referring schema nor on the target, which resolves to the same location.
+			name:        "$ref closed with unevaluated properties",
+			schemaPath:  "testdata/additional_properties/closed_ref.json",
+			nViolations: 0,
+			rules:       []Rule{ShouldDisableAdditionalProperties{}},
+		},
+		{
+			// A permissive sibling 'additionalProperties' makes the
+			// 'unevaluatedProperties: false' a no-op, so the object is not closed.
+			name:        "$ref with permissive additional properties",
+			schemaPath:  "testdata/additional_properties/ref_with_permissive_additional.json",
+			nViolations: 1,
+			rules:       []Rule{ShouldDisableAdditionalProperties{}},
+		},
+		{
+			// Same for a permissive 'additionalProperties' on the target. Reported once,
+			// although both the referring schema and the target resolve to the location.
+			name:        "$ref to an object with permissive additional properties",
+			schemaPath:  "testdata/additional_properties/ref_target_permissive_additional.json",
+			nViolations: 1,
+			rules:       []Rule{ShouldDisableAdditionalProperties{}},
+		},
+		{
+			// A map definition -- 'additionalProperties' is a subschema, so disabling it
+			// is not the advice to give, and the '$ref' stays exempt.
+			name:        "$ref to a map definition",
+			schemaPath:  "testdata/additional_properties/closed_ref_to_map.json",
+			nViolations: 0,
+			rules:       []Rule{ShouldDisableAdditionalProperties{}},
+		},
 	}
 
 	for _, tc := range testCases {
