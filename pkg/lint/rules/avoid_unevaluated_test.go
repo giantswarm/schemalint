@@ -40,6 +40,19 @@ func TestAvoidUnevaluated(t *testing.T) {
 			schemaPath:  "testdata/avoid_unevaluated/ref_with_unevaluated_subschema.json",
 			nViolations: 1,
 		},
+		{
+			// A permissive sibling 'additionalProperties' evaluates every property, so
+			// the 'unevaluatedProperties: false' closes nothing and is not exempt.
+			name:        "uses unevaluated properties next to a permissive additionalProperties",
+			schemaPath:  "testdata/avoid_unevaluated/ref_with_permissive_additional.json",
+			nViolations: 1,
+		},
+		{
+			// 'unevaluatedProperties' has no effect on an array.
+			name:        "uses unevaluated properties on a $ref'ed array",
+			schemaPath:  "testdata/avoid_unevaluated/array_ref_with_unevaluated.json",
+			nViolations: 1,
+		},
 	}
 
 	for _, tc := range testCases {

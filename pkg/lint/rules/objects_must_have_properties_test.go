@@ -32,6 +32,12 @@ func TestObjectsMustHaveProperties(t *testing.T) {
 			schemaPath:  "testdata/objects_must_have_properties/object_with_pattern_property.json",
 			nViolations: 0,
 		},
+		{
+			// The properties come in through the '$ref'.
+			name:        "case 4: object with properties from a $ref",
+			schemaPath:  "testdata/objects_must_have_properties/closed_ref.json",
+			nViolations: 0,
+		},
 	}
 
 	for _, tc := range testCases {

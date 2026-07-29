@@ -1,0 +1,79 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Values",
+    "description": "Configuration values for this cluster.",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "connectivity": {
+            "type": "object",
+            "title": "Connectivity",
+            "description": "Settings for reaching the cluster over the network from outside.",
+            "additionalProperties": false,
+            "properties": {
+                "baseDomain": {
+                    "type": "string",
+                    "title": "Base domain",
+                    "description": "The DNS zone that endpoints of this cluster are created under.",
+                    "maxLength": 100,
+                    "examples": [
+                        "example.io"
+                    ]
+                }
+            }
+        },
+        "controlPlane": {
+            "$ref": "#/$defs/nodeGroup",
+            "type": "object",
+            "title": "Control plane",
+            "description": "Settings for the machines that run the Kubernetes API and etcd.",
+            "unevaluatedProperties": false
+        },
+        "metadata": {
+            "type": "object",
+            "title": "Metadata",
+            "description": "Descriptive information used to identify this cluster.",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "description": "Unique identifier of this cluster within the installation.",
+                    "maxLength": 20,
+                    "examples": [
+                        "abc12"
+                    ]
+                }
+            }
+        },
+        "nodePools": {
+            "type": "object",
+            "title": "Node pools",
+            "description": "Groups of worker machines sharing one configuration, keyed by name.",
+            "additionalProperties": {
+                "$ref": "#/$defs/nodeGroup",
+                "type": "object",
+                "title": "Node pool",
+                "description": "Settings for one group of worker machines sharing a configuration.",
+                "unevaluatedProperties": false
+            }
+        }
+    },
+    "$defs": {
+        "nodeGroup": {
+            "type": "object",
+            "properties": {
+                "replicas": {
+                    "type": "integer",
+                    "title": "Replicas",
+                    "description": "Number of individual machines to create for this group.",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "examples": [
+                        3
+                    ]
+                }
+            }
+        }
+    }
+}

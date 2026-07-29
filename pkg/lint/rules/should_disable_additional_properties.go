@@ -29,8 +29,9 @@ func (r ShouldDisableAdditionalProperties) Verify(
 func isAdditionalPropertiesDisabled(s *schema.ExtendedSchema) bool {
 	// An object defined via '$ref' is closed with 'unevaluatedProperties: false'
 	// instead -- 'additionalProperties: false' would reject every field the
-	// referenced schema defines. See isClosedRef.
-	return s.AdditionalProperties == false || isClosedRef(s)
+	// referenced schema defines. See isClosedRef. The '$ref' target is exempt too:
+	// closing it would reject the sibling properties the referring schema adds.
+	return s.AdditionalProperties == false || isClosedRef(s) || isClosedRefTarget(s)
 }
 
 func (r ShouldDisableAdditionalProperties) GetSeverity() Severity {

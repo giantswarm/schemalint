@@ -6,11 +6,6 @@
         "affinity": {
             "$ref": "#/$defs/affinity",
             "type": "object",
-            "properties": {
-                "extra": {
-                    "type": "string"
-                }
-            },
             "unevaluatedProperties": false
         }
     },
@@ -18,14 +13,8 @@
         "affinity": {
             "type": "object",
             "properties": {
-                "nodeAffinity": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                        "key": {
-                            "type": "string"
-                        }
-                    }
+                "key": {
+                    "type": "string"
                 }
             }
         }

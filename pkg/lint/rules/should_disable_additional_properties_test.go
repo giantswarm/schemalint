@@ -27,10 +27,19 @@ func TestShouldDisableAdditionalProperties(t *testing.T) {
 		},
 		{
 			// A '$ref'ed object is closed with 'unevaluatedProperties: false'; asking
-			// for 'additionalProperties: false' there would be wrong.
+			// for 'additionalProperties: false' there would be wrong -- neither on the
+			// referring schema nor on the target, which resolves to the same location.
 			name:        "$ref closed with unevaluated properties",
 			schemaPath:  "testdata/additional_properties/closed_ref.json",
 			nViolations: 0,
+			rules:       []Rule{ShouldDisableAdditionalProperties{}},
+		},
+		{
+			// A permissive sibling 'additionalProperties' makes the
+			// 'unevaluatedProperties: false' a no-op, so the object is not closed.
+			name:        "$ref with permissive additional properties",
+			schemaPath:  "testdata/additional_properties/ref_with_permissive_additional.json",
+			nViolations: 1,
 			rules:       []Rule{ShouldDisableAdditionalProperties{}},
 		},
 	}

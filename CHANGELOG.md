@@ -14,10 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   2020-12 — `additionalProperties` only considers *sibling* `properties`/`patternProperties`
   (2020-12 core, §10.3.2), so `additionalProperties: false` next to a `$ref` rejects every
   field the referenced schema defines and breaks `helm template`. Every other use of
-  `unevaluatedProperties`, and all use of `unevaluatedItems`, remains an error.
+  `unevaluatedProperties`, and all use of `unevaluatedItems`, remains an error. A sibling
+  `additionalProperties` that is not `false`, or a declared type that is not `object`, makes
+  `unevaluatedProperties: false` a no-op and is therefore not covered by the exception.
 - `cluster-app` rule set: "Object should disable additional properties" no longer fires on
   a `$ref` closed with `unevaluatedProperties: false`. Such an object *is* closed, and
-  adding `additionalProperties: false` to it would be wrong.
+  adding `additionalProperties: false` to it would be wrong. This applies to the `$ref`
+  target as well, which is reported at the same location as the referring schema.
+- `cluster-app` rule set: "Object must have at least one property" now counts properties
+  reached through `$ref`, so a schema that is only a `$ref` to an object with properties
+  no longer errors.
 - Release binaries now include darwin/amd64, darwin/arm64, windows/amd64, and windows/arm64 alongside the existing linux targets. Windows binaries are named `schemalint-windows-<arch>.exe`.
 
 ## [2.6.1] - 2025-01-22
