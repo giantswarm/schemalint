@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   no longer errors.
 - Release binaries now include darwin/amd64, darwin/arm64, windows/amd64, and windows/arm64 alongside the existing linux targets. Windows binaries are named `schemalint-windows-<arch>.exe`.
 - Update `golang.org/x/sys` to v0.47.0, fixing CVE-2026-39824.
+- Update `github.com/santhosh-tekuri/jsonschema` to v6. Findings are unchanged; the wording
+  of the "invalid JSON Schema" message for a schema that does not compile comes from the
+  library and differs in places.
 
 ### Fixed
 
