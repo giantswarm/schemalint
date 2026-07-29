@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update `github.com/santhosh-tekuri/jsonschema` to v6. Findings are unchanged; the wording
   of the "invalid JSON Schema" message for a schema that does not compile comes from the
   library and differs in places.
+- Update `golang.org/x/text` to v0.39.0, fixing CVE-2026-56852. jsonschema v6 pulls it in.
 
 ### Fixed
 
