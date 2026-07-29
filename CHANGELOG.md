@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.2] - 2026-07-29
+
 ### Changed
 
 - `cluster-app` rule set: allow `unevaluatedProperties: false` on a schema that also has
@@ -185,7 +187,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.6.1...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.6.2...HEAD
+[2.6.2]: https://github.com/giantswarm/schemalint/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/giantswarm/schemalint/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/giantswarm/schemalint/compare/v2.5.1...v2.6.0
 [2.5.1]: https://github.com/giantswarm/schemalint/compare/v2.5.0...v2.5.1
