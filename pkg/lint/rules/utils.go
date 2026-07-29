@@ -61,19 +61,19 @@ func isClosedRef(s *schema.ExtendedSchema) bool {
 
 	// 'unevaluatedProperties' has no effect on a non-object. A schema without a
 	// declared type takes it from the '$ref' target, so fall back to the target's.
-	if len(s.Types) > 0 {
+	if len(s.GetTypes()) > 0 {
 		if !s.IsObject() {
 			return false
 		}
-	} else if len(ref.Types) > 0 && !ref.IsObject() {
+	} else if len(ref.GetTypes()) > 0 && !ref.IsObject() {
 		return false
 	}
 
 	unevaluated := s.UnevaluatedProperties
 
 	return unevaluated != nil &&
-		unevaluated.Always != nil &&
-		!*unevaluated.Always
+		unevaluated.Bool != nil &&
+		!*unevaluated.Bool
 }
 
 // isClosedRefTarget reports whether s is the schema a closed '$ref' points at.

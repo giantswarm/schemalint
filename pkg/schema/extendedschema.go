@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
+	jsonschema "github.com/santhosh-tekuri/jsonschema/v6"
 )
 
 type ExtendedSchema struct {
@@ -190,12 +190,21 @@ func (s *ExtendedSchema) IsBoolean() bool {
 
 func (s *ExtendedSchema) IsType(typeName string) bool {
 	isType := false
-	for _, t := range s.Types {
+	for _, t := range s.GetTypes() {
 		if t == typeName {
 			isType = true
 		}
 	}
 	return isType
+}
+
+// GetTypes returns the declared types, empty if the schema declares none.
+// 'Types' itself is a bitmask, so it cannot be counted or ranged over directly.
+func (s *ExtendedSchema) GetTypes() []string {
+	if s.Types == nil {
+		return nil
+	}
+	return s.Types.ToStrings()
 }
 
 func (s *ExtendedSchema) IsSelfReference() bool {

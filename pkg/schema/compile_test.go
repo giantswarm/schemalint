@@ -2,8 +2,6 @@ package schema
 
 import (
 	"testing"
-
-	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 )
 
 func TestCompileAuto(t *testing.T) {
