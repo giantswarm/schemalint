@@ -34,7 +34,7 @@ func (r TitleMustNotContainIllegalCharacters) Verify(
 		if containsLeadingOrTrailingSpace(title) {
 			ruleResults.Add(
 				"Property title must not contain leading or trailing spaces.",
-				s.GetResolvedLocation(),
+				resolvedLocation,
 			)
 		}
 	}

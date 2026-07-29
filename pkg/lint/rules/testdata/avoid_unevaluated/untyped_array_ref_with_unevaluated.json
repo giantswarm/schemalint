@@ -1,0 +1,19 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "tolerations": {
+            "$ref": "#/$defs/tolerations",
+            "unevaluatedProperties": false
+        }
+    },
+    "$defs": {
+        "tolerations": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

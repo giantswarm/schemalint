@@ -48,9 +48,22 @@ func TestAvoidUnevaluated(t *testing.T) {
 			nViolations: 1,
 		},
 		{
+			// The target's own permissive 'additionalProperties' annotates just as
+			// effectively as a sibling one.
+			name:        "uses unevaluated properties on a $ref to a permissive object",
+			schemaPath:  "testdata/avoid_unevaluated/ref_target_permissive_additional.json",
+			nViolations: 1,
+		},
+		{
 			// 'unevaluatedProperties' has no effect on an array.
 			name:        "uses unevaluated properties on a $ref'ed array",
 			schemaPath:  "testdata/avoid_unevaluated/array_ref_with_unevaluated.json",
+			nViolations: 1,
+		},
+		{
+			// Same, with the array type coming from the '$ref' target.
+			name:        "uses unevaluated properties on an untyped $ref to an array",
+			schemaPath:  "testdata/avoid_unevaluated/untyped_array_ref_with_unevaluated.json",
 			nViolations: 1,
 		},
 	}

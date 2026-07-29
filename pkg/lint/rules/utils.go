@@ -49,10 +49,23 @@ func isClosedRef(s *schema.ExtendedSchema) bool {
 		return false
 	}
 
-	// 'unevaluatedProperties' has no effect on a non-object. A schema without an
-	// explicit type takes it from the '$ref' target, so only a declared type that
-	// is not 'object' disqualifies.
-	if len(s.Types) > 0 && !s.IsObject() {
+	ref := s.GetRefSchema()
+
+	// The target's own 'additionalProperties: true' annotates just as effectively,
+	// and the target is exempt as well via isClosedRefTarget. A subschema value is
+	// left alone on purpose: that is a map definition, where closing it is not the
+	// advice to give.
+	if ref.AdditionalProperties == true {
+		return false
+	}
+
+	// 'unevaluatedProperties' has no effect on a non-object. A schema without a
+	// declared type takes it from the '$ref' target, so fall back to the target's.
+	if len(s.Types) > 0 {
+		if !s.IsObject() {
+			return false
+		}
+	} else if len(ref.Types) > 0 && !ref.IsObject() {
 		return false
 	}
 

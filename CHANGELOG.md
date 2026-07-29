@@ -14,9 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   2020-12 — `additionalProperties` only considers *sibling* `properties`/`patternProperties`
   (2020-12 core, §10.3.2), so `additionalProperties: false` next to a `$ref` rejects every
   field the referenced schema defines and breaks `helm template`. Every other use of
-  `unevaluatedProperties`, and all use of `unevaluatedItems`, remains an error. A sibling
-  `additionalProperties` that is not `false`, or a declared type that is not `object`, makes
-  `unevaluatedProperties: false` a no-op and is therefore not covered by the exception.
+  `unevaluatedProperties`, and all use of `unevaluatedItems`, remains an error. Spellings
+  that leave the object open anyway are not covered by the exception: an `additionalProperties`
+  that is not `false` either next to the `$ref` or on the target it resolves to (both annotate
+  every property as evaluated), and a type that is not `object`, taken from the `$ref` target
+  when the schema declares none.
 - `cluster-app` rule set: "Object should disable additional properties" no longer fires on
   a `$ref` closed with `unevaluatedProperties: false`. Such an object *is* closed, and
   adding `additionalProperties: false` to it would be wrong. This applies to the `$ref`
@@ -25,6 +27,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   reached through `$ref`, so a schema that is only a `$ref` to an object with properties
   no longer errors.
 - Release binaries now include darwin/amd64, darwin/arm64, windows/amd64, and windows/arm64 alongside the existing linux targets. Windows binaries are named `schemalint-windows-<arch>.exe`.
+- Update `golang.org/x/sys` to v0.47.0, fixing CVE-2026-39824.
+
+### Fixed
+
+- A finding is no longer reported twice for the same location. A `$ref` and its target
+  resolve to one location, so a rule that visits both reported it once per visit.
+- "Property title must not contain leading or trailing spaces" now points at the offending
+  property instead of the root of the schema.
 
 ## [2.6.1] - 2025-01-22
 

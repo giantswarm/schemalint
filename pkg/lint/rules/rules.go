@@ -20,7 +20,20 @@ type RuleResults struct {
 	Violations []Violation
 }
 
+// Add records a violation, unless the exact same message was already recorded for
+// the same location. A '$ref' and its target resolve to one location, so a rule
+// that visits both would otherwise report it twice, which is indistinguishable in
+// the output.
+//
+// ponytail: linear scan, violation counts are in the hundreds; index by
+// message+location if a rule ever produces enough to matter.
 func (r *RuleResults) Add(message string, location string) {
+	for _, violation := range r.Violations {
+		if violation.Message == message && violation.Location == location {
+			return
+		}
+	}
+
 	r.Violations = append(r.Violations, Violation{Message: message, Location: location})
 }
 
