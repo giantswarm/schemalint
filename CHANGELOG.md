@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.3] - 2026-08-04
+
 ## [2.6.2] - 2026-07-29
 
 ### Changed
@@ -187,7 +189,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added first basic linting.
 
-[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.6.2...HEAD
+[Unreleased]: https://github.com/giantswarm/schemalint/compare/v2.6.3...HEAD
+[2.6.3]: https://github.com/giantswarm/schemalint/compare/v2.6.2...v2.6.3
 [2.6.2]: https://github.com/giantswarm/schemalint/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/giantswarm/schemalint/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/giantswarm/schemalint/compare/v2.5.1...v2.6.0
