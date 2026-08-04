@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.6.3] - 2026-08-04
 
+### Changed
+
+- Action: Provide download URL.
+
 ## [2.6.2] - 2026-07-29
 
 ### Changed
