@@ -10,7 +10,7 @@ runs:
       uses: giantswarm/install-binary-action@5bef88f65012037dd836117c8d344b21bb559854 # v4.1.0
       with:
         binary: schemalint
-        version: 2.6.2
+        version: 2.6.3
         download_url: https://github.com/giantswarm/${binary}/releases/download/v${version}/${binary}-linux-amd64
     - name: Run schemalint
       shell: bash
