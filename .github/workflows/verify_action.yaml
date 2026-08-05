@@ -22,11 +22,6 @@
 name: Verify action
 
 on:
-  # TEMPORARY, removed before merge: workflow_dispatch only works from the default branch, so this
-  # is the only way to prove the job actually runs while it is still on a PR branch.
-  pull_request:
-    paths:
-      - '.github/workflows/verify_action.yaml'
   release:
     types: [published]
   schedule:
