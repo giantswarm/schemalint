@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- CI: `verify_action.yaml` runs `actions/verify-helm-schema` against a fixture chart on every
+  published release (plus daily), so a release whose assets no longer match what `action.yml`
+  downloads is caught here instead of in every repo consuming
+  `giantswarm/github-workflows/.github/workflows/json-schema-validation.yaml@main`. This is what
+  v2.6.2 needed: its assets stopped including `schemalint-v2.6.2-linux-amd64.tar.gz` once #319
+  dropped `build-release-artifacts: true`, and the resulting 404 only surfaced downstream.
+
 ## [2.6.3] - 2026-08-04
 
 ### Changed
