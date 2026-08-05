@@ -1,0 +1,69 @@
+# Runs `actions/verify-helm-schema` against a fixture chart, so this repo notices when its own
+# action stops working.
+#
+# Why it exists: v2.6.2 shipped a correct-looking action.yml next to a release whose assets had
+# been renamed out from under it. The `chore: align files according to platform standards` template
+# dropped `build-release-artifacts: true` from `zz_generated.create_release.yaml` (#319), so
+# `schemalint-v2.6.2-linux-amd64.tar.gz` was never built - while action.yml was still asking
+# install-binary-action for exactly that file. Every consumer of
+# giantswarm/github-workflows/.github/workflows/json-schema-validation.yaml@main started failing
+# with `Unexpected HTTP response: 404` within a minute of Renovate bumping the pin there, and
+# nothing in this repo noticed, because no workflow here ran its own action.
+#
+# The action is referenced by **local path**, so whatever action.yml currently pins is what gets
+# tested - there is no second copy of the version or URL to drift out of sync.
+#
+# `release: published` is the trigger that matters: release assets are final at that moment, which
+# is before Renovate can propagate the new version downstream. The daily schedule is a safety net
+# for assets that are renamed or deleted after the fact. There is deliberately no `pull_request`
+# trigger - `update_action.yaml` bumps the pinned version on the release PR branch *before* that
+# release exists, so a PR-time install would 404 on every release PR.
+
+name: Verify action
+
+on:
+  # TEMPORARY, removed before merge: workflow_dispatch only works from the default branch, so this
+  # is the only way to prove the job actually runs while it is still on a PR branch.
+  pull_request:
+    paths:
+      - '.github/workflows/verify_action.yaml'
+  release:
+    types: [published]
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  verify-helm-schema:
+    name: Install and run the verify-helm-schema action
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
+        with:
+          go-version-file: go.mod
+
+      # `verify-helm-schema.sh` locates its input with `find ./helm -maxdepth 2 -name
+      # values.schema.json`, so the fixture has to live there. Normalizing with the checked-out
+      # source instead of committing a fixture means it satisfies `verify`'s normalization gate for
+      # free and cannot go stale; `rulesets_test.go` already asserts this input has no `cluster-app`
+      # errors (its ~90 recommendations are advisory and do not fail the run).
+      - name: Build the fixture chart
+        run: |
+          mkdir -p helm/selftest
+          go run . normalize pkg/lint/rulesets/testdata/cluster_azure.json \
+            -o helm/selftest/values.schema.json --force
+
+      - name: Run the action
+        uses: ./actions/verify-helm-schema
+        with:
+          rule-set: cluster-app
