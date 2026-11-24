@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   v2.6.2 needed: its assets stopped including `schemalint-v2.6.2-linux-amd64.tar.gz` once #319
   dropped `build-release-artifacts: true`, and the resulting 404 only surfaced downstream.
 
+### Changed
+
+- CI: `update_action.yaml` runs only for a successful, push-triggered "Create Release PR" run in this repository, and its token is limited to `contents: write` and `pull-requests: read`. A fork pull request could add a workflow with the same name and trigger it (giantswarm/giantswarm#39472).
+
 ## [2.6.3] - 2026-08-04
 
 ### Changed

@@ -8,8 +8,20 @@ on:
     types:
       - completed
 
+permissions: {}
+
 jobs:
   update_action:
+    # Only a successful "Create Release PR" run started by a push to a release
+    # branch of this repository. A fork PR can add a workflow with the same name,
+    # and its run would trigger this one too.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    permissions:
+      contents: write
+      pull-requests: read
     uses: giantswarm/github-workflows/.github/workflows/update-action-version.yaml@main
     with:
       action_yml_path: actions/verify-helm-schema/action.yml
